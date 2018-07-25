@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js" ></script>
+		<script type="text/javascript" src="js/myjs.js" ></script>
+		<title>确认支付</title>
+	</head>
+	<body>
+		<div class="top">
+			<div class="auto">
+				<h6 class="fl">欢迎您！<a href="#">【登录】</a><a href="#">【注册】</a></h6>
+				<ul class="top_ul">
+					<li><a href="#">
+						<h4 class="fl">网站首页</h4>
+						<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->
+						<img src="img/img_nav_line.png" class="fl nav_line"/>
+					</a></li>
+					<li><a href="#">
+						<h4 class="fl">关注我们</h4>
+						<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
+						<img src="img/img_nav_line.png" class="fl nav_line"/>
+						<ul class="top_list">
+							<li><a href="#">
+								<h4 class="fl" style="color: #F76592;">关注我们</h4>
+								<img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
+							</a></li>
+							<li><a href="#">
+								<h4 class="fl">新手入门</h4>
+							</a></li>
+							<li><a href="#">
+								<h4 class="fl">入驻帮助</h4>
+							</a></li>
+						</ul>
+					</a></li>
+					<li><a href="#">
+						<h4 class="fl">帮助中心</h4>
+						<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
+						<img src="img/img_nav_line.png" class="fl nav_line"/>
+						<ul class="top_list">
+							<li><a href="#">
+								<h4 class="fl" style="color: #F76592;">帮助中心</h4>
+								<img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
+							</a></li>
+							<li><a href="#">
+								<h4 class="fl">新手入门</h4>
+							</a></li>
+							<li><a href="#">
+								<h4 class="fl">入驻帮助</h4>
+							</a></li>
+						</ul>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="nav">
+			<div class="auto">
+				<img src="img/nav_logo.png" class="fl"/>
+				<div class="nav_shop fl">
+					<h3>共荣农业合作社</h3>
+					<h4>品牌名：奔富1988</h4>
+				</div>
+				
+				<div class="enter_myorders" class="fr">
+					<img src="img/icon_nav_orders_color.png" class="fl m1"/>
+					<img src="img/icon_nav_orders_white.png" class="fl m2" style="display: none;"/>
+					<h4 class="fr">我的订单</h4>
+				</div>
+			</div>
+		</div>
+		
+		<!--支付状态-->
+		<div class="pay_state auto">
+			<h1 class="fl">订单确认</h1>
+			<ul class="fr">
+				<li>
+					<img src="img/img_pay_num_yellow1.png" class="fl">
+					<h3 class="fl" style="color: #f5a856;">确认订单信息</h3>
+				</li>
+				<li>
+					<img src="img/img_pay_num_black2.png" class="fl">
+					<h3 class="fl">完成付款</h3>
+				</li>
+				<li>
+					<img src="img/img_pay_num_black3.png" class="fl">
+					<h3 class="fl">认购成功</h3>
+				</li>
+			</ul>
+			<img src="img/sign_pay_state_white.png"/>
+		</div>
+		
+		<!--确认收货地址-->
+		<div class="auto confirm_address">
+			<h1>确认收货地址</h1>
+			<div class="confirm_address_box">
+				<h2>收货联系人：</h2>
+				<input type="" name="" id="" value="" />
+			</div>
+			<div class="confirm_address_box">
+				<h2>收货电话：</h2>
+				<input type="" name="" id="" value="" />
+			</div>
+			<div class="confirm_address_box">
+				<h2>收货地址：</h2>
+				<select>
+					<option>安徽省</option>
+					<option>湖南省</option>
+					<option>湖北省</option>
+					<option>贵州省</option>
+				</select>
+				<select style="width: 210px;margin-left: 12px;">
+					<option>合肥市</option>
+					<option>芜湖市</option>
+					<option>安庆市</option>
+					<option>马鞍山市</option>
+				</select>
+				<input type="" name="" id="" value="" placeholder="具体地址" class="address_details"/>
+			</div>	
+		</div>
+		
+		<!--确认订单信息-->
+		<div class="auto confirm_order_box">
+			<h1>确认订单信息</h1>
+			<ul class="confirm_order">
+				<li>产品</li>
+				<li>数量</li>
+				<li>土地面积</li>
+				<li>预计产出</li>
+				<li>产品属性</li>
+				<li>价格</li>
+			</ul>
+			<h2 style="margin-bottom: 5px;">店铺：凤山振兴合作社</h2>
+			<ul class="confirm_order confirm_order_list">
+				<li class="confirm_order_list_goods">
+					<img src="img/img_goods2.jpg" class="fl"/>
+					<div class="fl">
+						<h3>凤山村20分0.1亩红心猕猴桃认购开放一二三四五六七八九十</h3>
+						<h4>预计发货时间：2018年10月12日</h4>
+					</div>
+				</li>
+				<li>
+					<div class="goods_num_box1">
+						<div class="fl goods_num_box_btn1">
+							<img src="img/btn_minus.png" style="left: 0;"/>
+						</div>
+						<input type="" name="" id="" value="1" class="fl"/>
+						<div class="fr goods_num_box_btn1" >
+							<img src="img/btn_add.png" style="right: 0;"/>
+						</div>
+					</div>
+				</li>
+				<li>60平</li>
+				<li>360kg</li>
+				<li class="confirm_order_list_type"><h3 style="margin-top: 50px;">猕猴桃</h3><h3>红心猕猴桃</h3></li>
+				<li>600</li>
+			</ul>
+			<div class="confirm_order_message">
+				<div class="fl">
+					<h2>给卖家留言：</h2>
+					<textarea></textarea>
+				</div>
+				<h3 class="fl" style="margin-left: 55px;">运送方式：普通配送</h3>
+				<h3 class="fl" style="margin-left: 65px;">邮资：免邮</h3>
+				<h3 class="fr" style="margin-right: 65px;">小计：
+					&nbsp;<span style="font-size: 24px; color: #F76097;">600.00</span>&nbsp;
+					<span style="font-size: 14px;color: black;">元</span>
+				</h3>
+			</div>
+			<h3>认购信息&nbsp;&nbsp;<span>《认购协议》</span></h3>
+			<div class="confirm_order_progress">
+				<div class="fl">
+					<h3>阶段一：</h3>
+					<h3>下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
+					<h3 style="color: #666666;">(由于预约生产农产品的特殊性，不支持取消订单退款；请在提交订单后30分钟内付款，超时订单将被关闭)</h3>
+				</div>
+				<h4 class="fr">应付金额：<span>300</span>元</h4>
+			</div>
+			<div class="confirm_order_progress" style="border: none;">
+				<div class="fl">
+					<h3>阶段二：</h3>
+					<h3>确认收货，支付尾款。</h3>
+					<h3 style="color: #666666;">(在2019日07月19日前卖家发货，买家确认收货后，平台向卖家支付尾款)</h3>
+				</div>
+				<h4 class="fr">应付金额：<span>300</span>元</h4>
+			</div>
+			<h4 class="total">应付金额：&nbsp;<span>600.00</span>&nbsp;元</h4>
+			<div class="btn_submit" style="float: right;margin:10px 50px 30px 0;">
+				<h3>确认提交</h3>
+			</div>	
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<ul class="side">
+			<li>
+				<img src="img/img_side_follow.png"/>
+				<h4>关注我们</h4>
+			</li>
+			<li>
+				<img src="img/img_side_top.png"/>
+				<h4>回到顶部</h4>
+			</li>
+		</ul>
+		
+		<div class="login_propaganda">
+			<ul class="auto">
+				<li>
+					<img src="img/img_login_1.png" class="fl"/>
+					<h1>优质优价</br><span>互惠农商城乡发展</span></h1>
+				</li>
+				<li>
+					<img src="img/img_login_2.png" class="fl"/>
+					<h1>优质优价</br><span>互惠农商城乡发展</span></h1>
+				</li>
+				<li>
+					<img src="img/img_login_3.png" class="fl"/>
+					<h1>优质优价</br><span>互惠农商城乡发展</span></h1>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<div class="foot">
+			<h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
+			<h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
+		</div>
+	</body>
+</html>
