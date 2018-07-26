@@ -1,10 +1,3 @@
-//设置全局变量
-var indexData = {
-    pageSize: 9,
-    pageNo: 1,
-    html: ""
-};
-
 //预加载方法
 $(function () {
     getIndex();
@@ -16,7 +9,7 @@ function getIndex() {
     $.ajax({
         type: "post",
         data: "pageNo=" + indexData.pageNo + "&pageSize=" + indexData.pageSize,
-        url: "http://localhost:8080/dolaing/index",
+        url: SERVER_URL + "/index",
         success: function (data) {
             var goodsList = data.list;
             console.log(goodsList);
@@ -44,7 +37,7 @@ function getIndex() {
 function goodsHtml(goods) {
 
     var date1 = new Date();  //开始时间
-    var date2 = new Date(goods.endSubscribeTime.replace(/-/,"/"))    //结束时间
+    var date2 = new Date(goods.endSubscribeTime.replace(/-/, "/"))    //结束时间
     var date3 = date2.getTime() - date1.getTime()  //时间差的毫秒数
     //计算出相差天数
     var days = Math.floor(date3 / (24 * 3600 * 1000))
@@ -64,8 +57,8 @@ function goodsHtml(goods) {
         isFreeShipping = "包邮";
     }
     var html =
-        "<li title='"+ goods.goodsName +"'>" +
-        "<a href=\"/goods_details.html?id=" + goods.id + "\">" +
+        "<li title='" + goods.goodsName + "'>" +
+        "<a href=" + goods.id + "\"/goods_details.html?id=\">" +
         "<img src=\"" + goods.goodsMasterImgs + "\" class=\"home_list_goods\"/>" +
         "<h3>" + goods.goodsName + "</h3>" +
         "<h4>" + goods.goodsBrief + "</h4>" +
