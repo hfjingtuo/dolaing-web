@@ -10,9 +10,23 @@ var indexData = {
 /**
  * 获取时间
  * @param str
- * @returns {string}
+ * @returns {年月日}
  */
-function getMyDate(str){
+function getDate(str){
+    var oDate = new Date(str),
+        oYear = oDate.getFullYear(),
+        oMonth = oDate.getMonth()+1,
+        oDay = oDate.getDate(),
+        oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay);//最后拼接时间
+    return oTime;
+}
+
+/**
+ * 获取时间
+ * @param str
+ * @returns {年月日时分秒}
+ */
+function getDateTime(str){
     var oDate = new Date(str),
         oYear = oDate.getFullYear(),
         oMonth = oDate.getMonth()+1,

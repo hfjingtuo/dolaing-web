@@ -37,11 +37,13 @@ function goodsHtml(goods) {
     var isFreeShipping = goods.isFreeShipping;
     if ("1" == isFreeShipping) {
         isFreeShipping = "包邮";
+    }else {
+        isFreeShipping = "自费";
     }
     var html =
         "<li title='" + goods.goodsName + "'>" +
-        "<a href=" + goods.id + "\"/goodsDetails.html?id=\">" +
-        "<img src=\"" + goods.goodsMasterImgs + "\" class=\"home_list_goods\"/>" +
+        "<a href='/goodsDetails.html?id=" + goods.id +"'>"+
+        "<img src=\"" + goods.goodsMasterImgs.split(",")[0] + "\" class=\"home_list_goods\"/>" +
         "<h3>" + goods.goodsName + "</h3>" +
         "<h4>" + goods.goodsBrief + "</h4>" +
         "<div class=\"home_list_price\">" +

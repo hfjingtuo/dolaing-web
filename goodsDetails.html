@@ -60,8 +60,8 @@
     <div class="auto">
         <img src="img/nav_logo.png" class="fl"/>
         <div class="nav_shop fl">
-            <h3>共荣农业合作社</h3>
-            <h4 class="brandName"></h4>
+            <h3 class="shopName"></h3>
+            <h4 id="userId"></h4>
         </div>
 
         <div class="enter_myorders" class="fr">
@@ -78,7 +78,7 @@
     <div class="shop_box">
         <!--<h3 class="fl">返回产品</h3>-->
         <ul class="fr shop_list">
-            <li><a href="#">
+            <li><a href="shopDetails.html">
                 <h4>诚信档案</h4>
                 <img src="img/img_tab1.png"/>
             </a></li>
@@ -101,7 +101,7 @@
     </div>
     <div class="goods_right fl">
         <h1 id="goodsName"></h1>
-        <h2>副标题</h2>
+        <h2 id="goodsBrief"></h2>
         <div class="goods_state">
             <h3 class="fl">[认购中]</h3>
             <img src="img/img_goods_state_line.png" class="fl"/>
@@ -118,32 +118,32 @@
                 <li>
                     <img src="img/img_num2.png"/>
                     <h4>生产制作</h4>
-                    <h4>预计最晚：2018-08-20</h4>
+                    <h4 id="endSubscribeTime"></h4>
                 </li>
                 <li>
                     <img src="img/img_num3.png"/>
                     <h4>包装发货</h4>
-                    <h4>生产完成后七天内发货</h4>
+                    <h4 id="deliveryDays"></h4>
                 </li>
             </ul>
             <img src="img/img_process_bar.png"/>
         </div>
         <ul class="goods_points">
             <li>
-                <h3>种植时间：每年3月~5月</h3>
-                <h3 class="brandName"></h3>
+                <h3 id="plantingCycle"></h3>
+                <h3 id="brandName"></h3>
             </li>
             <li>
                 <h3 id="plantingCycleUnit"></h3>
-                <h3>品类：猕猴桃</h3>
+                <h3 id="catId">品类：猕猴桃</h3>
             </li>
             <li>
-                <h3>品种：红心猕猴桃</h3>
+                <h3 id="breeds">品种：红心猕猴桃</h3>
             </li>
         </ul>
         <ul class="goods_points" style="border: none;">
-            <li>
-                <h3 class="landAddress"></h3>
+            <li style="width: 50%">
+                <h3 id="landAddress"></h3>
                 <h3 id="landPartArea"></h3>
             </li>
             <li>
@@ -163,12 +163,14 @@
                 </div>
                 <input type="text" name="count" id="num" value="1" class="fl"
                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
+                       onblur="if(this.value > parseInt($('#goodsNo').val())){this.value=$('#goodsNo').val()}"
                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
                 <div class="fr goods_num_box_btn">
                     <img src="img/btn_add.png" onclick="add()"/>
                 </div>
             </div>
             <h3 class="fl" id="goodsNumber"></h3>
+            <input type="hidden" id="goodsNo">
         </div>
         <div class="btn_submit" style="margin: 60px 0;">
             <h3>立即认购</h3>
@@ -180,9 +182,9 @@
 <div class="auto goods_main">
     <div class="goods_main_left fl">
         <div class="goods_main_left_shop">
-            <h2>共荣农业合作社</h2>
+            <h2 id="shopName"></h2>
             <h4 id="businessScope"></h4>
-            <h4 class="landAddress">所在地区：贵州 清镇</h4>
+            <h4 id="area"></h4>
             <h4>诚信记录：<span>优秀</span></h4>
         </div>
         <ul class="home_list" style="width: 280px;margin-top: 20px;">
