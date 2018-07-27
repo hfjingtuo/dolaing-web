@@ -1,3 +1,8 @@
+document.write("<script language=javascript src='js/jquery-1.7.2.min.js'></script>");
+document.write("<script language=javascript src='js/myjs.js'></script>");
+document.write("<script language=javascript src='js/layui/layui.all.js'></script>");
+document.write("<script language=javascript src='js/common/jquery.cookie.js'></script>");
+
 var SERVER_URL = "http://localhost:8080/dolaing";
 
 //设置全局变量

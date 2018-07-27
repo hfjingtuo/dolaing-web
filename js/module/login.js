@@ -18,7 +18,7 @@ function login(){
     $.ajax({
         type: "POST",
         url:  SERVER_URL + "/login",
-        data: "username=" + userName + "&password=" + pwd,
+        data: "userName=" + userName + "&password=" + pwd,
         success: function (data) {
             console.log(data);
             var message = data.message;

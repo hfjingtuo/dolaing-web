@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="js/myjs.js"></script>
+    <script src="js/common/common.js"></script>
+    <script src="js/module/register.js"></script>
     <title>买家注册</title>
 </head>
 <body>
@@ -74,32 +74,30 @@
     <div class="auto1">
         <div class="fp_part" style="margin-top: 65px;">
             <label class="fl">手机号:</label>
-            <input type="" name="" id="" value="" placeholder="请输入您的常用手机号" class="fl"/>
-        </div>
-        <div class="fp_part">
-            <label class="fl">验证码:</label>
-            <input type="" name="" id="" value="" placeholder="请输入收到的验证码" class="fl"/>
-            <h3>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;获取验证码</h3>
-            <h4 class="fl">等待45秒</h4>
+            <input type="text" id="userName" placeholder="请输入手机号" maxlength="11" autocomplete="off" onblur="validUserName();" class="fl"/>
         </div>
         <div class="fp_part">
             <label class="fl">设置密码:</label>
-            <input type="" name="" id="" value="" placeholder="由6~20个字母、数字以及下划线组成" class="fl"/>
+            <input type="password" id="pwd" placeholder="由6~20个字母、数字以及下划线组成" maxlength="20" autocomplete="off" class="fl"/>
         </div>
         <div class="fp_part">
             <label class="fl">确认密码:</label>
-            <input type="" name="" id="" value="" placeholder="再输入一次密码" class="fl"/>
+            <input type="password" id="confirmPwd" placeholder="再输入一次密码" maxlength="20" autocomplete="off" class="fl"/>
+        </div>
+        <div class="fp_part">
+            <label class="fl">验证码:</label>
+            <input type="text" name="msgCode" id="msgCode" placeholder="请输入验证码" maxlength="6" autocomplete="off" class="fl"/>
+            <h3>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 16px" id="btnSendCode">获取验证码</span></h3>
+            <!--<h4 class="fl">等待45秒</h4>-->
         </div>
         <div class="line_long" style="margin-bottom: 25px;"></div>
-        <div class="agreement">
+        <!--<div class="agreement">
             <input type="checkbox" name="" id="" value="" class="fl"/>
             <label class="fl">我已阅读并同意<span>《dolaing用户协议》</span></label>
-        </div>
+        </div>-->
         <div class="btn_submit" style="margin-bottom: 20px;">
-            <h3>确认，下一步</h3>
+            <h3 onclick="register();">注册</h3>
         </div>
-        <h5 class="cancel">取消注册</h5>
-
     </div>
 </div>
 

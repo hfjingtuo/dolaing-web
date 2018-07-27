@@ -3,8 +3,23 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="js/myjs.js"></script>
+    <script src="js/common/common.js"></script>
+    <script>
+        $(function () {
+            setInterval(ChangeTime, 1000);
+        });
+        function ChangeTime() {
+            var time;
+            time = $("#time").text();
+            time = parseInt(time);
+            time--;
+            if (time <= 0) {
+                window.location.href = "/login.html";
+            } else {
+                $("#time").text(time);
+            }
+        }
+    </script>
     <title>买家注册</title>
 </head>
 <body>
@@ -74,10 +89,10 @@
     <div class="auto1">
         <img src="img/img_register_success.png" class="img_success"/>
         <h2 class="tip_success">恭喜你，注册成功</h2>
-        <h5 class="cancel">10秒后自动跳转至首页</h5>
+        <h5 class="cancel"><span class="cancel" id="time">5</span>秒后自动跳转至首页</h5>
         <div class="line_long" style="margin-bottom: 25px;"></div>
         <div class="btn_submit" style="margin-bottom: 70px;margin-top: 70px;">
-            <h3>现在登录</h3>
+            <h3 onclick="location.href='/login.html'">现在登录</h3>
         </div>
     </div>
 </div>
@@ -98,8 +113,8 @@
     </ul>
 </div>
 <div class="foot">
-    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a
-            href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
+    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
     <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
 </div>
 </body>
