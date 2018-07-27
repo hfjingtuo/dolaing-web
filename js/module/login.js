@@ -28,7 +28,7 @@ function login(){
                 });
             }else{
                 $.cookie('token', data.token);
-                location.href = SERVER_URL + "/index.html";
+                location.href = "/index.html";
             }
         },
     });
