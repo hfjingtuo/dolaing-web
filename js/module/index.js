@@ -4,7 +4,6 @@ $(function () {
 
 });
 
-//执行方法
 function getIndex() {
     $.ajax({
         type: "post",
@@ -20,6 +19,7 @@ function getIndex() {
                 for (var i = 0; i < goodsList.length; i++) {
                     goods = goodsList[i];
                     indexData.html += goodsHtml(goods);
+                    countdown(goods.endSubscribeTime, goods.id);//认购倒计时
                 }
             }
             $("#root").html(indexData.html);
@@ -31,34 +31,16 @@ function getIndex() {
             return true;
         }
     });
-
 }
 
 function goodsHtml(goods) {
-
-    var date1 = new Date();  //开始时间
-    var date2 = new Date(goods.endSubscribeTime.replace(/-/, "/"))    //结束时间
-    var date3 = date2.getTime() - date1.getTime()  //时间差的毫秒数
-    //计算出相差天数
-    var days = Math.floor(date3 / (24 * 3600 * 1000))
-    //计算出小时数
-    var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
-    var hours = Math.floor(leave1 / (3600 * 1000))
-    //计算相差分钟数
-    var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
-    var minutes = Math.floor(leave2 / (60 * 1000))
-    //计算相差秒数
-    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
-    var seconds = Math.round(leave3 / 1000)
-    //认购结束时间
-    var timeStampDiff = days + "天 " + hours + "小时 " + minutes + " 分钟" + seconds + " 秒";
     var isFreeShipping = goods.isFreeShipping;
     if ("1" == isFreeShipping) {
         isFreeShipping = "包邮";
     }
     var html =
         "<li title='" + goods.goodsName + "'>" +
-        "<a href=" + goods.id + "\"/goods_details.html?id=\">" +
+        "<a href=" + goods.id + "\"/goodsDetails.html?id=\">" +
         "<img src=\"" + goods.goodsMasterImgs + "\" class=\"home_list_goods\"/>" +
         "<h3>" + goods.goodsName + "</h3>" +
         "<h4>" + goods.goodsBrief + "</h4>" +
@@ -68,13 +50,35 @@ function goodsHtml(goods) {
         "<img src=\"img/sign_free.png\" class=\"fr\"/>" +
         "<h6>" + isFreeShipping
         + "</h6></div>" +
-        "<h6 class=\"home_list_time\">剩余：<span>" + timeStampDiff + "</span></h6>" +
+        "<h6 class=\"home_list_time\">剩余：<span id='timer" + goods.id + "'></span></h6>" +
         "</a></li>"
     return html;
 }
 
-
 function getIndexMore() {
     indexData.pageNo += 1;
     getIndex();
+}
+
+function countdown(endSubscribeTime, goodsId) {
+    setInterval(function () {
+        let nowTime = new Date(endSubscribeTime) - new Date;
+        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
+
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+        days = checkTime(days);
+        hours = checkTime(hours);
+        $("#timer" + goodsId).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+    }, 1000);
+}
+
+function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
 }

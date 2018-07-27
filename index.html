@@ -7,16 +7,16 @@
 		<script type="text/javascript" src="js/myjs.js" ></script>
 		<script type="text/javascript" src="js/html5zoo.js" ></script>
 		<!--<script type="text/javascript" src="js/lovelygallery.js" ></script>-->
-		<script src="js/common.js"></script>
+		<script src="js/common/common.js"></script>
 		<script src="js/module/index.js"></script>
 		<title>都来应</title>
 	</head>
 	<body>
 		<div class="top">
 			<div class="auto">
-				<h6 class="fl">欢迎您！<a href="login.html">【登录】</a><a href="register-buyer.html">【注册】</a></h6>
+				<h6 class="fl">欢迎您！<a href="login.html">【登录】</a><a href="registerBuyer.html">【注册】</a></h6>
 				<ul class="top_ul">
-					<li><a href="#">
+					<li><a href="index.html">
 						<h4 class="fl">网站首页</h4>
 						<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->
 						<img src="img/img_nav_line.png" class="fl nav_line"/>
@@ -88,23 +88,11 @@
 				<h4 class="fl">产地直销，优质优价</h4>
 				<h4 class="fr">更多产地商品 ></h4>
 			</div>
-			<ul class="home_list">
-				<li id="root">
-					<a href="#">
-						<img src="img/img_goods1.jpg" class="home_list_goods"/>
-						<h3>凤山村20分0.1亩红心猕猴桃开放认购，心猕猴桃开放认购，心猕猴桃开放认购，预计产量500斤。</h3>
-						<h4>这是一段副标题内容这是一段副标题内容这是一段副标题内容</h4>
-						<div class="home_list_price">
-							<h5 class="fl"><span style="font-size: 16px;">￥</span>&nbsp;5000.00&nbsp;<span style="font-size: 14px;color: #E85526;">元</span></h5>
-							<img src="img/sign_free.png" class="fr"/>
-							<h6>包邮</h6>
-						</div>
-						<h6 class="home_list_time">剩余：<span>23天20小时06分05秒</span></h6>
-					</a>
-				</li>
+			<ul class="home_list" id="root">
+
 			</ul>
 			<h5 class="cancel" style="margin-top: 50px;margin-bottom: 70px;">没有更多了</h5>
-			<h5 id="OK" class="cancel" style="margin-top: 50px;margin-bottom: 70px;" onclick="getMyCollect()">加载更多</h5>
+			<h5 id="OK" class="cancel" style="margin-top: 50px;margin-bottom: 70px;" onclick="getIndexMore()">加载更多</h5>
 		</div>
 		<ul class="side">
 			<li>

@@ -3,16 +3,21 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="js/layui/css/layui.css">
 		<script type="text/javascript" src="js/jquery-1.7.2.min.js" ></script>
 		<script type="text/javascript" src="js/myjs.js" ></script>
+		<script type="text/javascript" src="js/layui/layui.all.js"></script>
+		<script src="js/common/common.js"></script>
+		<script src="js/common/jquery.cookie.js"></script>
+		<script src="js/module/login.js"></script>
 		<title>登录</title>
 	</head>
 	<body>
 		<div class="top">
 			<div class="auto">
-				<h6 class="fl">欢迎您！<a href="#">【登录】</a><a href="#">【注册】</a></h6>
+				<h6 class="fl">欢迎您！<a href="login.html">【登录】</a><a href="registerBuyer.html">【注册】</a></h6>
 				<ul class="top_ul">
-					<li><a href="#">
+					<li><a href="index.html">
 						<h4 class="fl">网站首页</h4>
 						<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->
 						<img src="img/img_nav_line.png" class="fl nav_line"/>
@@ -72,24 +77,24 @@
 					<div class="login_box_input">
 						<img src="img/icon_login_user.png" class="login_box_input_icon"/>
 						<img src="img/img_login_input_line.png" class="login_box_input_line"/>
-						<input type="text" name="userName" id="userName" value="" placeholder="手机号码"/>
+						<input type="text" name="userName" id="userName" autocomplete="off" placeholder="请输入手机号" maxlength="11"/>
 					</div>
 					<div class="login_box_input">
 						<img src="img/icon_login_password.png" class="login_box_input_icon"/>
 						<img src="img/img_login_input_line.png" class="login_box_input_line"/>
-						<input type="password" name="pwd" id="pwd" value="" placeholder="请输入密码"/>
+						<input type="password" name="password" id="pwd" placeholder="请输入密码" maxlength="20"/>
 					</div>
 					<div class="login_box_btn">
-						<h3 onclick="window.location='index.html'">确认登录</h3>
+						<h3 onclick="login();">确认登录</h3>
 					</div>
 					<div class="login_box_input">
-						<a href="#">忘记密码</a>
-						<a href="#">买家注册</a>
+						<a href="forgetPassword.html">忘记密码</a>
+						<a href="registerBuyer.html">买家注册</a>
 					</div>
 					<ul class="login_box_tab">
-						<li class="login_box_tab_cur" style="border-bottom-left-radius: 5px;">我是买家</li>
+						<!--<li class="login_box_tab_cur" style="border-bottom-left-radius: 5px;">我是买家</li>
 						<li style="border-left:1px solid #f0edeb ;border-right:1px solid #f0edeb ;">我是卖家</li>
-						<li style="border-bottom-right-radius: 5px;">我是农户</li>
+						<li style="border-bottom-right-radius: 5px;">我是农户</li>-->
 					</ul>
 				</div>
 			</div>
