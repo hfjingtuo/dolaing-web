@@ -1,3 +1,8 @@
+$(function () {
+    $.cookie('token', "",{expires: -1});
+    $.cookie('userName', {expires: -1});
+});
+
 function login(){
     var userName = $("#userName").val();
     var pwd = $("#pwd").val();
@@ -28,6 +33,7 @@ function login(){
                 });
             }else{
                 $.cookie('token', data.token);
+                $.cookie('userName', userName);
                 location.href = "/index.html";
             }
         },

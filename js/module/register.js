@@ -217,7 +217,7 @@ function register() {
                 });
                 $("#pwd").focus();
             } else {
-                location.href = "/registerSucess.html";
+                location.href = "/registerSuccess.html";
             }
         },
     });

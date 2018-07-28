@@ -1,7 +1,7 @@
 //预加载方法
 $(function () {
     getIndex();
-
+    initTopData();
 });
 
 function getIndex() {
@@ -21,14 +21,13 @@ function getIndex() {
                     indexData.html += goodsHtml(goods);
                     countdown(goods.endSubscribeTime, goods.id);//认购倒计时
                 }
+                $("#root").html(indexData.html);
+                if (goodsList.length < indexData.pageSize) {
+                    $("#OK").hide();
+                } else {
+                    $("#OK").show();
+                }
             }
-            $("#root").html(indexData.html);
-            if (goodsList.length < indexData.pageSize) {
-                $("#OK").hide();
-            } else {
-                $("#OK").show();
-            }
-            return true;
         }
     });
 }

@@ -1,8 +1,5 @@
 $(document).ready(function () {
-    /*var token = $.cookie('token');
-    if (token == null) {
-        window.location.href = "login.html";
-    }*/
+    initTopData();
     var goodsId;
     var str = location.href; //取得整个地址栏
     var num = str.indexOf("?")
