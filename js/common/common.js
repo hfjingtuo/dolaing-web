@@ -5,7 +5,6 @@ document.write("<script language=javascript src='/js/layui/layui.js'></script>")
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 
 var SERVER_URL = "http://localhost:8080/dolaing";
-var CLIENT_URL = window.location.host;
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -21,7 +20,7 @@ function ajaxData(ajaxObj) {
     }
 
     if (ajaxObj.timeout == null || ajaxObj.timeout == undefined) {
-        ajaxObj.timeout = 3000;
+        ajaxObj.timeout = 5000;
     }
 
     if (ajaxObj.cache == null || ajaxObj.cache == undefined) {
@@ -147,16 +146,25 @@ function getzf(num) {
 function initTopData() {
     var token = $.cookie('token');
     var userName = $.cookie('userName');
-    if (token == null) {
-        window.location.href = "/login.html";
-    } else {
-        var html = "欢迎您！<a href='/web/seller/publishGoods.html'>" + userName + "</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='/login.html'>注销</a>";
+    if (token != null) {
+        var html = "欢迎您！<a href='/web/seller/publishGoods.html'>" + userName + "</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:goLogout();'>注销</a>";
         $("#loginStatus").html(html);
     }
 }
 
+function goLogin() {
+    var redirectUrl = location.href;
+    $.cookie('redirectUrl', redirectUrl, { path: "/"});
+    location.href = "/login.html";
+}
+
+function goLogout() {
+    $.cookie('redirectUrl', '', {expires: -1});
+    location.href = "/login.html";
+}
+
 /**
- * 初始化头部数据
+ * 非空判断
  */
 function isEmpty(str) {
     if (str != null && str != "") {

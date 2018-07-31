@@ -5,13 +5,15 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/layui.css" media="all"/>
     <script src="/js/common/common.js"></script>
+    <script src="/js/layui/layui.all.js"></script>
     <script src="/js/module/seller/publishGoods.js"></script>
     <title>卖家个人中心-发布商品</title>
 </head>
 <body>
 <div class="top">
     <div class="auto">
-        <h6 class="fl" id="loginStatus">欢迎您！<a href="/login.html">【登录】</a><a href="/registerBuyer.html">【注册】</a></h6>
+        <h6 class="fl" id="loginStatus">欢迎您！<a href="javascript:goLogin();">【登录】</a><a
+                href="/registerBuyer.html">【注册】</a></h6>
         <ul class="top_ul">
             <li><a href="/index.html">
                 <h4 class="fl">网站首页</h4>
@@ -116,16 +118,18 @@
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" value="" placeholder="填写商品单价" style="width: 240px;"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       placeholder="填写商品单价" style="width: 240px;"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="text" id="depositRatio" value="" placeholder="" style="width: 140px;"/>
+                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 140px;"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">
                 <h3>是否包邮：</h3>
                 <select id="isFreeShipping">
                     <option value="1">是</option>
-                    <option value="0">否</option>
+                    <!--<option value="0">否</option>-->
                 </select>
             </div>
         </div>
@@ -145,47 +149,49 @@
             </div>
             <div class="publish_box">
                 <h3>品牌名称：</h3>
-                <input type="text" id="brandName" value="" placeholder="" style="width: 200px;"/>
+                <input type="text" id="brandName" placeholder="请输入品牌名称" style="width: 200px;"/>
                 <h3 style="width: 98px;">生长周期：</h3>
-                <input type="text" id="plantingCycle" value="" placeholder="" style="width: 200px;"/>
+                <input type="text" id="plantingCycle" onpaste="return false"
+                       onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
                 <h4 style="left: 600px;color: #333333;">天</h4>
             </div>
 
             <div class="publish_box">
                 <h3>种植时间：</h3>
-                <select style="width: 150px;">
-                    <option>1月</option>
-                    <option>2月</option>
-                    <option>3月</option>
-                    <option>4月</option>
-                    <option>5月</option>
-                    <option>6月</option>
-                    <option>7月</option>
-                    <option>8月</option>
-                    <option>9月</option>
-                    <option>10月</option>
-                    <option>11月</option>
-                    <option>12月</option>
+                <select style="width: 150px;" id="startPlantime">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
                 </select>
                 <h3 style="width: 50px;text-align: center;">至</h3>
-                <select style="width: 150px;" id="startPlantime">
-                    <option>1月</option>
-                    <option>2月</option>
-                    <option>3月</option>
-                    <option>4月</option>
-                    <option>5月</option>
-                    <option>6月</option>
-                    <option>7月</option>
-                    <option>8月</option>
-                    <option>9月</option>
-                    <option>10月</option>
-                    <option>11月</option>
-                    <option>12月</option>
+                <select style="width: 150px;" id="endPlantime">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
                 </select>
             </div>
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
-                <input type="text" id="expectPartOutput" value="" placeholder="" style="width: 240px;"/>
+                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 240px;"/>
                 <h4 style="right: 410px;color: #333333;">kg</h4>
             </div>
         </div>
@@ -193,111 +199,76 @@
             <h1><span>土地属性：</span>错误填写商品属性，可能会引起商品下架或搜索流量减少，影响您的正常销售，请认真准确填写！</h1>
             <div class="publish_box">
                 <h3>土地编号：</h3>
-                <input type="text" id="landSn" value="" placeholder="" style="width: 200px;"/>
+                <input type="text" id="landSn" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 200px;"/>
                 <h3 style="width: 118px;">土地所在地：</h3>
-                <input type="text" id="landAddress" value="" placeholder="" style="width: 200px;"/>
+                <input type="text" id="landAddress" style="width: 200px;"/>
             </div>
             <div class="publish_box">
                 <h3>每单位土地面积：</h3>
-                <input type="text" id="landPartArea" value="" placeholder="" style="width: 200px;"/>
+                <input type="text" id="landPartArea" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       placeholder="" style="width: 200px;"/>
                 <h3 style="width: 118px;">所属农户：</h3>
-                <select style="width: 200px;">
-                    <option>1月</option>
-                    <option>2月</option>
-                    <option>3月</option>
-                    <option>4月</option>
-                    <option>5月</option>
-                    <option>6月</option>
-                    <option>7月</option>
-                    <option>8月</option>
-                    <option>9月</option>
-                    <option>10月</option>
-                    <option>11月</option>
-                    <option>12月</option>
-                </select>
+                <input type="text" id="farmerId" style="width: 200px;"/>
             </div>
         </div>
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>上架库存数：</h3>
-                <input type="text" id="goodsNumber" value="" placeholder="" style="width: 240px;"/>
+                <input type="text" id="goodsNumber"   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"  style="width: 240px;"/>
                 <h4 style="right: 410px;color: #333333;">件</h4>
                 <h5>总面积：1000亩预计&nbsp;&nbsp;&nbsp;&nbsp;总产量：约4546551KG&nbsp;&nbsp;&nbsp;&nbsp;预计单价：6.25元/KG</h5>
             </div>
         </div>
         <div class="publish">
-            <h1><span>商品主图：</span>宝贝主图大小不能超过3MB；700*700 以上图片上传后宝贝详情页自动提供放大镜功能;</h1>
-            <ul class="upload">
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
-                </li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
-                </li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
-                </li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
-                </li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
-                </li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
+            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张</h1>
+            <input type="hidden" id="goodsMasterImgs">
+            <ul class="upload" id="showMasterImgs">
+                <li>
+                    <img src="/img/bg_upload.png" id="uploadMasterImg" style="width: 150px;height: 150px">
+                    <input type="file" accept="image/*"/>
                 </li>
             </ul>
-            <h1 style="margin-top: 30px;"><span>商品土地图：</span>土地图大小不能超过3MB； 上传符合规范的土地图片，能让您的商品详情显示效果更好。</h1>
-            <ul class="upload">
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
+            <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。</h1>
+            <input type="hidden" id="landImgs">
+            <ul class="upload" id="showLandImgs">
+                <li>
+                    <img src="/img/bg_upload.png" id="uploadLandImg" style="width: 150px;height: 150px">
+                    <input type="file" accept="image/*"/>
                 </li>
-                <!--<li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>-->
             </ul>
-            <h1 style="margin-top: 30px;text-align: left;margin-left: 124px;"><span>商品详情图：</span>详情大小不能超过3MB；</h1>
-            <ul class="upload" style="margin-bottom: 30px;">
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/>
-                    <input type="file" id="aa" value="" accept="image/*"/>
+            <h1 style="margin-top: 30px;text-align: left;"><span>商品详情图：</span>详情大小不能超过3MB，最多允许上传3张</h1>
+            <input type="hidden" id="goodsDescImgs">
+            <ul class="upload" style="margin-bottom: 30px;" id="showDescImgs">
+                <li>
+                    <img src="/img/bg_upload.png" id="uploadDescImg" style="width: 150px;height: 150px">
+                    <input type="file" accept="image/*"/>
                 </li>
-                <!--<li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>
-                <li><img onclick="$(this).parent().find('#aa').click();" src="/img/bg_upload.png"/><input type="file"  id="aa" value="" accept="image/*"/></li>-->
             </ul>
         </div>
         <div class="publish">
             <div class="publish_box" style="margin-top:30px;">
                 <h3>电脑端商品描述：</h3>
-                <textarea rows="" cols="" placeholder="商品描述"></textarea>
+                <textarea id="goodsDesc" rows="" cols="" placeholder="商品描述，0-1200字符，600字以内"></textarea>
             </div>
             <div class="publish_box">
                 <h3>认购时限：</h3>
                 <div class="layui-form">
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" class="layui-input" id="test5" placeholder="选择日期和时间">
-                        </div>
+                    <div class="layui-input-inline">
+                        <input type="date" style="width: 170px" id="startSubscribeTime">
+                    </div>
+                    &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
+                    <div class="layui-input-inline">
+                        <input type="date" style="width: 170px" id="endSubscribeTime">
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="agreement" style="margin: 50px 0 30px 300px;">
-            <input type="checkbox" id="" value="" class="fl"/>
-            <label class="fl">我已阅读并同意<span>《dolaing用户协议》</span></label>
-        </div>
-        <div class="btn_submit" style="margin-bottom: 50px;">
-            <h3 onclick="publishGoods()">发布</h3>
+        <div class="btn_submit" style="margin-bottom: 50px;margin-top: 45px;">
+            <h3 onclick="publishGoods()" id="publishGoods">发布商品</h3>
         </div>
     </div>
 </div>
-
-<!--支付状态-->
 
 <ul class="side">
     <li>
@@ -327,11 +298,107 @@
     </ul>
 </div>
 
-
 <div class="foot">
     <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a
             href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
     <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
 </div>
+<script>
+
+    /**
+     * 上传图片
+     */
+    layui.use('upload', function () {
+        var $ = layui.jquery, upload = layui.upload;
+        var masterImg = "";
+        var landImg = "";
+        var descImg = "";
+        //商品主图片上传
+        upload.render({
+            elem: '#uploadMasterImg'
+            , url: SERVER_URL + '/seller/upload/goodsImage'
+            , size: 3000
+            , before: function (obj) {
+                console.log(masterImg.split(",").length);
+                if (masterImg.split(",").length > 6) {
+                    return layer.msg("最多允许上传5张图片");
+                }
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#showMasterImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                });
+            }
+            , done: function (res) {
+                var code = res.code;
+                var message = res.message;
+                console.log("message==" + message);
+                //如果上传失败
+                if (200 != code) {
+                    return layer.msg('上传失败,重试');
+                } else {
+                    masterImg += message + ",";
+                }
+                console.log("mainImg:" + masterImg);
+                $('#goodsMasterImgs').val(masterImg.substr(0, masterImg.length - 1));
+            }
+        });
+
+        //商品土地图
+        upload.render({
+            elem: '#uploadLandImg'
+            , url: SERVER_URL + '/seller/upload/goodsImage'
+            , size: 3000
+            , before: function (obj) {
+                console.log(landImg.split(",").length);
+                if (masterImg.split(",").length > 2) {
+                    return layer.msg("最多允许上传1张图片");
+                }
+                obj.preview(function (index, file, result) {
+                    $('#showLandImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                });
+            }
+            , done: function (res) {
+                var code = res.code;
+                var message = res.message;
+                console.log("message==" + message);
+                if (200 != code) {
+                    return layer.msg('上传失败,重试');
+                } else {
+                    landImg += message + ",";
+                }
+                console.log("landImg:" + landImg);
+                $('#landImgs').val(landImg.substr(0, landImg.length - 1));
+            }
+        });
+
+        //商品详情图
+        upload.render({
+            elem: '#uploadDescImg'
+            , url: SERVER_URL + '/seller/upload/goodsImage'
+            , size: 3000
+            , before: function (obj) {
+                console.log(descImg.split(",").length);
+                if (masterImg.split(",").length > 4) {
+                    return layer.msg("最多允许上传3张图片");
+                }
+                obj.preview(function (index, file, result) {
+                    $('#showDescImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                });
+            }
+            , done: function (res) {
+                var code = res.code;
+                var message = res.message;
+                console.log("message==" + message);
+                if (200 != code) {
+                    return layer.msg('上传失败,重试');
+                } else {
+                    descImg += message + ",";
+                }
+                console.log("descImg:" + descImg);
+                $('#goodsDescImgs').val(descImg.substr(0, descImg.length - 1));
+            }
+        });
+    });
+</script>
 </body>
 </html>
