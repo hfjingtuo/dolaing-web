@@ -1,0 +1,7 @@
+$(function () {
+    initTopData();
+});
+
+function payConfirm() {
+
+}

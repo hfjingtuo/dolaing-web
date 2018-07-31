@@ -51,13 +51,13 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .login_box h1{font-size: 24px;width: 100%;text-align: center;margin-top: 40px;margin-bottom: 30px;}
 .login_box h1 img{margin: 0 25px 8px;}
 
-.login_box_input{width: 430px;margin: 0 55px;position: relative;margin-top: 25px;}
+.login_box_input{width: 430px;margin: 0 55px;position: relative;margin-top: 25px;text-align: center;}
 .login_box_input input{width: 428px;height: 48px;border: 1px solid #e6e6e6;border-radius: 5px;background: #f7f5f2;font-size: 14px;text-indent: 65px;}
 .login_box_input_icon{position: absolute;left: 0;top: 0;}
 .login_box_input_line{position: absolute;left: 50px;top: 0;}
 
-.login_box_input a{color: #808080;font-size: 14px;float: right;margin-left: 25px;}
-.login_box_input a:hover{color: #F5A856;}
+.login_box_input a{color: #808080;font-size: 14px;}
+.login_box_input a:hover{color: #F76096;}
 
 .login_box_btn{background: url(../img/btn_login_select.png) no-repeat;height: 60px;width: 440px;margin: 35px 50px 0;cursor: pointer;}
 .login_box_btn h3{color: #f76592;font-size: 18px;height: 60px;width: 440px;text-align: center;line-height: 60px;}
@@ -373,7 +373,7 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .bank_card2{width: 240px;background: url(../img/bg_bank_name.png) no-repeat;overflow: hidden;height: 46px;padding: 0 20px;}
 .bank_card2 h3{height: 46px;line-height: 46px;}
 
-.center_right{width: 900px;background: white;}
+.center_right{width: 900px;background: white;min-height: 782px;}
 .center_right_tip{width: 850px;margin: 0 25px;border-bottom: 1px solid #E6E6E6;color: #ee8564;font-size: 24px;text-align: center;line-height: 36px;padding: 70px 0; }
 
 /***初始页-支付设置***/
@@ -447,9 +447,9 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 
 .orders_box_goods{overflow: hidden;}
 .orders_box_goods img{width: 78px;height: 78px;border: 1px solid #e6e6e6;margin: 30px;float: left;}
-.orders_box_goods div{margin-top: 35px;}
-.orders_box_goods h3{font-size: 14px;color: #333;width: 230px;line-height: 20px;}
-.orders_box_goods h4{font-size: 14px;color: #666;width: 230px;margin-top: 10px;}
+.orders_box_goods div{margin-top: 30px;}
+.orders_box_goods h3{font-size: 14px;color: #333;width: 230px;line-height: 22px;}
+.orders_box_goods h4{font-size: 14px;color: #666;width: 230px;}
 .orders_box_state h3,.orders_box_state h4{font-size: 14px;color: #333;width: 135px;text-align: center;}
 .orders_box_price h3,.orders_box_price h4{font-size: 14px;color: #333;width: 110px;text-align: center;}
 .orders_box_state h3,.orders_box_price h3{margin-top: 52px;line-height: 24px;}
@@ -466,7 +466,7 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .data2 h2 span{color: #333;font-size: 14px;}
 .data2 h3{color: #333;font-size: 14px;width: 230px;line-height: 30px;margin-left: 25px;}
 
-.record_title{width: 900px;height: 40px;line-height: 40px;border-bottom: 1px solid #e6e6e6;color: #7f7f7f;text-indent: 25px;}
+.record_title{width: 900px;height: 40px;line-height: 40px;border-bottom: 1px solid #e6e6e6;color: #7f7f7f;text-indent: 25px;margin-bottom: 20px;}
 .record_title a{color: #7f7f7f;}
 .record_title a:hover{color: #F76096;}
 .record{width: 848px;border: 1px solid #e6e6e6;margin:40px 25px;}
@@ -495,3 +495,57 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .published_list>div:nth-child(1){width: 355px;}
 .published_list>.orders_box_goods h3{width: 185px;margin-top: 5px;}
 .orders_box_operate1 h3{widows: 128px;line-height: normal;height: auto;}
+
+/****卖家-订单列表*****/
+.con{width: 850px;margin: 0 25px;}
+.con li{border-bottom: 1px solid #E6E6E6;padding-bottom:20px;}
+.grid_seller td:nth-child(1){width: 395px;border-right: 1px solid white;}
+.grid_seller td:nth-child(2){width: 140px;border-right: 1px solid white;}
+.grid_seller td:nth-child(3){width: 90px;border-right: 1px solid white;}
+.grid_seller td:nth-child(4){width: 135px;border-right: 1px solid white;}
+.grid_seller td:nth-child(5){width: 86px;}
+.seller_list_tit{border-bottom: 1px solid #E6E6E6;margin-top: 30px;}
+.seller_list_tit td{color: #666666;text-align: center;padding-bottom: 5px;}
+.seller_list_tit td:nth-child(1){text-align: left;text-indent: 30px;}
+
+.seller_list_content td{height: 160px;background: #f7f3f0;}
+.seller_list_content td:nth-child(1){overflow: hidden;}
+.seller_list_content td:nth-child(1) img{width: 78px;height: 78px;border: 1px solid #e6e6e6;margin: 30px;float: left;}
+.seller_list_content td:nth-child(1) div{margin-top: 30px;}
+.seller_list_content td:nth-child(1) h3{font-size: 14px;color: #333;width: 230px;line-height: 20px;margin-bottom: 5px;}
+.seller_list_content td:nth-child(1) h4{font-size: 14px;color: #666;width: 230px;}
+
+.middle{text-align: center;line-height: 25px;}
+.link{color: #f785ae;cursor: pointer;}
+.link:hover{text-decoration: underline;}
+.money{color: #f785ae;font-size: 18px;font-weight: bold;}
+.deliver{width: 850px;height: 40px;line-height: 40px;text-indent: 30px;background: #f7f3f0;color: #333333;margin-top: 1px;}
+
+/****卖家-订单详情*****/
+.order_line{width: 850px;margin:40px 25px 25px;position: relative;height: 110px;}
+.bg_grey_line{width: 750px;margin: 50px;}
+.order_line1{overflow: hidden;position: absolute;top: 2px;left: 0;z-index: 1;}
+.order_line1 li{float: left;position: relative;margin-right: 42px;}
+.order_line1 li:last-child{margin-right: 0;}
+.order_line1 li h3{width: 106px;text-align: center;}
+.order_line1 li h4{width: 106px;text-align: center;font-size: 12px;color: #808080;line-height: 14px;}
+.order_line1 li img{width: 34px;height: 34px;margin: 15px 36px;}
+.order_line2{overflow: hidden;position: absolute;top: 41px;left: 41px;z-index: 2;}
+.order_line2 li{float: left;}
+
+.details{width: 848px;border: 1px solid #E6E6E6;margin: 0 25px 20px;position: relative;}
+.details>img{width: 848px;position: absolute;top: 0;left: 0;}
+.details>.details_part:last-child{border: none;}
+.details_part{overflow: hidden;border-bottom: 1px solid #E6E6E6;padding-bottom: 20px;}
+.details_part>img{width: 40px;height: 40px;margin: 10px 20px 0 30px;}
+.details_part_list{margin-top: 15px;}
+.details_part_list h3{line-height: 24px;color: #333333;}
+.details_part_list h3 span{color: #F76096;font-weight: bold;font-size: 18px;}
+.btn_order{width: 150px;height: 50px;}
+.details_part_money{text-align: right;color: #333333;margin-right: 60px;margin-top: 40px;}
+
+
+.btn_order{background: url(/img/btn_order2_select.png) no-repeat;height: 50px;width: 150px;cursor: pointer;position: absolute;top: 60px;right: 50px;}
+.btn_order h3{color: #f76592;font-size: 18px;height: 50px;width: 150px;text-align: center;line-height: 50px;}
+.btn_order:hover{background: url(/img/btn_orders2_selected.png) no-repeat;}
+.btn_order:hover h3{color: white;}
