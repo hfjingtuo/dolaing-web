@@ -154,7 +154,7 @@ function confirmSubmit() {
         $("#pwd").focus();
         return false;
     }
-    if (pwd.length < 6 && pwd.length > 20) {
+    if (pwd.length < 6 || pwd.length > 20) {
         layer.tips("密码长度为6-20位", '#pwd', {
             tips: [2, '#f76592']
         });

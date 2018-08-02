@@ -149,14 +149,14 @@ function publishGoods() {
         layer.tips("请输入认购开始时间", '#startSubscribeTime', {
             tips: [2, '#f76592']
         });
-        $("#goodsNumber").focus();
+        $("#startSubscribeTime").focus();
         return false;
     }
     if (!isEmpty(endSubscribeTime)) {
         layer.tips("请输入认购结束时间", '#endSubscribeTime', {
             tips: [2, '#f76592']
         });
-        $("#goodsNumber").focus();
+        $("#endSubscribeTime").focus();
         return false;
     }
     var goods = {};
