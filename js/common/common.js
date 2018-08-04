@@ -3,8 +3,8 @@ document.write("<script language=javascript src='/js/myjs.js'></script>");
 document.write("<script language=javascript src='/js/layui/layui.all.js'></script>");
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
-
-var SERVER_URL = "http://localhost:8080/dolaing";
+var SERVER_URL = "http://localhost:8081/dolaing";
+var CLIENT_URL = window.location.host;
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -47,7 +47,7 @@ function ajaxData(ajaxObj) {
     var token = $.cookie('token');
     var Authorization = "Bearer " + token;
     if (ajaxObj.authorization && (token == null || token == "")) {
-        window.location.href = "./login.html";
+        window.location.href = "/login.html";
         return false;
     }
     $.ajax({
@@ -140,18 +140,6 @@ function getzf(num) {
     return num;
 }
 
-/**
- * 初始化头部数据
- */
-function initTopData() {
-    var token = $.cookie('token');
-    var userName = $.cookie('userName');
-    if (token != null) {
-        var html = "欢迎您！<a href='/web/seller/publishGoods.html'>" + userName + "</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:goLogout();'>注销</a>";
-        $("#loginStatus").html(html);
-    }
-}
-
 function goLogin() {
     var redirectUrl = location.href;
     $.cookie('redirectUrl', redirectUrl, { path: "/"});
@@ -172,3 +160,218 @@ function isEmpty(str) {
     }
     return false;
 }
+
+
+
+var Dolaing ={
+    user : {} ,
+    view : {} ,
+    page : {} ,
+    validate :{} //验证工具
+}
+
+/**
+ * 初始化头部
+ */
+Dolaing.view.info = function(){
+    var token = $.cookie('token');
+    var userName = $.cookie('userName');
+    var user = $.cookie('user');
+    var payAccountFlag = $.cookie('accountBankCode') == null ? false :true;
+    var loginStatusHtml = "";
+    var centerUrl = "" ;
+
+    if(token == null || user == null){
+        loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="#">【注册】</a>';
+    }else{
+        Dolaing.user =  JSON.parse(user);
+        Dolaing.user.payAccountFlag = payAccountFlag ;
+        Dolaing.user.bankCode = $.cookie('accountBankCode') ;
+        centerUrl = Dolaing.center.getUrl();
+        loginStatusHtml = '欢迎您！<a href=\"'+centerUrl+'\">' + userName +'</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
+    }
+    var _html = '<div class="auto">' +
+       '<h6 class="fl">'+loginStatusHtml+'</h6>' +
+       '<ul class="top_ul">' +
+       '<li><a href="#">' +
+       '<h4 class="fl" onclick="window.location.href =\"/index.html\"">网站首页</h4>' +
+       '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
+       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">关注我们</h4>' +
+       '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
+       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+       '<ul class="top_list">' +
+       '<li><a href="#">' +
+       '<h4 class="fl" style="color: #F76592;">关注我们</h4>' +
+       '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">新手入门</h4>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">入驻帮助</h4>' +
+       '</a></li>' +
+       '</ul>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">帮助中心</h4>' +
+       '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
+       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+       '<ul class="top_list">' +
+       '<li><a href="#">' +
+       '<h4 class="fl" style="color: #F76592;">帮助中心</h4>' +
+       '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">新手入门</h4>' +
+       '</a></li>' +
+       '<li><a href="#">' +
+       '<h4 class="fl">入驻帮助</h4>' +
+       '</a></li>' +
+       '</ul>' +
+       '</a></li>' +
+       '</ul>' +
+       '</div>' ;
+    $(".top").html(_html);
+};
+
+
+/**
+ * 根据类型获取个人中心地址
+ * @type {{getUrl: Dolaing.center.getUrl}}
+ */
+Dolaing.center = {
+    farmer : {
+        tabMenu : function(menuId){
+            if(menuId == "1"){ //交易记录
+
+            }else if(menuId == "2"){
+
+            }else if(menuId == "3"){
+
+            }
+        }
+    },
+    buyer : {
+        tabMenu : function(menuId){
+            if(menuId == "1"){ //交易记录
+
+            }else if(menuId == "2"){
+
+            }else if(menuId == "3"){
+
+            }
+        }
+    },
+    seller :{
+        tabMenu : function(menuId){
+           if(menuId == "1"){ //交易记录
+               window.location.href = "/web/seller/sellerCenter.html";
+           }else if(menuId == "2"){ //发布产品
+               window.location.href = "/web/seller/publishGoods.html";
+           }else if(menuId == "3"){ //已发布产品
+               window.location.href = "/web/seller/publishedGoods.html";
+           }else if(menuId == "4"){  //订单列表
+               window.location.href = "/web/seller/sellerOrders.html";
+           }else if(menuId == "5"){  //修改密码
+               window.location.href = "/web/member/changePassword.html";
+           }
+        }
+    },
+    getUrl :function(){
+        if(Dolaing.user.type == "0" || Dolaing.user.type == "1"){
+            return "/web/buyer/buyerCenter.html";
+        }else if(Dolaing.user.type == "2"){
+            return "/web/seller/sellerCenter.html";
+        }else if(Dolaing.user.type == "3"){
+            return "/web/farmer/farmerCenter.html";
+        }
+    }
+}
+
+
+/**
+ * 验证是否为空
+ * @param fieldObj : name 和 value
+ * @param prefix
+ * @param suffix
+ */
+Dolaing.validate.checkBlank = function(fieldObj , prefix ,suffix){
+    if(prefix == null ){
+        prefix = "请输入" ;
+    }
+
+    if(suffix == null ){
+        suffix = "" ;
+    }
+
+    if(fieldObj instanceof Array){
+       for(var i = 0 ;i < fieldObj.length ; i++){
+           if(fieldObj[i].value == null || fieldObj[i].value.trim() ==""){
+               layer.alert(prefix+fieldObj[i].name+suffix);
+               return false ;
+           }
+       }
+    }else{
+        if(fieldObj.value == null || fieldObj.value.trim() ==""){
+            layer.alert(prefix+fieldObj.name+suffix);
+            return false ;
+        }
+    }
+
+    return true ;
+
+}
+
+
+/**
+ * 分页
+ * 当前页
+ * 总页数
+ * 数据总条数
+ */
+Dolaing.page.view = function(pageNo,totalPages,total,pageFun){
+    var pageView = '<div class="pages fr">' +
+    '<ul><li class="pages_last" onclick="page('+ ((pageNo-1) <=0 ? 1 : (pageNo-1)) +')">上一页</li>';
+
+    for(var i =1 ; i <= totalPages ; i++){
+       if(i == pageNo){
+           pageView += '<li class="pages_cur">'+i+'</li>' ;
+       }else{
+           pageView += '<li onclick="page('+i+')">'+i+'</li>' ;
+       }
+    }
+    pageView += '<li class="pages_next" onclick="page('+ ((pageNo+1) > totalPages ? totalPages : (pageNo+1)) +')">下一页</li>' ;
+    pageView += '</ul></div>';
+    return pageView ;
+
+}
+
+/**
+ *
+ */
+Dolaing.getParameter = function(paramKey){
+    var str = location.href; //取得整个地址栏
+    var num = str.indexOf("?");
+    str = str.substr(num + 1); //取得所有参数
+    var params = str.split("&");
+    var paramArr = null ;
+    var paramMap = {} ;
+    if(params !=null){
+       for(var i=0;i<params.length;i++){
+           paramArr = params[i].split("=");
+           if(paramArr.length==2){
+               paramMap[paramArr[0]]= paramArr[1];
+           }
+       }
+    }
+    return paramMap[paramKey] ;
+}
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 $(function () {
     $.cookie('token', '', {expires: -1});
-    $.cookie('userName', '', {expires: -1});
+    $.cookie('accountBankCode', '', {expires: -1});
+    $.cookie('user', '', {expires: -1});
+    $.cookie('userName', '', {expires: -1})
 });
 
 function login() {
@@ -32,15 +34,18 @@ function login() {
                     tips: [2, "#f76592"]
                 });
             } else {
-                $.cookie('token', data.token);
-                $.cookie('userName', userName);
-                var redirectUrl = $.cookie('redirectUrl');
-                console.log(redirectUrl);
-                if ("undefined" == redirectUrl) {
-                    location.href = "/index.html";
-                } else {
-                    location.href = $.cookie('redirectUrl');
-                }
+                $.cookie('token', data.token,{ path: '/'});
+                $.cookie('accountBankCode', data.accountBankCode,{expires:7, path: '/'});
+                $.cookie('user', JSON.stringify(data.user),{ path: '/'});
+                $.cookie('userName', userName,{ path: '/'});
+                location.href = "/index.html";
+                // var redirectUrl = $.cookie('redirectUrl');
+                // console.log(redirectUrl);
+                // if ("undefined" == redirectUrl) {
+                //     location.href = "/index.html";
+                // } else {
+                //     location.href = $.cookie('redirectUrl');
+                // }
             }
         },
     });

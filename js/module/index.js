@@ -1,7 +1,6 @@
 //预加载方法
 $(function () {
     getIndex();
-    initTopData();
 });
 
 function getIndex() {
