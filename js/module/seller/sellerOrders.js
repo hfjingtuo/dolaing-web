@@ -1,6 +1,6 @@
 var SellerOrder = {
     page : {
-        pageSize : 5 ,
+        pageSize : 1,
         pageNo : 1
     }
 };
@@ -17,40 +17,16 @@ SellerOrder.infoMenus = function(){
 SellerOrder.findRecords = function(){
     var postData = "?userId="+Dolaing.user.account + "&pageNo="+SellerOrder.page.pageNo +"&pageSize="+SellerOrder.page.pageSize ;
     var ajaxObj = {
-        url: SERVER_URL+"/accountRecord/queryRecordsByUser"+postData,
+        url: SERVER_URL+"/orderRecord/queryRecordsByUser"+postData,
         success: function (data) {
             if(data !=null && data.code == '1000'){
                 if(data.data !=null){
-                    var html = "";
-                    var status = "";
-                    var processType = "" ;
+                    var _html = "";
                     $(data.data.records).each(function(index,record){
-                        if(record.status == "1"){
-                            status ="交易完成" ;
-                        }else if(record.status == "0"){
-                            status ="未完成" ;
-                        }else if(record.status == "-1"){
-                            status ="已取消" ;
-                        }
-                        if(record.processType == "1"){
-                            processType ="转入" ;
-                        }else if(record.processType == "2"){
-                            processType ="支付" ;
-                        }
-                        var createDay = record.createTime.substr(0,4)+"年"+record.createTime.substr(5,2)+"月"+record.createTime.substr(8,2)+"日"
-                        var createHour = record.createTime.substr(11);
-                        html += '<tr>' +
-                            '<td>'+createDay+'<br>'+createHour+'</td>' +
-                            '<td>'+processType+'</td>' +
-                            '<td>'+record.remarks+'<br>订单编号：'+record.sourceId+'</td>' +
-                            '<td>'+record.amount+'</td>' +
-                            '<td>'+status+'</td>' +
-                            '</tr>';
+                        _html += SellerOrder.buildDataView(record);
                     });
 
-                    $("#tableBody").html(html);
-                    //todo
-                    console.log("当前页"+data.data.current +" 总页数:"+data.data.pages +" 总数："+data.data.total);
+                    $("#orderList").html(_html);
                     $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
@@ -63,11 +39,61 @@ SellerOrder.findRecords = function(){
     ajaxData(ajaxObj);
 }
 
+
+SellerOrder.buildDataView = function(order){
+    var _html ='<li>' +
+        '                <div class="orders_words">' +
+        '                    <input type="checkbox" name=""  value="" />' +
+        '                    <h5>订单号：'+order.orderSn+'&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：'+order.createTime+'&nbsp;&nbsp;</h5>' +
+        '                </div>' ;
+    var goods = null ;
+    for(var i =0 ; i< order.orderGoodsVos.length ; i++){
+        goods = order.orderGoodsVos[i] ;
+        _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
+            '                    <tr>' +
+            '                        <td>' +
+            '                            <img src="img/img_goods1.jpg"/>' +
+            '                            <div class="fl">' +
+            '                                <h3>'+goods.goodsName+'</h3>' +
+            '                                <h4>土地编号：'+goods.landSn+'</h4>' +
+            '                                <h4>认购土地面积：'+goods.buyLandArea+goods.landPartAreaUnitName+'</h4>' +
+            '                            </div>' +
+            '                        </td>' +
+            '                        <td class="middle">' +
+            '                            <h3>买家：'+order.userId+'</h3>' +
+            '                            <h3>农户：'+goods.farmerId+'</h3>' +
+            '                        </td>' +
+            '                        <td class="middle">' +
+            '                            <h3>'+order.orderStatusFullName+'</h3>' +
+            '                            <h3 class="link">查看详情</h3>' +
+            '                        </td>' +
+            '                        <td class="middle">' +
+            '                            <h3>应得金额</h3>' +
+            '                            <h2 class="money">￥'+order.sellerReceivableAmount+'</h2>' +
+            '                            <h3>（定金比例'+goods.depositRatioLabel+'）</h3>' +
+            '                            <h3>总额：'+goods.goodsAmount+'</h3>' +
+            '                        </td>' ;
+        if(order.orderStatusFullCode == "2"){
+            _html += ' <td class="middle">' +
+            ' <h3 class="link">发&nbsp;&nbsp;货</h3>' +
+            '</td>' ;
+        }else{
+            _html += ' <td class="middle"></td>' ;
+        }
+        _html += '</tr>' +
+            '                </table>' +
+            '                <h5 class="deliver">预计发货时间：'+Dolaing.date.formatCh(goods.expectDeliverTime)
+            +'&nbsp;&nbsp;|&nbsp;&nbsp;预计出货：'+goods.expectPartOutputOrder+goods.expectPartOutputUnitName+'</h5>' ;
+    }
+    _html +='</li>' ;
+    return _html ;
+}
+
 /**
  * 分页请求
  * @param pageNo
  */
 function page(pageNo){
     SellerOrder.page.pageNo = pageNo ;
-    SellerOrder.findTradeRecords();
+    SellerOrder.findRecords();
 }
