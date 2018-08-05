@@ -4,57 +4,13 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="js/layui/css/layui.css">
-    <script src="js/common/common.js"></script>
-    <script src="js/module/goodsDetail.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/_head.js" ></script>
+    <script src="/js/module/goodsDetail.js"></script>
     <title>产品详情</title>
 </head>
 <body>
-<div class="top">
-    <div class="auto">
-        <h6 class="fl" id="loginStatus">欢迎您！<a href="/login.html">【登录】</a><a href="/registerBuyer.html">【注册】</a></h6>
-        <ul class="top_ul">
-            <li><a href="index.html">
-                <h4 class="fl">网站首页</h4>
-                <!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">关注我们</h4>
-                <img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">关注我们</h4>
-                        <img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">帮助中心</h4>
-                <img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">帮助中心</h4>
-                        <img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-        </ul>
-    </div>
-</div>
+<div class="top"></div>
 <div class="nav">
     <div class="auto">
         <img src="img/nav_logo.png" class="fl"/>
@@ -160,7 +116,7 @@
                 <div class="fl goods_num_box_btn">
                     <img src="img/btn_minus.png" onclick="minus()"/>
                 </div>
-                <input type="text" name="count" id="num" value="1" class="fl"
+                <input type="text" name="count" id="goodsNum" value="1" class="fl"
                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
                        onblur="if(this.value > parseInt($('#goodsNo').val())){this.value=$('#goodsNo').val()}"
                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
@@ -168,11 +124,12 @@
                     <img src="img/btn_add.png" onclick="add()"/>
                 </div>
             </div>
-            <h3 class="fl" id="goodsNumber"></h3>
-            <input type="hidden" id="goodsNo">
+            <h3 class="fl" id="goodsNumber"></h3><!--- 库存 -->
+            <input type="hidden" id="goodsId">
+            <input type="hidden" id="inventory">
         </div>
-        <div class="btn_submit" style="margin: 60px 0;">
-            <h3 onclick="window.location.href='/web/pay/payConfirm.html'">立即认购</h3>
+        <div class="btn_submit" style="margin: 60px 0;" id="subscription">
+            <h3 onclick="subscription();">立即认购</h3>
         </div>
     </div>
 </div>
@@ -303,28 +260,7 @@
     </li>
 </ul>
 
-<div class="login_propaganda">
-    <ul class="auto">
-        <li>
-            <img src="img/img_login_1.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="img/img_login_2.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="img/img_login_3.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-    </ul>
-</div>
-
-
-<div class="foot">
-    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a
-            href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
-    <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
-</div>
+<script src="/js/common/_side.js" ></script>
+<script src="/js/common/_foot.js" ></script>
 </body>
 </html>

@@ -125,7 +125,7 @@ function getDateTime(str) {
         oYear = oDate.getFullYear(),
         oMonth = oDate.getMonth() + 1,
         oDay = oDate.getDate(),
-        oHour = oDate.getHours(),
+        oHour = oDate.getHours() - 8,
         oMin = oDate.getMinutes(),
         oSen = oDate.getSeconds(),
         oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
@@ -173,65 +173,67 @@ var Dolaing ={
 /**
  * 初始化头部
  */
-Dolaing.view.info = function(){
+Dolaing.view.info = function () {
     var token = $.cookie('token');
+    var userName = $.cookie('userName');
     var user = $.cookie('user');
-    var payAccountFlag = $.cookie('accountBankCode') == null ? false :true;
+    var payAccountFlag = $.cookie('accountBankCode') == null ? false : true;
     var loginStatusHtml = "";
-    var centerUrl = "" ;
-    if(token == null || user == null){
+    var centerUrl = "";
+
+    if (token == null || user == null) {
         loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="#">【注册】</a>';
-    }else{
-        Dolaing.user =  JSON.parse(user);
-        Dolaing.user.payAccountFlag = payAccountFlag ;
-        Dolaing.user.bankCode = $.cookie('accountBankCode') ;
+    } else {
+        Dolaing.user = JSON.parse(user);
+        Dolaing.user.payAccountFlag = payAccountFlag;
+        Dolaing.user.bankCode = $.cookie('accountBankCode');
         centerUrl = Dolaing.center.getUrl();
-        loginStatusHtml = '欢迎您！<a href=\"'+centerUrl+'\">' + Dolaing.user.account +'</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
+        loginStatusHtml = '欢迎您！<a href=\"' + centerUrl + '\">' + userName + '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
     }
     var _html = '<div class="auto">' +
-       '<h6 class="fl">'+loginStatusHtml+'</h6>' +
-       '<ul class="top_ul">' +
-       '<li><a href="#">' +
-       '<h4 class="fl" onclick="window.location.href =\"/index.html\"">网站首页</h4>' +
-       '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
-       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">关注我们</h4>' +
-       '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
-       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
-       '<ul class="top_list">' +
-       '<li><a href="#">' +
-       '<h4 class="fl" style="color: #F76592;">关注我们</h4>' +
-       '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">新手入门</h4>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">入驻帮助</h4>' +
-       '</a></li>' +
-       '</ul>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">帮助中心</h4>' +
-       '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
-       '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
-       '<ul class="top_list">' +
-       '<li><a href="#">' +
-       '<h4 class="fl" style="color: #F76592;">帮助中心</h4>' +
-       '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">新手入门</h4>' +
-       '</a></li>' +
-       '<li><a href="#">' +
-       '<h4 class="fl">入驻帮助</h4>' +
-       '</a></li>' +
-       '</ul>' +
-       '</a></li>' +
-       '</ul>' +
-       '</div>' ;
+        '<h6 class="fl">' + loginStatusHtml + '</h6>' +
+        '<ul class="top_ul">' +
+        '<li><a href="#">' +
+        '<h4 class="fl" onclick="window.location.href =\"/index.html\"">网站首页</h4>' +
+        '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
+        '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">关注我们</h4>' +
+        '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
+        '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+        '<ul class="top_list">' +
+        '<li><a href="#">' +
+        '<h4 class="fl" style="color: #F76592;">关注我们</h4>' +
+        '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">新手入门</h4>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">入驻帮助</h4>' +
+        '</a></li>' +
+        '</ul>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">帮助中心</h4>' +
+        '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
+        '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+        '<ul class="top_list">' +
+        '<li><a href="#">' +
+        '<h4 class="fl" style="color: #F76592;">帮助中心</h4>' +
+        '<img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">新手入门</h4>' +
+        '</a></li>' +
+        '<li><a href="#">' +
+        '<h4 class="fl">入驻帮助</h4>' +
+        '</a></li>' +
+        '</ul>' +
+        '</a></li>' +
+        '</ul>' +
+        '</div>';
     $(".top").html(_html);
 };
 
@@ -259,27 +261,27 @@ Dolaing.center = {
             }
         }
     },
-    seller :{
-        tabMenu : function(menuId){
-           if(menuId == "1"){ //交易记录
-               window.location.href = "/web/seller/sellerCenter.html";
-           }else if(menuId == "2"){ //发布产品
-               window.location.href = "/web/seller/publishGoods.html";
-           }else if(menuId == "3"){ //已发布产品
-               window.location.href = "/web/seller/publishedGoods.html";
-           }else if(menuId == "4"){  //订单列表
-               window.location.href = "/web/seller/sellerOrders.html";
-           }else if(menuId == "5"){  //修改密码
-               window.location.href = "/web/member/changePassword.html";
-           }
+    seller: {
+        tabMenu: function (menuId) {
+            if (menuId == "1") { //交易记录
+                window.location.href = "/web/seller/sellerCenter.html";
+            } else if (menuId == "2") { //发布产品
+                window.location.href = "/web/seller/publishGoods.html";
+            } else if (menuId == "3") { //已发布产品
+                window.location.href = "/web/seller/publishedGoods.html";
+            } else if (menuId == "4") {  //订单列表
+                window.location.href = "/web/seller/sellerOrders.html";
+            } else if (menuId == "5") {  //修改密码
+                window.location.href = "/web/member/changePassword.html";
+            }
         }
     },
-    getUrl :function(){
-        if(Dolaing.user.type == "0" || Dolaing.user.type == "1"){
+    getUrl: function () {
+        if (Dolaing.user.type == "0" || Dolaing.user.type == "1") {
             return "/web/buyer/buyerCenter.html";
-        }else if(Dolaing.user.type == "2"){
+        } else if (Dolaing.user.type == "2") {
             return "/web/seller/sellerCenter.html";
-        }else if(Dolaing.user.type == "3"){
+        } else if (Dolaing.user.type == "3") {
             return "/web/farmer/farmerCenter.html";
         }
     }
@@ -292,30 +294,30 @@ Dolaing.center = {
  * @param prefix
  * @param suffix
  */
-Dolaing.validate.checkBlank = function(fieldObj , prefix ,suffix){
-    if(prefix == null ){
-        prefix = "请输入" ;
+Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
+    if (prefix == null) {
+        prefix = "请输入";
     }
 
-    if(suffix == null ){
-        suffix = "" ;
+    if (suffix == null) {
+        suffix = "";
     }
 
-    if(fieldObj instanceof Array){
-       for(var i = 0 ;i < fieldObj.length ; i++){
-           if(fieldObj[i].value == null || fieldObj[i].value.trim() ==""){
-               layer.alert(prefix+fieldObj[i].name+suffix);
-               return false ;
-           }
-       }
-    }else{
-        if(fieldObj.value == null || fieldObj.value.trim() ==""){
-            layer.alert(prefix+fieldObj.name+suffix);
-            return false ;
+    if (fieldObj instanceof Array) {
+        for (var i = 0; i < fieldObj.length; i++) {
+            if (fieldObj[i].value == null || fieldObj[i].value.trim() == "") {
+                layer.alert(prefix + fieldObj[i].name + suffix);
+                return false;
+            }
+        }
+    } else {
+        if (fieldObj.value == null || fieldObj.value.trim() == "") {
+            layer.alert(prefix + fieldObj.name + suffix);
+            return false;
         }
     }
 
-    return true ;
+    return true;
 
 }
 

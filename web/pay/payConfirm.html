@@ -1,58 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <script src="/js/common/common.js" ></script>
-    <script src="/js/module/buyer/payConfirm.js" ></script>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/_head.js"></script>
+    <script src="/js/module/buyer/payConfirm.js"></script>
     <title>确认支付</title>
 </head>
 <body>
 <div class="top">
-    <div class="auto">
-        <h6 class="fl" id="loginStatus">欢迎您！<a href="/login.html">【登录】</a><a href="/registerBuyer.html">【注册】</a></h6>
-        <ul class="top_ul">
-            <li><a href="index.html">
-                <h4 class="fl">网站首页</h4>
-                <!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">关注我们</h4>
-                <img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">关注我们</h4>
-                        <img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">帮助中心</h4>
-                <img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">帮助中心</h4>
-                        <img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-        </ul>
-    </div>
 </div>
 <div class="nav">
     <div class="auto">
@@ -70,7 +27,7 @@
     </div>
 </div>
 
-<!--支付状态-->
+<!--商城-认购-生成订单-->
 <div class="pay_state auto">
     <h1 class="fl">订单确认</h1>
     <ul class="fr" style="background: url(/img/bg_progress1.png) no-repeat;">
@@ -95,27 +52,21 @@
     <h1>确认收货地址</h1>
     <div class="confirm_address_box">
         <h2>收货联系人：</h2>
-        <input type="text" id="consignee"  />
+        <input type="text" id="consignee" maxlength="8"/>
     </div>
     <div class="confirm_address_box">
         <h2>收货电话：</h2>
-        <input type="text" id="phone"  />
+        <input type="text" id="phone" maxlength="11"/>
     </div>
     <div class="confirm_address_box">
         <h2>收货地址：</h2>
-        <select>
-            <option>安徽省</option>
-            <option>湖南省</option>
-            <option>湖北省</option>
-            <option>贵州省</option>
+        <select id="province" onchange="selectArea(this.value)">
+            <option value="">请选择省</option>
         </select>
-        <select style="width: 210px;margin-left: 12px;">
-            <option>合肥市</option>
-            <option>芜湖市</option>
-            <option>安庆市</option>
-            <option>马鞍山市</option>
+        <select style="width: 210px;margin-left: 12px;" id="city" onchange="selectArea(this.value)">
+            <option value="">请选择市</option>
         </select>
-        <input type="text" id="address" value="" placeholder="具体地址" class="address_details"/>
+        <input type="text" id="address" placeholder="具体地址" class="address_details"/>
     </div>
 </div>
 
@@ -130,40 +81,49 @@
         <li>产品属性</li>
         <li>价格</li>
     </ul>
-    <h2 style="margin-bottom: 5px;">店铺：凤山振兴合作社</h2>
+    <h2 style="margin-bottom: 5px;" id="shopName">店铺：凤山振兴合作社</h2>
     <ul class="confirm_order confirm_order_list">
         <li class="confirm_order_list_goods">
-            <img src="/img/img_goods2.jpg" class="fl"/>
+            <img id="goodsMasterImg" src="/img/img_goods2.jpg" class="fl"/>
             <div class="fl">
-                <h3>凤山村20分0.1亩红心猕猴桃认购开放一二三四五六七八九十</h3>
-                <h4>预计发货时间：2018年10月12日</h4>
+                <h3 id="goodsName">凤山村20分0.1亩红心猕猴桃认购</h3>
+                <h4 id="deliveryTime">预计发货时间：2018年10月12日</h4>
             </div>
         </li>
         <li>
             <div class="goods_num_box1">
                 <div class="fl goods_num_box_btn1">
-                    <img src="/img/btn_minus.png" style="left: 0;"/>
+                    <img src="/img/btn_minus.png" style="left: 0;" onclick="minus()"/>
                 </div>
-                <input type="" name="" id="" value="1" class="fl"/>
-                <div class="fr goods_num_box_btn1" >
-                    <img src="/img/btn_add.png" style="right: 0;"/>
+                <input type="hidden" id="goodsId"/>
+                <input type="hidden" id="inventory">
+                <input type="hidden" id="price">
+                <input type="text" name="count" id="goodsNum" value="1" class="fl"
+                       onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
+                       onblur="if(this.value > parseInt($('#goodsNo').val())){this.value=$('#goodsNo').val()}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
+                <div class="fr goods_num_box_btn1">
+                    <img src="/img/btn_add.png" style="right: 0;" onclick="add()"/>
                 </div>
             </div>
         </li>
-        <li>60平</li>
-        <li>360kg</li>
-        <li class="confirm_order_list_type"><h3 style="margin-top: 50px;">猕猴桃</h3><h3>红心猕猴桃</h3></li>
-        <li>600</li>
+        <li id="landTotalArea">60平</li>
+        <li id="expectTotalOutputUnit">360kg</li>
+        <li class="confirm_order_list_type">
+            <h3 style="margin-top: 50px;" id="breeds">猕猴桃</h3>
+            <!--<h3>红心猕猴桃</h3>-->
+        </li>
+        <li id="shopPrice">600</li>
     </ul>
     <div class="confirm_order_message">
         <div class="fl">
             <h2>给卖家留言：</h2>
-            <textarea></textarea>
+            <textarea id="remarks"></textarea>
         </div>
         <h3 class="fl" style="margin-left: 55px;">运送方式：普通配送</h3>
-        <h3 class="fl" style="margin-left: 65px;">邮资：免邮</h3>
+        <h3 class="fl" style="margin-left: 65px;" id="isFreeShipping">邮资：免邮</h3>
         <h3 class="fr" style="margin-right: 65px;">小计：
-            &nbsp;<span style="font-size: 24px; color: #F76097;">600.00</span>&nbsp;
+            &nbsp;<span style="font-size: 24px; color: #F76097;" class="totalPrice">600.00</span>&nbsp;
             <span style="font-size: 14px;color: black;">元</span>
         </h3>
     </div>
@@ -171,30 +131,25 @@
     <div class="confirm_order_progress">
         <div class="fl">
             <h3>阶段一：</h3>
-            <h3>下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
+            <h3 id="depositRatio">下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
             <h3 style="color: #666666;">(由于预约生产农产品的特殊性，不支持取消订单退款；请在提交订单后30分钟内付款，超时订单将被关闭)</h3>
         </div>
-        <h4 class="fr">应付金额：<span>300</span>元</h4>
+        <input type="hidden" id="depositRatioVal"/>
+        <h4 class="fr">应付金额：<span id="deposit">300</span>元</h4>
     </div>
     <div class="confirm_order_progress" style="border: none;">
         <div class="fl">
             <h3>阶段二：</h3>
             <h3>确认收货，支付尾款。</h3>
-            <h3 style="color: #666666;">(在2019日07月19日前卖家发货，买家确认收货后，平台向卖家支付尾款)</h3>
+            <h3 style="color: #666666;" id="expectDeliverTime">(在2019日07月19日前卖家发货，买家确认收货后，平台向卖家支付尾款)</h3>
         </div>
-        <h4 class="fr">应付金额：<span>300</span>元</h4>
+        <h4 class="fr">应付金额：<span id="retainage">300</span>元</h4>
     </div>
-    <h4 class="total">应付金额：&nbsp;<span>600.00</span>&nbsp;元</h4>
+    <h4 class="total">应付金额：&nbsp;<span class="totalPrice">600.00</span>&nbsp;元</h4>
     <div class="btn_submit" style="float: right;margin:10px 50px 30px 0;">
-        <h3>确认提交</h3>
+        <h3 onclick="payConfirm();">确认提交</h3>
     </div>
 </div>
-
-
-
-
-
-
 
 
 <ul class="side">
@@ -208,27 +163,7 @@
     </li>
 </ul>
 
-<div class="login_propaganda">
-    <ul class="auto">
-        <li>
-            <img src="/img/img_login_1.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="/img/img_login_2.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="/img/img_login_3.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-    </ul>
-</div>
-
-
-<div class="foot">
-    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
-    <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
-</div>
+<script src="/js/common/_side.js"></script>
+<script src="/js/common/_foot.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/layui.css" media="all"/>
     <script src="/js/common/common.js"></script>
-    <script src="/js/layui/layui.all.js"></script>
+    <script src="/js/common/_head.js" ></script>
     <script src="/js/module/seller/publishGoods.js"></script>
     <title>卖家个人中心-发布商品</title>
 </head>
@@ -88,7 +88,7 @@
             <ul class="center_left_list">
                 <li>交易记录</li>
                 <li class="center_left_list_cur">发布商品</li>
-                <li>已发布商品</li>
+                <li onclick="location.href='publishedGoods.html'">已发布商品</li>
                 <li>订单列表</li>
                 <li><a style="font-size: 18px" href="../../editPassword.html">修改密码</a></li>
             </ul>
@@ -280,31 +280,9 @@
         <h4>回到顶部</h4>
     </li>
 </ul>
-
-<div class="login_propaganda">
-    <ul class="auto">
-        <li>
-            <img src="/img/img_login_1.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="/img/img_login_2.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="/img/img_login_3.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-    </ul>
-</div>
-
-<div class="foot">
-    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a
-            href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
-    <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
-</div>
+<script src="/js/common/_side.js" ></script>
+<script src="/js/common/_foot.js" ></script>
 <script>
-
     /**
      * 上传图片
      */
