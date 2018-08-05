@@ -1,5 +1,9 @@
-var FarmerCenter = {};
-
+var FarmerCenter = {
+    page : {
+        pageSize : 1,
+        pageNo : 1
+    }
+};
 /**
  * 未开户
  * @type {string}
@@ -22,7 +26,7 @@ FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="#">首页</a>&n
     '<td>操作</td>' +
     '</tr>' +
     '</table>' +
-    '<ul class="con">' +
+    '<ul class="con" id="orderList">' +
     '<li>' +
     '<div class="orders_words">' +
     '<input type="checkbox" name="" id="" value="" />' +
@@ -60,23 +64,16 @@ FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="#">首页</a>&n
     '</li>' +
     '' +
     '</ul>' +
-    '<div class="operation" style="margin-top: 25px;margin-bottom: 55px;">' +
+    '<div class="operation" id="pageView" style="margin-top: 25px;margin-bottom: 55px;">' +
     '<div class="pages fr">' +
     '<ul>' +
     '<li class="pages_last">上一页</li>' +
     '<li class="pages_cur">1</li>' +
-    '<li>2</li>' +
-    '<li>3</li>' +
-    '<li>4</li>' +
     '<li class="pages_next">下一页</li>' +
     '</ul>' +
     '</div>' +
     '</div>' +
     '</div>';
-
-
-
-
 
 /**
  * 获取菜单
@@ -171,51 +168,28 @@ $(function () {
     FarmerCenter.infoMenus();
     FarmerCenter.addMenu();
     FarmerCenter.addContent();
+    FarmerCenter.findRecords();
 });
 
-FarmerCenter.findTradeRecords = function(){
-    var postData = {
-        pageSize:0 ,
-        pageNo : 1 ,
-        userId : 0
-    }
 
+
+/**
+ * 买家订单记录查询
+ */
+FarmerCenter.findRecords = function(){
+    var postData = "?userId="+Dolaing.user.account + "&pageNo="+FarmerCenter.page.pageNo +"&pageSize="+FarmerCenter.page.pageSize ;
     var ajaxObj = {
-        url: SERVER_URL+"/dolaing/AccountRecord/queryRecordsByUser",
-        data: JSON.stringify(postData),
+        url: SERVER_URL+"/orderRecord/queryRecordsByUser"+postData,
         success: function (data) {
             if(data !=null && data.code == '1000'){
                 if(data.data !=null){
-                    var html = "";
-                    var status = "";
-                    var processType = "" ;
-                    $(data.data.list).each(function(index,record){
-                        if(record.status == "1"){
-                            status ="已完成" ;
-                        }else if(record.status == "0"){
-                            status ="未完成" ;
-                        }else if(record.status == "-1"){
-                            status ="已取消" ;
-                        }
-                        if(record.processType == "1"){
-                            processType ="转入" ;
-                        }else if(record.processType == "2"){
-                            processType ="支付" ;
-                        }
-                        var createDay = record.createDate.substr(0,4)+"年"+record.createDate.substr(5,2)+"月"+record.createDate.substr(8,2)+"日"
-                        var createHour = record.createDate.substr(11);
-                        html += '<tr>' +
-                            '<td>'+createDay+'<br>'+createHour+'</td>' +
-                            '<td>'+processType+'</td>' +
-                            '<td>'+record.remarks+'<br>订单编号：'+record.sourceId+'</td>' +
-                            '<td>'+record.amount+'</td>' +
-                            '<td>'+status+'</td>' +
-                            '</tr>';
+                    var _html = "";
+                    $(data.data.records).each(function(index,record){
+                        _html += FarmerCenter.buildDataView(record);
                     });
 
-                    $("#tableBody").html(html);
-                    //todo
-                    $("#pageView").html(Dolaing.page.view(postData.pageNo,postData.pageSize,""));
+                    $("#orderList").html(_html);
+                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {
@@ -224,7 +198,140 @@ FarmerCenter.findTradeRecords = function(){
             }
         }
     }
+    ajaxData(ajaxObj);
 }
+
+
+FarmerCenter.buildDataView = function(order){
+    var _html ='<li>' +
+        '                <div class="orders_words">' +
+        '                    <input type="checkbox" name=""  value="" />' +
+        '                    <h5>订单号：'+order.orderSn+'&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：'+order.createTime+'&nbsp;&nbsp;</h5>' +
+        '                </div>' ;
+    var goods = null ;
+    var dStatus = "" ;//定金收款状态
+    var wStatus = "" ;//尾款收款状态
+    for(var i =0 ; i< order.orderGoodsVos.length ; i++){
+        goods = order.orderGoodsVos[i] ;
+        if(order.farmerReceiveStatus == 0){
+            dStatus = "未到账" ;
+            wStatus =  "未到账" ;
+        }else if(order.farmerReceiveStatus == 1){
+            dStatus = "到账中" ;
+            wStatus =  "未到账" ;
+        }else if(order.farmerReceiveStatus == 2){
+            dStatus = "已到账" ;
+            wStatus =  "未到账" ;
+        }else if(order.farmerReceiveStatus == 3){
+            dStatus = "已到账" ;
+            wStatus =  "到账中" ;
+        }else if(order.farmerReceiveStatus == 4){
+            dStatus = "已到账" ;
+            wStatus =  "已到账" ;
+        }
+
+        _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
+            '                    <tr>' +
+            '                        <td>' +
+            '                            <img src="img/img_goods1.jpg"/>' +
+            '                            <div class="fl">' +
+            '                                <h3>'+goods.goodsName+'</h3>' +
+            '                                <h4>土地编号：'+goods.landSn+'</h4>' +
+            '                                <h4>认购土地面积：'+goods.buyLandArea+goods.landPartAreaUnitName+'</h4>' +
+            '                            </div>' +
+            '                        </td>' +
+            '<td class="middle">' +
+            '<h3>定金：'+goods.depositPayment+'<br>'+dStatus+'</h3>' +
+            '<h3 style="margin-top: 10px;">尾款：'+goods.balancePayment+'<br>'+wStatus+'</h3>' +
+            '</td>' +
+            '                        <td class="middle">' +
+            '                            <h3>'+order.orderStatusFullName+'</h3>' +
+            '                        </td>' +
+            '                        <td class="middle">' +
+            '                            <h3>应得金额</h3>' +
+            '                            <h2 class="money">￥'+order.farmerReceivableAmount+'</h2>' +
+            '                            <h3>（定金比例'+goods.depositRatioLabel+'）</h3>' +
+            '                            <h3>总额：'+goods.goodsAmount+'</h3>' +
+            '                        </td>' ;
+        if(order.orderStatusFullCode == "2"){
+            _html += ' <td class="middle">' +
+                ' <h3 class="link">发&nbsp;&nbsp;货</h3>' +
+                '</td>' ;
+        }else{
+            _html += ' <td class="middle"></td>' ;
+        }
+        _html += '</tr>' +
+            '                </table>' +
+            '                <h5 class="deliver">预计发货时间：'+Dolaing.date.formatCh(goods.expectDeliverTime)
+            +'&nbsp;&nbsp;|&nbsp;&nbsp;预计出货：'+goods.expectPartOutputOrder+goods.expectPartOutputUnitName+'</h5>' ;
+    }
+    _html +='</li>' ;
+    return _html ;
+}
+
+// FarmerCenter.findTradeRecords = function(){
+//     var postData = {
+//         pageSize:0 ,
+//         pageNo : 1 ,
+//         userId : 0
+//     }
+//
+//     var ajaxObj = {
+//         url: SERVER_URL+"/dolaing/AccountRecord/queryRecordsByUser",
+//         data: JSON.stringify(postData),
+//         success: function (data) {
+//             if(data !=null && data.code == '1000'){
+//                 if(data.data !=null){
+//                     var html = "";
+//                     var status = "";
+//                     var processType = "" ;
+//                     $(data.data.list).each(function(index,record){
+//                         if(record.status == "1"){
+//                             status ="已完成" ;
+//                         }else if(record.status == "0"){
+//                             status ="未完成" ;
+//                         }else if(record.status == "-1"){
+//                             status ="已取消" ;
+//                         }
+//                         if(record.processType == "1"){
+//                             processType ="转入" ;
+//                         }else if(record.processType == "2"){
+//                             processType ="支付" ;
+//                         }
+//                         var createDay = record.createDate.substr(0,4)+"年"+record.createDate.substr(5,2)+"月"+record.createDate.substr(8,2)+"日"
+//                         var createHour = record.createDate.substr(11);
+//                         html += '<tr>' +
+//                             '<td>'+createDay+'<br>'+createHour+'</td>' +
+//                             '<td>'+processType+'</td>' +
+//                             '<td>'+record.remarks+'<br>订单编号：'+record.sourceId+'</td>' +
+//                             '<td>'+record.amount+'</td>' +
+//                             '<td>'+status+'</td>' +
+//                             '</tr>';
+//                     });
+//
+//                     $("#tableBody").html(html);
+//                     //todo
+//                     $("#pageView").html(Dolaing.page.view(postData.pageNo,postData.pageSize,""));
+//                 }
+//             }else{
+//                 layer.alert(data.msg, {
+//                     icon: 0
+//                 });
+//             }
+//         }
+//     }
+// }
+//
+
+/**
+ * 分页请求
+ * @param pageNo
+ */
+function page(pageNo){
+    FarmerCenter.page.pageNo = pageNo ;
+    FarmerCenter.findRecords();
+}
+
 
 
 

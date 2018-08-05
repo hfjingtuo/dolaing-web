@@ -4,7 +4,7 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 var SERVER_URL = "http://localhost:8081/dolaing";
-var CLIENT_URL = window.location.host;
+var IMAGE_URL = "http://localhost:8081/dolaing/upload";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -175,12 +175,10 @@ var Dolaing ={
  */
 Dolaing.view.info = function(){
     var token = $.cookie('token');
-    var userName = $.cookie('userName');
     var user = $.cookie('user');
     var payAccountFlag = $.cookie('accountBankCode') == null ? false :true;
     var loginStatusHtml = "";
     var centerUrl = "" ;
-
     if(token == null || user == null){
         loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="#">【注册】</a>';
     }else{
@@ -188,7 +186,7 @@ Dolaing.view.info = function(){
         Dolaing.user.payAccountFlag = payAccountFlag ;
         Dolaing.user.bankCode = $.cookie('accountBankCode') ;
         centerUrl = Dolaing.center.getUrl();
-        loginStatusHtml = '欢迎您！<a href=\"'+centerUrl+'\">' + userName +'</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
+        loginStatusHtml = '欢迎您！<a href=\"'+centerUrl+'\">' + Dolaing.user.account +'</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
     }
     var _html = '<div class="auto">' +
        '<h6 class="fl">'+loginStatusHtml+'</h6>' +
@@ -350,7 +348,7 @@ Dolaing.page.view = function(pageNo,totalPages,total,pageFun){
 }
 
 /**
- *
+ * 获取url中的参数值
  */
 Dolaing.getParameter = function(paramKey){
     var str = location.href; //取得整个地址栏
@@ -370,7 +368,15 @@ Dolaing.getParameter = function(paramKey){
     return paramMap[paramKey] ;
 }
 
+/**
+ * 时间处理
+ */
 
+Dolaing.date = {
+    formatCh : function(dataStr){
+        return dataStr.substr(0,4)+"年"+dataStr.substr(5,2)+"月"+dataStr.substr(8,2)+"日"
+    }
+}
 
 
 
