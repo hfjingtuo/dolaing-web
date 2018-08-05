@@ -1,8 +1,3 @@
-//预加载方法
-$(function () {
-    initTopData();
-});
-
 function confirmSubmitEditPwd() {
     var oldPwd = $("#oldPwd").val().trim();
     var newPwd = $("#newPwd").val().trim();

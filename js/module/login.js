@@ -39,13 +39,6 @@ function login() {
                 $.cookie('user', JSON.stringify(data.user),{ path: '/'});
                 $.cookie('userName', userName,{ path: '/'});
                 location.href = "/index.html";
-                // var redirectUrl = $.cookie('redirectUrl');
-                // console.log(redirectUrl);
-                // if ("undefined" == redirectUrl) {
-                //     location.href = "/index.html";
-                // } else {
-                //     location.href = $.cookie('redirectUrl');
-                // }
             }
         },
     });

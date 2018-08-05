@@ -4,8 +4,9 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="js/layui/css/layui.css">
-    <script src="js/common/common.js"></script>
-    <script src="js/module/goodsDetail.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/_head.js" ></script>
+    <script src="/js/module/goodsDetail.js"></script>
     <title>产品详情</title>
 </head>
 <body>
@@ -160,7 +161,7 @@
                 <div class="fl goods_num_box_btn">
                     <img src="img/btn_minus.png" onclick="minus()"/>
                 </div>
-                <input type="text" name="count" id="num" value="1" class="fl"
+                <input type="text" name="count" id="goodsNum" value="1" class="fl"
                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
                        onblur="if(this.value > parseInt($('#goodsNo').val())){this.value=$('#goodsNo').val()}"
                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
@@ -168,11 +169,11 @@
                     <img src="img/btn_add.png" onclick="add()"/>
                 </div>
             </div>
-            <h3 class="fl" id="goodsNumber"></h3>
-            <input type="hidden" id="goodsNo">
+            <h3 class="fl" id="goodsNumber"></h3><!--- 库存 -->
+            <input type="hidden" id="goodsId">
         </div>
-        <div class="btn_submit" style="margin: 60px 0;">
-            <h3 onclick="window.location.href='/web/pay/payConfirm.html'">立即认购</h3>
+        <div class="btn_submit" style="margin: 60px 0;" id="subscription">
+            <h3 onclick="subscription();">立即认购</h3>
         </div>
     </div>
 </div>
