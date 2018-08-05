@@ -92,10 +92,10 @@ FarmerCenter.infoMenus = function(){
         '<h3>所在地区：贵州省 清镇市</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur">订单列表</li>' +
-        '<li>修改密码</li>' +
+        '<li class="center_left_list_cur" onclick="Dolaing.center.farmer.tabMenu(1)">订单列表</li>' +
+        '<li onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out">用户退出</h2>' +
+        '<h2 class="center_out" onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
         '</div>';
 
     //买家订单列表
@@ -110,10 +110,10 @@ FarmerCenter.infoMenus = function(){
         '<h3>所在地区：贵州省 清镇市</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur">订单列表</li>' +
-        '<li>修改密码</li>' +
+        '<li class="center_left_list_cur" onclick="Dolaing.center.farmer.tabMenu(1)">订单列表</li>' +
+        '<li onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out">用户退出</h2>' +
+        '<h2 class="center_out" onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
         '</div>' +
         '<!--银行卡-->' +
         '<div class="bank_card">' +
@@ -233,7 +233,7 @@ FarmerCenter.buildDataView = function(order){
         _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
             '                    <tr>' +
             '                        <td>' +
-            '                            <img src="img/img_goods1.jpg"/>' +
+            '                            <img src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
             '                            <div class="fl">' +
             '                                <h3>'+goods.goodsName+'</h3>' +
             '                                <h4>土地编号：'+goods.landSn+'</h4>' +

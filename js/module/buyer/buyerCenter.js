@@ -79,10 +79,10 @@ BuyerCenter.infoMenus = function(){
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur">我的订单</li>' +
-        '<li>修改密码</li>' +
+        '<li class="center_left_list_cur"  onclick="Dolaing.center.farmer.tabMenu(1)">我的订单</li>' +
+        '<li  onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out">用户退出</h2>' +
+        '<h2 class="center_out"onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
         '</div>';
 
     //买家订单列表
@@ -92,10 +92,10 @@ BuyerCenter.infoMenus = function(){
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur">我的订单</li>' +
-        '<li>修改密码</li>' +
+        '<li class="center_left_list_cur"  onclick="Dolaing.center.farmer.tabMenu(1)">我的订单</li>' +
+        '<li  onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out">用户退出</h2>' +
+        '<h2 class="center_out"onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
         '</div>' +
         '<!--银行卡-->' +
         '<div class="bank_card">' +
@@ -194,7 +194,7 @@ BuyerCenter.buildDataView = function(order){
         goods = order.orderGoodsVos[i] ;
         _html += '<div class="orders_box">' +
         '<div class="orders_box_goods" style="width: 466px;">' +
-        '<img src="img/img_goods1.jpg">' +
+        '<img src="'+IMAGE_URL+goods.goodsMasterImg+'">' +
         '<div class="fl">' +
         '<h3>' + goods.goodsName + '</h3>' +
         ' <h4>土地编号：' + goods.landSn + '</h4>' +

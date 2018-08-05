@@ -4,7 +4,7 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 var SERVER_URL = "http://localhost:8081/dolaing";
-var IMAGE_URL = "http://localhost:8081/dolaing/upload";
+var IMAGE_URL = "http://localhost:8081/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -249,6 +249,8 @@ Dolaing.center = {
                 window.location.href = "/web/farmer/farmerCenter.html";
             }else if(menuId == "2"){
                 window.location.href = "/web/member/changePassword.html";
+            }else if(menuId == "3"){
+                goLogout();
             }
         }
     },
@@ -258,6 +260,8 @@ Dolaing.center = {
                 window.location.href = "/web/buyer/buyerCenter.html";
             }else if(menuId == "2"){
                 window.location.href = "/web/member/changePassword.html";
+            }else if(menuId == "3"){
+                goLogout();
             }
         }
     },
@@ -376,6 +380,20 @@ Dolaing.date = {
     }
 }
 
+/**
+ * 全选框 点击之后 将 rangeId 内的所有checkbox 做同样操作
+ */
+Dolaing.selector = function ( className ,rangeId){
+   if($("."+className).prop('checked')){
+       $("#"+rangeId+" input[type='checkbox']").each(function(){
+           $(this).prop("checked",true);
+       });
+   }else{
+       $("#"+rangeId+" input[type='checkbox']").each(function(){
+           $(this).prop("checked",false);
+       });
+   }
+}
 
 
 

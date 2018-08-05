@@ -1,11 +1,18 @@
 var SellerOrder = {
     page : {
-        pageSize : 1,
+        pageSize : 10,
         pageNo : 1
     }
 };
 
 $(function () {
+    $(".selectAll").click(function(){
+        Dolaing.selector("selectAll" , "contentCenter");
+    });
+    //批量发货
+    $(".batchDeliver").click(function(){
+        SellerOrder.batchDeliver();
+    });
     SellerOrder.infoMenus();
     SellerOrder.findRecords();
 });
@@ -43,7 +50,7 @@ SellerOrder.findRecords = function(){
 SellerOrder.buildDataView = function(order){
     var _html ='<li>' +
         '                <div class="orders_words">' +
-        '                    <input type="checkbox" name=""  value="" />' +
+        '                    <input type="checkbox" name=""  value="'+order.id+'-'+order.orderStatusFullCode+'" />' +
         '                    <h5>订单号：'+order.orderSn+'&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：'+order.createTime+'&nbsp;&nbsp;</h5>' +
         '                </div>' ;
     var goods = null ;
@@ -52,7 +59,7 @@ SellerOrder.buildDataView = function(order){
         _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
             '                    <tr>' +
             '                        <td>' +
-            '                            <img src="img/img_goods1.jpg"/>' +
+            '                            <img src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
             '                            <div class="fl">' +
             '                                <h3>'+goods.goodsName+'</h3>' +
             '                                <h4>土地编号：'+goods.landSn+'</h4>' +
@@ -75,7 +82,7 @@ SellerOrder.buildDataView = function(order){
             '                        </td>' ;
         if(order.orderStatusFullCode == "2"){
             _html += ' <td class="middle">' +
-            ' <h3 class="link">发&nbsp;&nbsp;货</h3>' +
+            ' <h3 class="link" onclick="SellerOrder.batchDeliver(\''+order.id+'\')">发&nbsp;&nbsp;货</h3>' +
             '</td>' ;
         }else{
             _html += ' <td class="middle"></td>' ;
@@ -88,6 +95,52 @@ SellerOrder.buildDataView = function(order){
     _html +='</li>' ;
     return _html ;
 }
+
+
+
+/**
+ * 批量发货
+ */
+SellerOrder.batchDeliver = function(id){
+    var ids = "" ;
+    var flag = true ;
+    if(id != null && id !=""){ //单个发货
+        ids = id ;
+    }else { //批量发货
+        $("#orderList input[type='checkbox']:checked").each(function(){
+            if($(this).val().split("-")[1] != 2 ){ //如果不是生产中的订单不允许发货
+                layer.alert("请选择生产中的订单进行发货");
+                flag = false ;
+                return false ;
+            }
+            ids+= $(this).val().split("-")[0] +",";
+        });
+        if(!flag){
+            return false ;
+        }
+        if(ids == ""){
+            layer.alert("请选择待发货的订单");
+            return false ;
+        }
+        ids = ids.substr(0,ids.length-1);
+    }
+    var ajaxObj = {
+        url: SERVER_URL+"/orderRecord/batchDeliver?ids="+ids ,
+        success: function (data) {
+            if(data !=null && data.code == '1000'){
+                layer.alert("已完成发货");
+                SellerOrder.findRecords();
+            }else{
+                layer.alert(data.msg, {
+                    icon: 0
+                });
+            }
+        }
+    }
+    ajaxData(ajaxObj);
+
+}
+
 
 /**
  * 分页请求

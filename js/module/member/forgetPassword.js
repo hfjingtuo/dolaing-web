@@ -96,7 +96,7 @@ function getCode(userName) {
                 curCount = code;
                 $("#btnSendCode").attr("disabled", "disabled");
                 $("#btnSendCode").css("color", "red");
-                $("#btnSendCode").html(curCount + "s后获取");
+                $("#btnSendCode").html(curCount + "s");
                 InterValObj = window.setInterval(SetRemainTime, 1000);
                 $("#msgCode").focus();
             }
@@ -113,7 +113,7 @@ function SetRemainTime() {
         $("#btnSendCode").html("获取验证码");
     } else {
         curCount--;
-        $("#btnSendCode").html(curCount + "s后获取");
+        $("#btnSendCode").html(curCount + "s");
     }
 }
 

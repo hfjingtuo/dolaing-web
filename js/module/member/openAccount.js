@@ -17,12 +17,26 @@ var Account ={
  * 开户
  */
 Account.register = function(){
-    var userId = $.cookie('userId') ;
-    // if(userId== null ){
-    //     window.location.href = "login.html" ;
-    // }
     Account.buildData();
     if(!Account.validate()){
+        return false ;
+    }
+
+    if(Account.data.payPassWord.trim().length < 6){
+        layer.alert("支付密码不允许小于6位");
+        return false ;
+    }
+    if(Account.data.payPassWord.trim() !=Account.data.confirmPayPassWord ){
+        layer.alert("密码不一致");
+        return false ;
+    }
+    if(Account.data.identifyingCode == null || Account.data.identifyingCode.trim() ==  ""){
+        layer.alert("请输入验证码");
+        return false ;
+    }
+    //验证是否读过了协议
+    if(!$("#readAgreement").prop('checked')){
+        layer.alert("请先阅读dolaing用户协议");
         return false ;
     }
     var ajaxObj = {
@@ -32,7 +46,6 @@ Account.register = function(){
             if(data !=null && data.code == '1000'){
                 layer.alert('开户成功');
                 $.cookie('accountBankCode','0303',{expires:7, path: '/'});
-                alert($.cookie('accountBankCode'));
                 setTimeout(function() {
                     window.location.href = Dolaing.center.getUrl();
                 }, 1500);
@@ -47,6 +60,14 @@ Account.register = function(){
 }
 
 
+
+
+/**
+ * 验证码获取
+ */
+var InterValObj; //timer变量，控制时间
+var count = 60; //间隔函数，1秒执行
+var curCount;//当前剩余秒数
 /**
  * 开户短信下发
  * @returns {boolean}
@@ -64,6 +85,11 @@ Account.marginRegisterSms = function(){
         success: function (data) {
             console.log(data);
             if(data !=null && data.code == '1000'){
+                $(".btnSendCode").attr("disabled", "disabled");
+                $(".btnSendCode").css("color", "red");
+                curCount = 60 ;
+                $(".btnSendCode").html("等待"+curCount + "秒");
+                InterValObj = window.setInterval(SetRemainTime, 1000);
                 layer.alert("已发送短信息", {
                     icon: 1
                 });
@@ -81,6 +107,18 @@ Account.marginRegisterSms = function(){
         }
     }
     ajaxData(ajaxObj);
+}
+
+function SetRemainTime(){
+    if (curCount == 0) {
+        window.clearInterval(InterValObj);
+        $(".btnSendCode").removeAttr("disabled");
+        $(".btnSendCode").css("color", "");
+        $(".btnSendCode").html("获取验证码");
+    } else {
+        curCount--;
+        $(".btnSendCode").html("等待"+curCount + "秒");
+    }
 }
 
 
@@ -113,6 +151,7 @@ Account.buildData = function(){
         Account.data.mobile = $("#personForm input[name='mobile']").val() ;
         Account.data.payPassWord = $("#personForm input[name='payPassWord']").val() ;
         Account.data.confirmPayPassWord = $("#personForm input[name='confirmPayPassWord']").val() ;
+        Account.data.identifyingCode = $("#personForm input[name='identifyingCode']").val() ;
     }else if(Account.data.custType == 1){
         Account.data.userNameText = $("#companyForm input[name='userNameText']").val() ;
         Account.data.certType = $("#companyForm select[name='certType']").val() ;
@@ -123,6 +162,7 @@ Account.buildData = function(){
         Account.data.mobile = $("#companyForm input[name='mobile']").val() ;
         Account.data.payPassWord = $("#companyForm input[name='payPassWord']").val() ;
         Account.data.confirmPayPassWord = $("#companyForm input[name='confirmPayPassWord']").val() ;
+        Account.data.identifyingCode = $("#companyForm input[name='identifyingCode']").val() ;
     }
 }
 
