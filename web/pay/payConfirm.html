@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/css/style.css"/>
     <script src="/js/common/common.js"></script>
-    <script src="/js/common/_head.js" ></script>
+    <script src="/js/common/_head.js"></script>
     <script src="/js/module/buyer/payConfirm.js"></script>
     <title>确认支付</title>
 </head>
@@ -60,14 +60,11 @@
     </div>
     <div class="confirm_address_box">
         <h2>收货地址：</h2>
-        <select id="province">
-            <option value="1">安徽省</option>
+        <select id="province" onchange="selectArea(this.value)">
+            <option value="">请选择省</option>
         </select>
-        <select style="width: 210px;margin-left: 12px;" id="city">
-            <option value="1">合肥市</option>
-            <option value="2">芜湖市</option>
-            <option value="3">安庆市</option>
-            <option value="4">马鞍山市</option>
+        <select style="width: 210px;margin-left: 12px;" id="city" onchange="selectArea(this.value)">
+            <option value="">请选择市</option>
         </select>
         <input type="text" id="address" placeholder="具体地址" class="address_details"/>
     </div>
@@ -96,12 +93,17 @@
         <li>
             <div class="goods_num_box1">
                 <div class="fl goods_num_box_btn1">
-                    <img src="/img/btn_minus.png" style="left: 0;"/>
+                    <img src="/img/btn_minus.png" style="left: 0;" onclick="minus()"/>
                 </div>
-                <input type="hidden" id="goodsId" />
-                <input type="text" id="goodsNum" value="1" class="fl"/>
+                <input type="hidden" id="goodsId"/>
+                <input type="hidden" id="inventory">
+                <input type="hidden" id="price">
+                <input type="text" name="count" id="goodsNum" value="1" class="fl"
+                       onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
+                       onblur="if(this.value > parseInt($('#goodsNo').val())){this.value=$('#goodsNo').val()}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
                 <div class="fr goods_num_box_btn1">
-                    <img src="/img/btn_add.png" style="right: 0;"/>
+                    <img src="/img/btn_add.png" style="right: 0;" onclick="add()"/>
                 </div>
             </div>
         </li>
@@ -129,18 +131,19 @@
     <div class="confirm_order_progress">
         <div class="fl">
             <h3>阶段一：</h3>
-            <h3>下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
+            <h3 id="depositRatio">下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
             <h3 style="color: #666666;">(由于预约生产农产品的特殊性，不支持取消订单退款；请在提交订单后30分钟内付款，超时订单将被关闭)</h3>
         </div>
-        <h4 class="fr">应付金额：<span>300</span>元</h4>
+        <input type="hidden" id="depositRatioVal"/>
+        <h4 class="fr">应付金额：<span id="deposit">300</span>元</h4>
     </div>
     <div class="confirm_order_progress" style="border: none;">
         <div class="fl">
             <h3>阶段二：</h3>
             <h3>确认收货，支付尾款。</h3>
-            <h3 style="color: #666666;">(在2019日07月19日前卖家发货，买家确认收货后，平台向卖家支付尾款)</h3>
+            <h3 style="color: #666666;" id="expectDeliverTime">(在2019日07月19日前卖家发货，买家确认收货后，平台向卖家支付尾款)</h3>
         </div>
-        <h4 class="fr">应付金额：<span id="deposit">300</span>元</h4>
+        <h4 class="fr">应付金额：<span id="retainage">300</span>元</h4>
     </div>
     <h4 class="total">应付金额：&nbsp;<span class="totalPrice">600.00</span>&nbsp;元</h4>
     <div class="btn_submit" style="float: right;margin:10px 50px 30px 0;">
@@ -160,7 +163,7 @@
     </li>
 </ul>
 
-<script src="/js/common/_side.js" ></script>
-<script src="/js/common/_foot.js" ></script>
+<script src="/js/common/_side.js"></script>
+<script src="/js/common/_foot.js"></script>
 </body>
 </html>

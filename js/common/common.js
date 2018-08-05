@@ -125,7 +125,7 @@ function getDateTime(str) {
         oYear = oDate.getFullYear(),
         oMonth = oDate.getMonth() + 1,
         oDay = oDate.getDate(),
-        oHour = oDate.getHours(),
+        oHour = oDate.getHours() - 8,
         oMin = oDate.getMinutes(),
         oSen = oDate.getSeconds(),
         oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
@@ -367,17 +367,4 @@ Dolaing.getParameter = function (paramKey) {
         }
     }
     return paramMap[paramKey];
-}
-
-function parseURL(url) {
-    var url = url.split("?")[1];
-    var para = url.split("&");
-    var len = para.length;
-    var res = {};
-    var arr = [];
-    for (var i = 0; i < len; i++) {
-        arr = para.split("=");
-        res[arr[0]] = arr[1];
-    }
-    return res;
 }

@@ -1,6 +1,26 @@
 $(function () {
     initGoodsData();
+    selectArea("45");
 });
+
+function selectArea(parentId) {
+    $.ajax({
+        url: SERVER_URL + "/changeArea/" + parentId,
+        method: "GET",
+        cache: false,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (i, val) {
+                if (parentId == "45") {
+                    $("#province").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                } else {
+                    $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                }
+            });
+        }
+    });
+}
 
 /**
  * 初始化商品相关数据
@@ -21,9 +41,12 @@ function initGoodsData() {
             } else {
                 var mallGoods = data.mallGoods;
                 var mallShop = data.mallShop;
-
+                var depositRatio = mallGoods.depositRatio;//定金比例
                 $("#goodsId").val(mallGoods.id);
+                $("#depositRatioVal").val(depositRatio);
                 $("#shopName").text("店铺：" + mallShop.shopName);
+                $("#inventory").val(mallGoods.goodsNumber);//库存
+                $("#goodsNum").val(goodsNum);//购物车
                 $("#goodsName").text(mallGoods.goodsName);
                 //$("#deliveryTime").text("预计发货时间：" + getDateByAdd(mallGoods.endSubscribeTime, parseInt(mallGoods.plantingCycle)));
                 $("#deliveryTime").text("预计发货时间：" + getDate(mallGoods.endSubscribeTime));
@@ -32,12 +55,47 @@ function initGoodsData() {
                 $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
                 $("#breeds").text("品种：" + mallGoods.breeds);
                 $("#shopPrice").text(mallGoods.shopPrice);
+                $("#price").val(mallGoods.shopPrice);
                 $(".totalPrice").text(parseInt(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
                 $("#isFreeShipping").text("邮资：" + ("1" == mallGoods.isFreeShipping ? "包邮" : "自费"));
-                $("#deposit").text(mallGoods.shopPrice / 2);//定金
+                $("#deposit").text(parseInt(mallGoods.shopPrice) * goodsNum * depositRatio);//定金
+                $("#retainage").text(parseInt(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
+                $("#depositRatio").text("下单支付认购全款，其中的 " + depositRatio * 100 + "% 作为定金发放给卖家。");
+                $("#expectDeliverTime").text("(在" + getDate(mallGoods.expectDeliverTime) + "前卖家发货，买家确认收货后，平台向卖家支付尾款)");
             }
         }
     });
+}
+
+//加的效果
+function add() {
+    var n = $("#goodsNum").val();//购物车
+    var inventory = $("#inventory").val();//库存
+    var price = $("#price").val();//单价
+    var depositRatioVal = $("#depositRatioVal").val();//单价
+    var num = parseInt(n) + 1;
+    if (num > parseInt(inventory)) {
+        return;
+    }
+    $("#goodsNum").val(num);
+    $(".totalPrice").text(parseInt(price) * parseInt(num));//商品总价
+    $("#deposit").text(parseInt(price) * num * depositRatioVal);//定金
+    $("#retainage").text(parseInt(price) * num * (1 - depositRatioVal));//尾款
+}
+
+//减的效果
+function minus() {
+    var price = $("#price").val();//单价
+    var depositRatioVal = $("#depositRatioVal").val();//单价
+    var n = $("#goodsNum").val();//购物车
+    if (n <= 1) {
+        return
+    }
+    var num = parseInt(n) - 1;
+    $("#goodsNum").val(num);
+    $(".totalPrice").text(parseInt(price) * parseInt(num));//商品总价
+    $("#deposit").text(parseInt(price) * num * depositRatioVal);//定金
+    $("#retainage").text(parseInt(price) * num * (1 - depositRatioVal));//尾款
 }
 
 function payConfirm() {

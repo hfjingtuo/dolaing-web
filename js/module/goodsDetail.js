@@ -42,6 +42,7 @@ $(document).ready(function () {
                 $("#expectPartOutput").text("预计单位产量：" + mallGoods.expectPartOutput + ("1" == mallGoods.expectPartOutputUnit ? "kg" : "t"));
 
                 $("#goodsNumber").text("件 [ 库存：" + mallGoods.goodsNumber + "件 ]");
+                $("#inventory").val(mallGoods.goodsNumber);
 
                 $("#isFreeShipping").text("1" == mallGoods.isFreeShipping ? "包邮" : "自费");
 
@@ -93,20 +94,21 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
 
 //加的效果
 function add() {
-    var n = $("#num").val();
+    var n = $("#goodsNum").val();//购物车
+    var inventory= $("#inventory").val();//库存
     var num = parseInt(n) + 1;
-    if (num > parseInt($('#goodsNo').val())) {
+    if (num > parseInt(inventory)) {
         return;
     }
-    $("#num").val(num);
+    $("#goodsNum").val(num);
 }
 
 //减的效果
 function minus() {
-    var n = $("#num").val();
+    var n = $("#goodsNum").val();
     if (n <= 1) {
         return
     }
     var num = parseInt(n) - 1;
-    $("#num").val(num);
+    $("#goodsNum").val(num);
 }
