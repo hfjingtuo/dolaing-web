@@ -243,23 +243,19 @@ Dolaing.view.info = function(){
 Dolaing.center = {
     farmer : {
         tabMenu : function(menuId){
-            if(menuId == "1"){ //交易记录
-
+            if(menuId == "1"){
+                window.location.href = "/web/farmer/farmerCenter.html";
             }else if(menuId == "2"){
-
-            }else if(menuId == "3"){
-
+                window.location.href = "/web/member/changePassword.html";
             }
         }
     },
     buyer : {
         tabMenu : function(menuId){
             if(menuId == "1"){ //交易记录
-
+                window.location.href = "/web/buyer/buyerCenter.html";
             }else if(menuId == "2"){
-
-            }else if(menuId == "3"){
-
+                window.location.href = "/web/member/changePassword.html";
             }
         }
     },

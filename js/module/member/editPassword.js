@@ -1,7 +1,3 @@
-//预加载方法
-$(function () {
-    initTopData();
-});
 
 function confirmSubmitEditPwd() {
     var oldPwd = $("#oldPwd").val().trim();
@@ -69,8 +65,8 @@ function confirmSubmitEditPwd() {
             $("#rePwd").focus();
         } else {
             layer.alert("修改密码成功", function (index) {
-                location.href = "/web/seller/publishedGoods.html";
                 layer.close(index);
+                location.href = "/web/seller/publishedGoods.html";
             });
         }
     }
