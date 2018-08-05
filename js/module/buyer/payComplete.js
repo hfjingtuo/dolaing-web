@@ -1,11 +1,14 @@
+var PayComplete = {
+    orderId : "" ,
+} ;
 /**
  * 初始化订单相关数据
  */
 $(function () {
-    var orderId = $.query.get("orderId");
+    PayComplete.orderId = $.query.get("orderId");
     $.ajax({
         type: "GET",
-        url: SERVER_URL + "/order/detail/" + orderId,
+        url: SERVER_URL + "/order/detail/" + PayComplete.orderId,
         success: function (data) {
             console.log(data);
             if (500 == data.code) {
@@ -48,4 +51,38 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
         i = "0" + i;
     }
     return i;
+}
+
+/**
+ * 支付方法
+ */
+PayComplete.pay = function(){
+    var payPassword = $("#payPassword").val();
+    var validateFlag = Dolaing.validate.checkBlank([
+             {name:"支付密码",value:payPassword},
+             {name:"订单号",value:PayComplete.orderId}]);
+    if(!validateFlag){
+        return validateFlag ;
+    }
+
+    if(payPassword.trim().length < 6 ){
+         layer.alert("支付密码错误");
+    }
+
+    var ajaxObj = {
+        timeout: 15000,
+        url: SERVER_URL+"/orderRecord/pay?orderId="+PayComplete.orderId + "&payPassword="+payPassword,
+        success: function (data) {
+            console.log(data);
+            if(data !=null && data.code == '1000'){
+                window.location.href = "/web/pay/paySuccess.html?orderId="+PayComplete.orderId;
+            }else{
+                layer.alert(data.msg, {
+                    icon: 0
+                });
+            }
+        }
+    }
+    ajaxData(ajaxObj);
+
 }

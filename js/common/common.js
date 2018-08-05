@@ -3,6 +3,7 @@ document.write("<script language=javascript src='/js/myjs.js'></script>");
 document.write("<script language=javascript src='/js/layui/layui.all.js'></script>");
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
+document.write("<script language=javascript src='/js/jquery.params.js'></script>");
 var SERVER_URL = "http://localhost:8081/dolaing";
 var IMAGE_URL = "http://localhost:8081/dolaing/upload/";
 
@@ -309,7 +310,7 @@ Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
 
     if (fieldObj instanceof Array) {
         for (var i = 0; i < fieldObj.length; i++) {
-            if (fieldObj[i].value == null || fieldObj[i].value.trim() == "") {
+            if (fieldObj[i].value == null || (fieldObj[i].value+"").trim() == "") {
                 layer.alert(prefix + fieldObj[i].name + suffix);
                 return false;
             }
