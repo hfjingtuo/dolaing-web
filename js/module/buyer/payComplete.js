@@ -17,7 +17,7 @@ $(function () {
                 var orderInfo = data.orderInfo;
                 $("#orderSn").html("订单编号：" + orderInfo.orderSn + "&nbsp;&nbsp;&nbsp;下单时间：" + getDateTime(orderInfo.createTime));
                 $("#userId").text("账户名称：" + orderInfo.userId);
-                var receiptInformation = " 收货人：" + orderInfo.consignee + "</br> 收货电话：" + orderInfo.mobile + "</br>收货地址：" + orderInfo.province + orderInfo.city + orderInfo.district + orderInfo.address;
+                var receiptInformation = " 收货人：" + orderInfo.consignee + "</br> 收货电话：" + orderInfo.mobile + "</br>收货地址：" + orderInfo.address;
                 $("#receiptInformation").html(receiptInformation);
                 $("#buyerOrderAmount").text("￥" + orderInfo.buyerOrderAmount);
                 timer(orderInfo.createTime);//订单倒计时

@@ -3,7 +3,7 @@ $(function () {
     selectArea("45");
 });
 
-function selectArea(parentId) {
+function selectArea(parentId,type) {
     $.ajax({
         url: SERVER_URL + "/changeArea/" + parentId,
         method: "GET",
@@ -15,7 +15,11 @@ function selectArea(parentId) {
                 if (parentId == "45") {
                     $("#province").append('<option value=' + val.id + '>' + val.chName + '</option>');
                 } else {
-                    $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                    if("province" == type){
+                        $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                    }else if ("city" == type) {
+                        $("#area").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                    }
                 }
             });
         }
@@ -136,6 +140,13 @@ function payConfirm() {
         $("#city").focus();
         return false;
     }
+    if (!isEmpty(city)) {
+        layer.tips("请选择区", '#area', {
+            tips: [2, '#f76592']
+        });
+        $("#area").focus();
+        return false;
+    }
     if (!isEmpty(address)) {
         layer.tips("请输入收货具体地址", '#address', {
             tips: [2, '#f76592']
@@ -149,6 +160,7 @@ function payConfirm() {
     goods.mobile = phone;
     goods.province = province;
     goods.city = city;
+    goods.area = area;
     goods.address = address;
     goods.goodsNum = goodsNum;
     goods.remarks = remarks;
