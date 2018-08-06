@@ -11,50 +11,7 @@
 </head>
 <body>
 <div class="top">
-    <div class="auto">
-        <h6 class="fl" id="loginStatus">欢迎您！<a href="javascript:goLogin();">【登录】</a><a
-                href="/registerBuyer.html">【注册】</a></h6>
-        <ul class="top_ul">
-            <li><a href="/index.html">
-                <h4 class="fl">网站首页</h4>
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">关注我们</h4>
-                <img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">关注我们</h4>
-                        <img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">帮助中心</h4>
-                <img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="/img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">帮助中心</h4>
-                        <img src="/img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-        </ul>
-    </div>
+
 </div>
 <div class="nav">
     <div class="auto">
@@ -86,13 +43,13 @@
                 <h3>所在地区：贵州省 清镇市</h3>
             </div>
             <ul class="center_left_list">
-                <li>交易记录</li>
-                <li class="center_left_list_cur">发布商品</li>
-                <li onclick="location.href='publishedGoods.html'">已发布商品</li>
-                <li>订单列表</li>
-                <li><a style="font-size: 18px" href="../../editPassword.html">修改密码</a></li>
+                <li onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>
+                <li onclick="Dolaing.center.seller.tabMenu(2)" class="center_left_list_cur">发布产品</li>
+                <li onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>
+                <li onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>
+                <li onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>
             </ul>
-            <h2 class="center_out">用户退出</h2>
+            <h2 class="center_out" onclick="Dolaing.center.seller.tabMenu(6)">用户退出</h2>
         </div>
         <!--银行卡-->
         <div class="bank_card">
@@ -259,7 +216,7 @@
                     </div>
                     &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
                     <div class="layui-input-inline">
-                        <input type="date" style="width: 170px" id="endSubscribeTime">
+                        <input type="date" s    tyle="width: 170px" id="endSubscribeTime">
                     </div>
                 </div>
             </div>
@@ -270,16 +227,6 @@
     </div>
 </div>
 
-<ul class="side">
-    <li>
-        <img src="/img/img_side_follow.png"/>
-        <h4>关注我们</h4>
-    </li>
-    <li>
-        <img src="/img/img_side_top.png"/>
-        <h4>回到顶部</h4>
-    </li>
-</ul>
 <script src="/js/common/_side.js" ></script>
 <script src="/js/common/_foot.js" ></script>
 <script>

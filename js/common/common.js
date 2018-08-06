@@ -278,6 +278,8 @@ Dolaing.center = {
                 window.location.href = "/web/seller/sellerOrders.html";
             } else if (menuId == "5") {  //修改密码
                 window.location.href = "/web/member/changePassword.html";
+            }else if(menuId == "6"){
+                goLogout();
             }
         }
     },
