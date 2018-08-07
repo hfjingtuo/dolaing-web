@@ -125,7 +125,7 @@ function getDateTime(str) {
         oYear = oDate.getFullYear(),
         oMonth = oDate.getMonth() + 1,
         oDay = oDate.getDate(),
-        oHour = oDate.getHours() - 8,
+        oHour = oDate.getHours(),
         oMin = oDate.getMinutes(),
         oSen = oDate.getSeconds(),
         oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间

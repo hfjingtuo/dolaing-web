@@ -6,7 +6,7 @@ function publishGoods() {
     var catId = $("#catId").val();
     var breeds = $("#breeds").val();
     //var brandId = $("#brandId").val();
-    var brandName = $("#brandName").val();
+    //var brandName = $("#brandName").val();
     var plantingCycle = $("#plantingCycle").val();//生长周期
     var startPlantime = $("#startPlantime").val();
     var endPlantime = $("#endPlantime").val();
@@ -70,13 +70,13 @@ function publishGoods() {
         $("#breeds").focus();
         return false;
     }
-    if (!isEmpty(brandName)) {
+    /*if (!isEmpty(brandName)) {
         layer.tips("请输入商品品牌", '#brandName', {
             tips: [2, '#f76592']
         });
         $("#brandId").focus();
         return false;
-    }
+    }*/
     if (!isEmpty(plantingCycle)) {
         layer.tips("请输入生长周期", '#plantingCycle', {
             tips: [2, '#f76592']
@@ -162,7 +162,7 @@ function publishGoods() {
     goods.isFreeShipping = isFreeShipping;
     goods.catId = catId;
     goods.breeds = breeds;
-    goods.brandId = brandName;
+    //goods.brandId = brandName;
     goods.plantingCycle = plantingCycle;
     goods.plantime = startPlantime + "," + endPlantime;
     goods.expectPartOutput = expectPartOutput;

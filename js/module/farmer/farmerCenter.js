@@ -84,7 +84,7 @@ FarmerCenter.infoMenus = function(){
     FarmerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
-        '<img src="img/img_goods1.jpg" class="fl">' +
+        '<img src="/img/img_goods1.jpg" class="fl">' +
         '<h2 class="fl">共荣农业合作社<br><span>好评率98%</span></h2>' +
         '</div>' +
         '<h3>品牌名称：奔富1988</h3>' +
