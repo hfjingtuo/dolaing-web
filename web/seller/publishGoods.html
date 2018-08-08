@@ -86,13 +86,13 @@
                 <h3>所在地区：贵州省 清镇市</h3>
             </div>
             <ul class="center_left_list">
-                <li>交易记录</li>
-                <li class="center_left_list_cur">发布商品</li>
-                <li onclick="location.href='publishedGoods.html'">已发布商品</li>
-                <li>订单列表</li>
-                <li><a style="font-size: 18px" href="../../editPassword.html">修改密码</a></li>
+                <li onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>
+                <li class="center_left_list_cur" onclick="Dolaing.center.seller.tabMenu(2)">发布产品</li>
+                <li onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>
+                <li onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>
+                <li onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>
             </ul>
-            <h2 class="center_out">用户退出</h2>
+            <h2 class="center_out" onclick="goLogout();">用户退出</h2>
         </div>
         <!--银行卡-->
         <div class="bank_card">
