@@ -368,26 +368,6 @@ Dolaing.page.view = function (pageNo, totalPages, total, pageFun) {
 
 }
 
-/**
- * 获取url中的参数值
- */
-Dolaing.getParameter = function (paramKey) {
-    var str = location.href; //取得整个地址栏
-    var num = str.indexOf("?");
-    str = str.substr(num + 1); //取得所有参数
-    var params = str.split("&");
-    var paramArr = null;
-    var paramMap = {};
-    if (params != null) {
-        for (var i = 0; i < params.length; i++) {
-            paramArr = params[i].split("=");
-            if (paramArr.length == 2) {
-                paramMap[paramArr[0]] = paramArr[1];
-            }
-        }
-    }
-    return paramMap[paramKey];
-}
 
 /**
  * 时间处理

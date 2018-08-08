@@ -23,7 +23,7 @@ BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
     '<div class="batch fl">' +
     '<input type="checkbox" name=""  value="" class="fl"/>' +
     '<h5 class="fl">全选</h5>' +
-    '<button type="button">批量收货</button>' +
+    '<button type="button"  class="batchReceive">批量收货</button>' +
     '</div>' +
     '</div>' +
     '<!--列表标题-->' +
@@ -51,7 +51,7 @@ BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
     '<div class="batch fl">' +
     '<input type="checkbox" name=""  value="" class="fl"/>' +
     '<h5 class="fl">全选</h5>' +
-    '<button type="button">批量收货</button>' +
+    '<button type="button"  class="batchReceive" >批量收货</button>' +
     '</div>' +
     '<div class="pages fr">' +
     '<ul>' +
@@ -134,10 +134,59 @@ BuyerCenter.addMenu = function(){
 BuyerCenter.addContent = function(){
     if(Dolaing.user.payAccountFlag){
         $("#contentCenter").html(BuyerCenter.CONTENT_HTML_2);
+        $(".selectAll").click(function(){
+            Dolaing.selector("selectAll" , "contentCenter");
+        });
+        //批量发货
+        $(".batchReceive").click(function(){
+            BuyerCenter.batchReceive();
+        });
         BuyerCenter.findRecords();
     }else{
         $("#contentCenter").html(BuyerCenter.CONTENT_HTML_1);
     }
+}
+
+/**
+ * 批量收货
+ */
+BuyerCenter.batchReceive = function (){
+    var ids = "" ;
+    var flag = true ;
+    if(id != null && id !=""){ //单个收货
+        ids = id ;
+    }else { //批量收货
+        $("#orderList input[type='checkbox']:checked").each(function(){
+            if($(this).val().split("-")[1] != 2 ){ //如果不是已发货的订单不允许收货
+                layer.alert("请选择已收货的订单进行发货");
+                flag = false ;
+                return false ;
+            }
+            ids+= $(this).val().split("-")[0] +",";
+        });
+        if(!flag){
+            return false ;
+        }
+        if(ids == ""){
+            layer.alert("请选择待发货的订单");
+            return false ;
+        }
+        ids = ids.substr(0,ids.length-1);
+    }
+    var ajaxObj = {
+        url: SERVER_URL+"/orderRecord/batchReceive?ids="+ids ,
+        success: function (data) {
+            if(data !=null && data.code == '1000'){
+                layer.alert("已完成收货");
+                SellerOrder.findRecords();
+            }else{
+                layer.alert(data.msg, {
+                    icon: 0
+                });
+            }
+        }
+    }
+    ajaxData(ajaxObj);
 }
 
 // 跳转到开户页面
