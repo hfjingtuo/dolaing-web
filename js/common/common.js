@@ -192,8 +192,8 @@ Dolaing.view.info = function () {
     var _html = '<div class="auto">' +
         '<h6 class="fl">' + loginStatusHtml + '</h6>' +
         '<ul class="top_ul">' +
-        '<li><a href="#">' +
-        '<h4 class="fl" onclick="window.location.href =\"/index.html\"">网站首页</h4>' +
+        '<li><a href="/index.html">' +
+        '<h4 class="fl">网站首页</h4>' +
         '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
         '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
         '</a></li>' +
@@ -367,4 +367,37 @@ Dolaing.getParameter = function (paramKey) {
         }
     }
     return paramMap[paramKey];
+}
+
+/**
+ * 计算剩余时间（计时每秒）
+ * @param time
+ * @param id
+ */
+function countdown(time, id) {
+    setInterval(function () {
+        let nowTime = new Date(time) - new Date;
+        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
+
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+        days = checkTime(days);
+        hours = checkTime(hours);
+        $("#timer" + id).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+    }, 1000);
+}
+
+function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+function splitTime(time) {
+    var times = time.split(" ");
+    return times[0] + "</br>" + times[1];
 }
