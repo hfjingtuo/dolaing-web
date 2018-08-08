@@ -185,7 +185,7 @@ function publishGoods() {
     goods.endSubscribeTime = endSubscribeTime;
 
     var ajaxObj = {};
-    ajaxObj.url = SERVER_URL + "/seller/publishGoods";
+    ajaxObj.url = SERVER_URL + "/publishGoods";
     ajaxObj.data = JSON.stringify(goods);
     ajaxObj.success = function (data) {
         var code = data.code;

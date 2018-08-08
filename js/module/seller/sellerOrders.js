@@ -72,7 +72,7 @@ SellerOrder.buildDataView = function(order){
             '                        </td>' +
             '                        <td class="middle">' +
             '                            <h3>'+order.orderStatusFullName+'</h3>' +
-            '                            <h3 class="link">查看详情</h3>' +
+            '                            <h3 class="link" onclick="lookOrderDetail(' + order.orderStatusFullCode + ',' + order.sellerReceiveStatus + ',' + order.id + ')">查看详情</h3>' +
             '                        </td>' +
             '                        <td class="middle">' +
             '                            <h3>应得金额</h3>' +
@@ -149,4 +149,26 @@ SellerOrder.batchDeliver = function(id){
 function page(pageNo){
     SellerOrder.page.pageNo = pageNo ;
     SellerOrder.findRecords();
+}
+
+/**
+ * 跳转到订单详情
+ * @param orderStatus
+ * @param sellerReceiveStatus
+ * @param id
+ */
+function lookOrderDetail(orderStatus, sellerReceiveStatus, id) {
+    if (orderStatus == 1 && sellerReceiveStatus == 0) {
+        window.location.href = "/web/seller/SellerCenterOrders1.html?orderId=" + id;
+    }else if (orderStatus == 2 && sellerReceiveStatus == 1) {
+        window.location.href = "/web/seller/SellerCenterOrders2.html?orderId=" + id;
+    } else if (orderStatus == 2 && sellerReceiveStatus == 2) {
+        window.location.href = "/web/seller/SellerCenterOrders3.html?orderId=" + id;
+    } else if (orderStatus == 3 && sellerReceiveStatus == 3) {
+        window.location.href = "/web/seller/SellerCenterOrders4.html?orderId=" + id;
+    } else if (orderStatus == 100 && sellerReceiveStatus == 3) {
+        window.location.href = "/web/seller/SellerCenterOrders5.html?orderId=" + id;
+    }else if (orderStatus == 100 && sellerReceiveStatus == 4) {
+        window.location.href = "/web/seller/SellerCenterOrders6.html?orderId=" + id;
+    }
 }
