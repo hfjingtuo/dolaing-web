@@ -20,7 +20,7 @@ $(function () {
                 var orderInfo = data.orderInfo;
                 $("#orderSn").html("订单编号：" + orderInfo.orderSn + "&nbsp;&nbsp;&nbsp;下单时间：" + getDateTime(orderInfo.createTime));
                 $("#userId").text("账户名称：" + orderInfo.userId);
-                var receiptInformation = " 收货人：" + orderInfo.consignee + "</br> 收货电话：" + orderInfo.mobile + "</br>收货地址：" + orderInfo.province + orderInfo.city + orderInfo.district + orderInfo.address;
+                var receiptInformation = " 收货人：" + orderInfo.consignee + "</br> 收货电话：" + orderInfo.mobile + "</br>收货地址：" + orderInfo.address;
                 $("#receiptInformation").html(receiptInformation);
                 $("#buyerOrderAmount").text("￥" + orderInfo.buyerOrderAmount);
                 timer(orderInfo.createTime);//订单倒计时
@@ -31,27 +31,30 @@ $(function () {
 
 function timer(timeStr) {
     var countdown = document.getElementById("countdown");
-    console.log(getDateTime(timeStr));
-    console.log(timeStr);
-    console.log(new Date().getTime());
-    console.log(new Date(timeStr).getTime());
     setInterval(function () {
-        let nowTime = new Date(timeStr) - new Date;
-        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
-        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
-
-        minutes = checkTime(minutes);
-        seconds = checkTime(seconds);
-        countdown.innerHTML = minutes + "分" + seconds + "秒";
+        //获取当前时间
+        var now = new Date().getTime();
+        //设置截止时间
+        var startTime = new Date(timeStr).getTime();
+        //时间差
+        var leftTime = 1800000 - (now - startTime);//30分钟倒计时
+        var minutes, second;
+        if (leftTime >= 0) {
+            minutes = Math.floor(leftTime / 1000 / 60 % 60);
+            second = Math.floor(leftTime / 1000 % 60);
+        }else {
+            window.location = "/web/buyer/buyerCenter.html";
+        }
+        if ((minutes == 0 && second == 1) || countdown.innerHTML == "undefined分undefined秒") {
+            window.location = "/web/buyer/buyerCenter.html";
+        } else if (minutes == 0) {
+            countdown.innerHTML = second + "秒";
+        } else {
+            countdown.innerHTML = minutes + "分" + second + "秒";
+        }
     }, 1000);
 }
 
-function checkTime(i) { //将0-9的数字前面加上0，例1变为01
-    if (i < 10) {
-        i = "0" + i;
-    }
-    return i;
-}
 
 /**
  * 支付方法

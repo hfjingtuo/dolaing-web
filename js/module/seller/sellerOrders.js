@@ -89,7 +89,7 @@ SellerOrder.buildDataView = function(order){
         }
         _html += '</tr>' +
             '                </table>' +
-            '                <h5 class="deliver">预计发货时间：'+Dolaing.date.formatCh(goods.expectDeliverTime)
+            '                <h5 class="deliver">预计发货时间：'+ getDate(goods.expectDeliverTime)
             +'&nbsp;&nbsp;|&nbsp;&nbsp;预计出货：'+goods.expectPartOutputOrder+goods.expectPartOutputUnitName+'</h5>' ;
     }
     _html +='</li>' ;

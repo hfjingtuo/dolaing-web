@@ -4,8 +4,7 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
-var SERVER_URL = "http://localhost:8081/dolaing";
-var IMAGE_URL = "http://localhost:8081/dolaing/upload/";
+var SERVER_URL = "http://localhost:8080/dolaing";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -126,7 +125,7 @@ function getDateTime(str) {
         oYear = oDate.getFullYear(),
         oMonth = oDate.getMonth() + 1,
         oDay = oDate.getDate(),
-        oHour = oDate.getHours() - 8,
+        oHour = oDate.getHours(),
         oMin = oDate.getMinutes(),
         oSen = oDate.getSeconds(),
         oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
@@ -163,12 +162,29 @@ function isEmpty(str) {
 }
 
 
+var Dolaing = {
+    user: {},
+    view: {},
+    page: {},
+    validate: {}, //验证工具
+    dictionary: {}
+}
 
-var Dolaing ={
-    user : {} ,
-    view : {} ,
-    page : {} ,
-    validate :{} //验证工具
+/**
+ * 初始化数据字典
+ */
+Dolaing.dictionary = function (dictName) {
+    $.ajax({
+        url: SERVER_URL + "/getDictionary/" + dictName,
+        method: "GET",
+        cache: false,
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (i, val) {
+                $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+            });
+        }
+    });
 }
 
 /**
@@ -194,8 +210,8 @@ Dolaing.view.info = function () {
     var _html = '<div class="auto">' +
         '<h6 class="fl">' + loginStatusHtml + '</h6>' +
         '<ul class="top_ul">' +
-        '<li><a href="#">' +
-        '<h4 class="fl" onclick="window.location.href =\"/index.html\"">网站首页</h4>' +
+        '<li><a href="/index.html">' +
+        '<h4 class="fl">网站首页</h4>' +
         '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
         '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
         '</a></li>' +
@@ -335,42 +351,42 @@ Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
  * 总页数
  * 数据总条数
  */
-Dolaing.page.view = function(pageNo,totalPages,total,pageFun){
+Dolaing.page.view = function (pageNo, totalPages, total, pageFun) {
     var pageView = '<div class="pages fr">' +
-    '<ul><li class="pages_last" onclick="page('+ ((pageNo-1) <=0 ? 1 : (pageNo-1)) +')">上一页</li>';
+        '<ul><li class="pages_last" onclick="page(' + ((pageNo - 1) <= 0 ? 1 : (pageNo - 1)) + ')">上一页</li>';
 
-    for(var i =1 ; i <= totalPages ; i++){
-       if(i == pageNo){
-           pageView += '<li class="pages_cur">'+i+'</li>' ;
-       }else{
-           pageView += '<li onclick="page('+i+')">'+i+'</li>' ;
-       }
+    for (var i = 1; i <= totalPages; i++) {
+        if (i == pageNo) {
+            pageView += '<li class="pages_cur">' + i + '</li>';
+        } else {
+            pageView += '<li onclick="page(' + i + ')">' + i + '</li>';
+        }
     }
-    pageView += '<li class="pages_next" onclick="page('+ ((pageNo+1) > totalPages ? totalPages : (pageNo+1)) +')">下一页</li>' ;
+    pageView += '<li class="pages_next" onclick="page(' + ((pageNo + 1) > totalPages ? totalPages : (pageNo + 1)) + ')">下一页</li>';
     pageView += '</ul></div>';
-    return pageView ;
+    return pageView;
 
 }
 
 /**
  * 获取url中的参数值
  */
-Dolaing.getParameter = function(paramKey){
+Dolaing.getParameter = function (paramKey) {
     var str = location.href; //取得整个地址栏
     var num = str.indexOf("?");
     str = str.substr(num + 1); //取得所有参数
     var params = str.split("&");
-    var paramArr = null ;
-    var paramMap = {} ;
-    if(params !=null){
-       for(var i=0;i<params.length;i++){
-           paramArr = params[i].split("=");
-           if(paramArr.length==2){
-               paramMap[paramArr[0]]= paramArr[1];
-           }
-       }
+    var paramArr = null;
+    var paramMap = {};
+    if (params != null) {
+        for (var i = 0; i < params.length; i++) {
+            paramArr = params[i].split("=");
+            if (paramArr.length == 2) {
+                paramMap[paramArr[0]] = paramArr[1];
+            }
+        }
     }
-    return paramMap[paramKey] ;
+    return paramMap[paramKey];
 }
 
 /**
@@ -400,3 +416,37 @@ Dolaing.selector = function ( className ,rangeId){
 
 
 
+
+
+/**
+ * 计算剩余时间（计时每秒）
+ * @param time
+ * @param id
+ */
+function countdown(time, id) {
+    setInterval(function () {
+        let nowTime = new Date(time) - new Date;
+        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
+
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+        days = checkTime(days);
+        hours = checkTime(hours);
+        $("#timer" + id).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+    }, 1000);
+}
+
+function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+function splitTime(time) {
+    var times = time.split(" ");
+    return times[0] + "</br>" + times[1];
+}

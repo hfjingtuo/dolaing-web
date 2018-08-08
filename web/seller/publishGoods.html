@@ -13,6 +13,7 @@
 <div class="top">
 
 </div>
+<div class="top"></div>
 <div class="nav">
     <div class="auto">
         <img src="/img/nav_logo.png" class="fl"/>
@@ -95,21 +96,13 @@
             <div class="publish_box">
                 <h3>品类：</h3>
                 <select id="catId" style="width: 200px">
-                    <option value="1">水果</option>
-                    <option value="2">蔬菜</option>
-                    <option value="3">肉类</option>
-                    <option value="4">蛋类</option>
                 </select>
-                <!--<input type="text" id="catId" value="" placeholder="如：猕猴桃" style="width: 200px;"/>-->
                 <h3 style="width: 98px;">品种：</h3>
                 <input type="text" id="breeds" value="" placeholder="如：红阳" style="width: 200px;"/>
             </div>
             <div class="publish_box">
-                <h3>品牌名称：</h3>
-                <input type="text" id="brandName" placeholder="请输入品牌名称" style="width: 200px;"/>
-                <h3 style="width: 98px;">生长周期：</h3>
-                <input type="text" id="plantingCycle" onpaste="return false"
-                       onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
+                <h3>生长周期：</h3>
+                <input type="text" id="plantingCycle" onpaste="return false"  onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
                 <h4 style="left: 600px;color: #333333;">天</h4>
             </div>
 
@@ -216,7 +209,7 @@
                     </div>
                     &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
                     <div class="layui-input-inline">
-                        <input type="date" s    tyle="width: 170px" id="endSubscribeTime">
+                        <input type="date" style="width: 170px" id="endSubscribeTime">
                     </div>
                 </div>
             </div>
@@ -275,7 +268,7 @@
             , size: 3000
             , before: function (obj) {
                 console.log(landImg.split(",").length);
-                if (masterImg.split(",").length > 2) {
+                if (landImg.split(",").length > 2) {
                     return layer.msg("最多允许上传1张图片");
                 }
                 obj.preview(function (index, file, result) {
@@ -303,7 +296,7 @@
             , size: 3000
             , before: function (obj) {
                 console.log(descImg.split(",").length);
-                if (masterImg.split(",").length > 4) {
+                if (descImg.split(",").length > 4) {
                     return layer.msg("最多允许上传3张图片");
                 }
                 obj.preview(function (index, file, result) {

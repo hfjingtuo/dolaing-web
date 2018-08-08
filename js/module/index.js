@@ -59,26 +59,3 @@ function getIndexMore() {
     indexData.pageNo += 1;
     getIndex();
 }
-
-function countdown(endSubscribeTime, goodsId) {
-    setInterval(function () {
-        let nowTime = new Date(endSubscribeTime) - new Date;
-        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
-        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
-
-        minutes = checkTime(minutes);
-        seconds = checkTime(seconds);
-        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
-        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
-        days = checkTime(days);
-        hours = checkTime(hours);
-        $("#timer" + goodsId).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
-    }, 1000);
-}
-
-function checkTime(i) { //将0-9的数字前面加上0，例1变为01
-    if (i < 10) {
-        i = "0" + i;
-    }
-    return i;
-}
