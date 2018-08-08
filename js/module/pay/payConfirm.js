@@ -1,27 +1,30 @@
 $(function () {
     initGoodsData();
-    selectArea("45");
+    selectArea("45", "country");
 });
 
-function selectArea(parentId,type) {
+function selectArea(parentId, type) {
+    if ("province" == type) {
+        $("#city").html("").append('<option value="">请选择市</option>');
+        $("#area").html("").append('<option value="">请选择区</option>');
+    } else if ("city" == type) {
+        $("#area").html("").append('<option value="">请选择区</option>');
+    }
     $.ajax({
         url: SERVER_URL + "/changeArea/" + parentId,
         method: "GET",
         cache: false,
         dataType: 'json',
         success: function (data) {
+            console.log("type=" + type);
             console.log(data);
             $.each(data, function (i, val) {
                 if (parentId == "45") {
                     $("#province").append('<option value=' + val.id + '>' + val.chName + '</option>');
-                    $("#city").html("").append('<option value="">请选择市</option>');
-                    $("#area").html("").append('<option value="">请选择区</option>');
                 } else {
-                    if("province" == type){
+                    if ("province" == type) {
                         $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
-                        $("#area").html("").append('<option value="">请选择区</option>');
-                    }else if ("city" == type) {
-                        $("#area").html("").append('<option value="">请选择区</option>');
+                    } else if ("city" == type) {
                         $("#area").append('<option value=' + val.id + '>' + val.chName + '</option>');
                     }
                 }

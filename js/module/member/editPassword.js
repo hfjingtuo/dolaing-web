@@ -1,3 +1,4 @@
+
 function confirmSubmitEditPwd() {
     var oldPwd = $("#oldPwd").val().trim();
     var newPwd = $("#newPwd").val().trim();
@@ -64,8 +65,8 @@ function confirmSubmitEditPwd() {
             $("#rePwd").focus();
         } else {
             layer.alert("修改密码成功", function (index) {
-                location.href = "/web/seller/publishedGoods.html";
                 layer.close(index);
+                location.href = "/web/seller/publishedGoods.html";
             });
         }
     }

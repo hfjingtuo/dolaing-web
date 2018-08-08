@@ -77,7 +77,7 @@ function getCode(userName) {
                 // 设置button效果，开始计时
                 $("#btnSendCode").attr("disabled", "disabled");
                 $("#btnSendCode").css("color", "red");
-                $("#btnSendCode").html(curCount + "s后获取");
+                $("#btnSendCode").html(curCount + "s");
                 // 启动计时器timer处理函数，1秒执行一次
                 InterValObj = window.setInterval(SetRemainTime, 1000);
                 layer.tips("短信验证码发送成功", '#msgCode', {
@@ -96,7 +96,7 @@ function getCode(userName) {
                 curCount = code;
                 $("#btnSendCode").attr("disabled", "disabled");
                 $("#btnSendCode").css("color", "red");
-                $("#btnSendCode").html(curCount + "s后获取");
+                $("#btnSendCode").html(curCount + "s");
                 InterValObj = window.setInterval(SetRemainTime, 1000);
                 $("#msgCode").focus();
             }
@@ -113,7 +113,7 @@ function SetRemainTime() {
         $("#btnSendCode").html("获取验证码");
     } else {
         curCount--;
-        $("#btnSendCode").html(curCount + "s后获取");
+        $("#btnSendCode").html(curCount + "s");
     }
 }
 
@@ -199,7 +199,7 @@ function confirmSubmit() {
                 });
                 $("#pwd").focus();
             } else {
-                location.href = "/forgetPasswordEditSuccess.html";
+                location.href = "/web/member/forgetPasswordEditSuccess.html";
             }
         },
     });

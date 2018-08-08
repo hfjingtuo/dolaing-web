@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <script src="/js/common/common.js"></script>
     <script src="/js/common/_head.js"></script>
+    <script src="/js/module/buyer/paySuccess.js"></script>
     <title>完成支付</title>
 </head>
 <body>
@@ -52,25 +53,14 @@
         <h1 class="fl" style="line-height: 35px;height: auto;">支付成功，谢谢您的认购，</br>
             接下来我们会通知卖家进行生产。</h1>
     </div>
-    <h2 class="fr">订单编号：7483274837289&nbsp;&nbsp;&nbsp;下单时间：2018-07-07</h2>
+    <h2 class="fr">订单编号：<span id="orderSn"></span>&nbsp;&nbsp;&nbsp;下单时间：<span id="orderCreateTime"></span></h2>
     <div class="line_long" style="width: 1100px;"></div>
-    <h3 style="border: none;margin-top: 30px;">收货人：张伟</br>收货电话：13535029962</br>收货地址：贵州省 贵阳市 观山湖区 会展城B区5组团2栋1103</h3>
-    <h4 class="view_order">查看订单>></h4>
+    <h3 style="border: none;margin-top: 30px;">收货人：<span id="consignee"></span></br>收货电话：<span id="mobile"></span></br>收货地址：<span id="address"></span></h3>
+    <h4 class="view_order" onclick="detailOrder()">查看订单>></h4>
 </div>
 <div class="btn_submit" style="margin:50px auto 70px;">
-    <h3>返回首页</h3>
+    <h3 onclick="window.location.href = '/index.html'">返回首页</h3>
 </div>
-
-<ul class="side">
-    <li>
-        <img src="/img/img_side_follow.png"/>
-        <h4>关注我们</h4>
-    </li>
-    <li>
-        <img src="/img/img_side_top.png"/>
-        <h4>回到顶部</h4>
-    </li>
-</ul>
 
 <script src="/js/common/_side.js" ></script>
 <script src="/js/common/_foot.js" ></script>

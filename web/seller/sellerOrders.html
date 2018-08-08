@@ -14,14 +14,14 @@
 </div>
 <div class="nav">
     <div class="auto">
-        <img src="../../img/nav_logo.png" class="fl"/>
+        <img src="/img/nav_logo.png" class="fl"/>
         <div class="nav_shop fl" style="margin-top: 40px;">
             <h3 style="margin-top: 10px;">卖家个人中心</h3>
         </div>
 
         <div class="enter_myorders" class="fr">
-            <img src="../../img/icon_nav_orders_color.png" class="fl m1"/>
-            <img src="../../img/icon_nav_orders_white.png" class="fl m2" style="display: none;"/>
+            <img src="/img/icon_nav_orders_color.png" class="fl m1"/>
+            <img src="/img/icon_nav_orders_white.png" class="fl m2" style="display: none;"/>
             <h4 class="fr">我的订单</h4>
         </div>
     </div>
@@ -67,9 +67,9 @@
         <h1 class="record_title"><a href="#">首页</a>&nbsp;>&nbsp;<a href="#">卖家中心</a>&nbsp;>&nbsp;订单列表</h1>
         <div class="operation">
             <div class="batch fl">
-                <input type="checkbox" name=""  value="" class="fl"/>
+                <input type="checkbox" name=""  value="" class="fl selectAll"/>
                 <h5 class="fl">全选</h5>
-                <button type="button">批量发货</button>
+                <button type="button" class="batchDeliver">批量发货</button>
             </div>
         </div>
         <!--列表标题-->
@@ -86,13 +86,13 @@
         <ul class="con" id="orderList">
         </ul>
         <!--操作栏-->
-        <div class="operation" style="margin-top: 25px;margin-bottom: 55px;" id="pageView">
+        <div class="operation" style="margin-top: 25px;margin-bottom: 55px;">
             <div class="batch fl">
-                <input type="checkbox" name=""  value="" class="fl"/>
+                <input type="checkbox" name=""  value="" class="fl selectAll"/>
                 <h5 class="fl">全选</h5>
-                <button type="button">批量发货</button>
+                <button type="button" class="batchDeliver">批量发货</button>
             </div>
-            <div class="pages fr">
+            <div class="pages fr"  id="pageView">
                 <ul>
                     <li class="pages_last">上一页</li>
                     <li class="pages_cur">1</li>

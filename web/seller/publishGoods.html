@@ -10,6 +10,9 @@
     <title>卖家个人中心-发布商品</title>
 </head>
 <body>
+<div class="top">
+
+</div>
 <div class="top"></div>
 <div class="nav">
     <div class="auto">
@@ -42,12 +45,12 @@
             </div>
             <ul class="center_left_list">
                 <li onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>
-                <li class="center_left_list_cur" onclick="Dolaing.center.seller.tabMenu(2)">发布产品</li>
+                <li onclick="Dolaing.center.seller.tabMenu(2)" class="center_left_list_cur">发布产品</li>
                 <li onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>
                 <li onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>
                 <li onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>
             </ul>
-            <h2 class="center_out" onclick="goLogout();">用户退出</h2>
+            <h2 class="center_out" onclick="Dolaing.center.seller.tabMenu(6)">用户退出</h2>
         </div>
         <!--银行卡-->
         <div class="bank_card">
@@ -217,16 +220,6 @@
     </div>
 </div>
 
-<ul class="side">
-    <li>
-        <img src="/img/img_side_follow.png"/>
-        <h4>关注我们</h4>
-    </li>
-    <li>
-        <img src="/img/img_side_top.png"/>
-        <h4>回到顶部</h4>
-    </li>
-</ul>
 <script src="/js/common/_side.js" ></script>
 <script src="/js/common/_foot.js" ></script>
 <script>

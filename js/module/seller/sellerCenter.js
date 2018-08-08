@@ -48,15 +48,6 @@ SellerCenter.CONTENT_HTML_2 ='<h1 class="record_title">交易记录</h1>' +
     '</ul>' +
     '</div>' +
     '</div>';
-
-
-
-
-
-/**
- * 获取菜单
- * @param type
- */
 SellerCenter.infoMenus = function(){
     //买家未开户
     SellerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
