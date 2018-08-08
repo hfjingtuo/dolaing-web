@@ -1,35 +1,48 @@
+var PublishedGoods = {
+    page : {
+        pageSize : 1,
+        pageNo : 1
+    }
+};
+
 //预加载方法
 $(function () {
     getPublishedGoodsList();
 });
 
 function getPublishedGoodsList() {
-    $.ajax({
-        type: "get",
-        data: "pageNo=" + indexData.pageNo + "&pageSize=" + indexData.pageSize,
-        url: SERVER_URL + "/seller/publishGoods/list",
+    var getData = "?pageNo=" + PublishedGoods.page.pageNo + "&pageSize=" + PublishedGoods.page.pageSize;
+    var ajaxObj = {
+        url: SERVER_URL + "/publishGoods/list" + getData,
+        type: "GET",
         success: function (data) {
-            console.log(data);
-            var goodsList = data.list;
-            console.log(goodsList);
-            if (goodsList == null || goodsList.length == 0) {
-                indexData.html += '暂无找到已发布商品';
-            } else {
-                var goods = null;
-                for (var i = 0; i < goodsList.length; i++) {
-                    goods = goodsList[i];
-                    indexData.html += goodsHtml(goods);
-                }
-                $("#root").html(indexData.html);
-                if (goodsList.length < indexData.pageSize) {
-                    $("#OK").hide();
-                } else {
-                    $("#OK").show();
-                }
-            }
+            if (data != null && data.code == '1000') {
+                if (data.data != null) {
+                    var _html = "";
+                    $(data.data.records).each(function (index, record) {
+                        _html += goodsHtml(record);
+                    });
 
+                    $("#root").html(_html);
+                    $("#pageView").html(Dolaing.page.view(data.data.current, data.data.pages, data.data.total));
+                }
+            } else {
+                layer.alert(data.msg, {
+                    icon: 0
+                });
+            }
         }
-    });
+    }
+    ajaxData(ajaxObj);
+}
+
+/**
+ * 分页请求
+ * @param pageNo
+ */
+function page(pageNo){
+    PublishedGoods.page.pageNo = pageNo ;
+    getPublishedGoodsList();
 }
 
 function goodsHtml(goods) {
@@ -72,7 +85,7 @@ function delGoods(goodsId) {
         $.ajax({
             type: "POST",
             data: "goodsId=" + goodsId,
-            url: SERVER_URL + "/seller/deleteGoods",
+            url: SERVER_URL + "/deleteGoods",
             success: function (data) {
                 console.log(data);
                 layer.msg(data.message);
