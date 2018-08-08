@@ -14,10 +14,14 @@ function selectArea(parentId,type) {
             $.each(data, function (i, val) {
                 if (parentId == "45") {
                     $("#province").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                    $("#city").html("").append('<option value="">请选择市</option>');
+                    $("#area").html("").append('<option value="">请选择区</option>');
                 } else {
                     if("province" == type){
                         $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                        $("#area").html("").append('<option value="">请选择区</option>');
                     }else if ("city" == type) {
+                        $("#area").html("").append('<option value="">请选择区</option>');
                         $("#area").append('<option value=' + val.id + '>' + val.chName + '</option>');
                     }
                 }

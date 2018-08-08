@@ -1,3 +1,7 @@
+$(function () {
+    Dolaing.dictionary("catId");
+});
+
 function publishGoods() {
     var goodsName = $("#goodsName").val();
     var shopPrice = $("#shopPrice").val();

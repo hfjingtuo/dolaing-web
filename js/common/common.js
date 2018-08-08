@@ -166,7 +166,25 @@ var Dolaing = {
     user: {},
     view: {},
     page: {},
-    validate: {} //验证工具
+    validate: {}, //验证工具
+    dictionary: {}
+}
+
+/**
+ * 初始化数据字典
+ */
+Dolaing.dictionary = function (dictName) {
+    $.ajax({
+        url: SERVER_URL + "/getDictionary/" + dictName,
+        method: "GET",
+        cache: false,
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function (i, val) {
+                $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+            });
+        }
+    });
 }
 
 /**
