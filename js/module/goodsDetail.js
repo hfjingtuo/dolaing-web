@@ -1,9 +1,5 @@
-$(document).ready(function () {
-    var goodsId;
-    var str = location.href; //取得整个地址栏
-    var num = str.indexOf("?")
-    str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
-    goodsId = str.split("=")[1];
+$(function () {
+    var goodsId = $.query.get("id");
     $.ajax({
         type: "GET",
         url: SERVER_URL + "/goods/detail/" + goodsId,
@@ -95,7 +91,7 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
 //加的效果
 function add() {
     var n = $("#goodsNum").val();//购物车
-    var inventory= $("#inventory").val();//库存
+    var inventory = $("#inventory").val();//库存
     var num = parseInt(n) + 1;
     if (num > parseInt(inventory)) {
         return;
