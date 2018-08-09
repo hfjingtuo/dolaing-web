@@ -1,6 +1,26 @@
 $(function () {
+    /**
+     * 初始化品类下拉框
+     */
     Dolaing.dictionary("catId");
+    //获取下级的所有农户
+    getAllFarmer();
 });
+
+function getAllFarmer() {
+    var ajaxObj = {
+        url: SERVER_URL + "/getAllFarmer",
+        success: function (data) {
+            console.log(data.data);
+            if (data != null && data.code == '1000') {
+                $.each(data.data, function (i, val) {
+                    $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
+                });
+            }
+        }
+    }
+    ajaxData(ajaxObj);
+}
 
 function publishGoods() {
     var goodsName = $("#goodsName").val();
@@ -9,8 +29,6 @@ function publishGoods() {
     var isFreeShipping = $("#isFreeShipping").val();
     var catId = $("#catId").val();
     var breeds = $("#breeds").val();
-    //var brandId = $("#brandId").val();
-    //var brandName = $("#brandName").val();
     var plantingCycle = $("#plantingCycle").val();//生长周期
     var startPlantime = $("#startPlantime").val();
     var endPlantime = $("#endPlantime").val();
@@ -19,18 +37,12 @@ function publishGoods() {
     var landAddress = $("#landAddress").val();
     var landPartArea = $("#landPartArea").val();
     var goodsNumber = $("#goodsNumber").val();
-
-    //var goodsBrief = $("#goodsBrief").val();
     var goodsDesc = $("#goodsDesc").val();
     var goodsMasterImgs = $("#goodsMasterImgs").val();
     var goodsDescImgs = $("#goodsDescImgs").val();
     var landImgs = $("#landImgs").val();
     var farmerId = $("#farmerId").val();
-
-    var startSubscribeTime = $("#startSubscribeTime").val();
-    var endSubscribeTime = $("#endSubscribeTime").val();
-
-    //var termsOfService = $("#endSubscribeTime");//同意协议
+    var subscribeTime = $("#subscribeTime").val();
 
     if (!isEmpty(goodsName)) {
         layer.tips("请输入商品标题", '#goodsName', {
@@ -47,7 +59,15 @@ function publishGoods() {
         return false;
     }
     if (!isEmpty(depositRatio)) {
-        layer.tips("请输入定金比例", '#depositRatio', {
+        layer.tips("请输入定金比例1-100", '#depositRatio', {
+            tips: [2, '#f76592']
+        });
+        $("#depositRatio").focus();
+        return false;
+    }
+    var depositRatioRegex = /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/;
+    if (!depositRatioRegex.test(depositRatio)) {
+        layer.tips("定金比例应在1-100范围内", '#depositRatio', {
             tips: [2, '#f76592']
         });
         $("#depositRatio").focus();
@@ -74,13 +94,6 @@ function publishGoods() {
         $("#breeds").focus();
         return false;
     }
-    /*if (!isEmpty(brandName)) {
-        layer.tips("请输入商品品牌", '#brandName', {
-            tips: [2, '#f76592']
-        });
-        $("#brandId").focus();
-        return false;
-    }*/
     if (!isEmpty(plantingCycle)) {
         layer.tips("请输入生长周期", '#plantingCycle', {
             tips: [2, '#f76592']
@@ -88,15 +101,22 @@ function publishGoods() {
         $("#plantingCycle").focus();
         return false;
     }
-    if (!isEmpty(plantingCycle)) {
+    if (!isEmpty(startPlantime)) {
         layer.tips("请选择种植开始时间", '#startPlantime', {
             tips: [2, '#f76592']
         });
         $("#startPlantime").focus();
         return false;
     }
-    if (!isEmpty(plantingCycle)) {
+    if (!isEmpty(endPlantime)) {
         layer.tips("请选择种植结束时间", '#endPlantime', {
+            tips: [2, '#f76592']
+        });
+        $("#endPlantime").focus();
+        return false;
+    }
+    if (startPlantime > endPlantime) {
+        layer.tips("种植开始时间不能大于结束时间", '#startPlantime', {
             tips: [2, '#f76592']
         });
         $("#endPlantime").focus();
@@ -145,20 +165,16 @@ function publishGoods() {
         $("#goodsNumber").focus();
         return false;
     }
-    if (!isEmpty(startSubscribeTime)) {
-        layer.tips("请输入认购开始时间", '#startSubscribeTime', {
+    if (!isEmpty(subscribeTime)) {
+        layer.tips("请选择认购时限", '#subscribeTime', {
             tips: [2, '#f76592']
         });
-        $("#startSubscribeTime").focus();
+        $("#subscribeTime").focus();
         return false;
     }
-    if (!isEmpty(endSubscribeTime)) {
-        layer.tips("请输入认购结束时间", '#endSubscribeTime', {
-            tips: [2, '#f76592']
-        });
-        $("#endSubscribeTime").focus();
-        return false;
-    }
+    var subscribeTimes = subscribeTime.split("至");
+    var startSubscribeTime = new Date(subscribeTimes[0]);
+    var endSubscribeTime = new Date(subscribeTimes[1]);
     var goods = {};
     goods.goodsName = goodsName;
     goods.shopPrice = shopPrice;
@@ -166,7 +182,6 @@ function publishGoods() {
     goods.isFreeShipping = isFreeShipping;
     goods.catId = catId;
     goods.breeds = breeds;
-    //goods.brandId = brandName;
     goods.plantingCycle = plantingCycle;
     goods.plantime = startPlantime + "," + endPlantime;
     goods.expectPartOutput = expectPartOutput;
@@ -174,7 +189,6 @@ function publishGoods() {
     goods.landAddress = landAddress;
     goods.landPartArea = landPartArea;
     goods.goodsNumber = goodsNumber;
-    //goods.goodsBrief = goodsBrief;
     goods.goodsDesc = goodsDesc;
     goods.goodsMasterImgs = goodsMasterImgs;
     goods.goodsDescImgs = goodsDescImgs;

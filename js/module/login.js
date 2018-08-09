@@ -27,7 +27,6 @@ function login() {
         url: SERVER_URL + "/login",
         data: "userName=" + userName + "&password=" + pwd,
         success: function (data) {
-            console.log(data);
             var message = data.message;
             if (data.code == "500") {
                 layer.tips(message, "#userName", {
@@ -42,5 +41,4 @@ function login() {
             }
         },
     });
-    return true;
 }

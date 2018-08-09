@@ -10,16 +10,12 @@
     <title>卖家个人中心-发布商品</title>
 </head>
 <body>
-<div class="top">
-
-</div>
 <div class="top"></div>
 <div class="nav">
     <div class="auto">
         <img src="/img/nav_logo.png" class="fl"/>
         <div class="nav_shop fl" style="margin-top: 40px;">
             <h3 style="margin-top: 10px;">卖家个人中心</h3>
-            <!--<h4>品牌名：奔富1988</h4>-->
         </div>
 
         <div class="enter_myorders" class="fr">
@@ -68,7 +64,7 @@
     </div>
     <!--右侧内容区-->
     <div class="fl center_right">
-        <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a href="#">卖家中心</a>&nbsp;>&nbsp;发布新商品</h1>
+        <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a>卖家中心</a>&nbsp;>&nbsp;发布新商品</h1>
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>商品标题：</h3>
@@ -76,16 +72,14 @@
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       placeholder="填写商品单价" style="width: 240px;"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"   placeholder="填写商品单价" style="width: 200px;"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 140px;"/>
+                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 180px;" maxlength="3"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">
                 <h3>是否包邮：</h3>
-                <select id="isFreeShipping">
+                <select id="isFreeShipping" style="width: 200px;">
                     <option value="1">是</option>
                     <!--<option value="0">否</option>-->
                 </select>
@@ -95,15 +89,14 @@
             <h1><span>商品属性：</span>错误填写商品属性，可能会引起商品下架或搜索流量减少，影响您的正常销售，请认真准确填写！</h1>
             <div class="publish_box">
                 <h3>品类：</h3>
-                <select id="catId" style="width: 200px">
-                </select>
+                <select id="catId" style="width: 200px"></select>
                 <h3 style="width: 98px;">品种：</h3>
-                <input type="text" id="breeds" value="" placeholder="如：红阳" style="width: 200px;"/>
+                <input type="text" id="breeds" style="width: 200px;"/>
             </div>
             <div class="publish_box">
                 <h3>生长周期：</h3>
                 <input type="text" id="plantingCycle" onpaste="return false"  onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
-                <h4 style="left: 600px;color: #333333;">天</h4>
+                <h4 style="left: 310px;color: #333333;">天</h4>
             </div>
 
             <div class="publish_box">
@@ -140,9 +133,8 @@
             </div>
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
-                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 240px;"/>
-                <h4 style="right: 410px;color: #333333;">kg</h4>
+                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"  style="width: 200px;"/>
+                <h4 style="left: 310px;color: #333333;">kg</h4>
             </div>
         </div>
         <div class="publish">
@@ -159,14 +151,14 @@
                 <input type="text" id="landPartArea" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
                        placeholder="" style="width: 200px;"/>
                 <h3 style="width: 118px;">所属农户：</h3>
-                <input type="text" id="farmerId" style="width: 200px;"/>
+                <select id="farmerId" style="width: 200px"></select>
             </div>
         </div>
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>上架库存数：</h3>
-                <input type="text" id="goodsNumber"   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"  style="width: 240px;"/>
-                <h4 style="right: 410px;color: #333333;">件</h4>
+                <input type="text" id="goodsNumber"   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"  style="width: 200px;"/>
+                <h4 style="left: 310px;color: #333333;">件</h4>
                 <h5>总面积：1000亩预计&nbsp;&nbsp;&nbsp;&nbsp;总产量：约4546551KG&nbsp;&nbsp;&nbsp;&nbsp;预计单价：6.25元/KG</h5>
             </div>
         </div>
@@ -199,17 +191,13 @@
         <div class="publish">
             <div class="publish_box" style="margin-top:30px;">
                 <h3>电脑端商品描述：</h3>
-                <textarea id="goodsDesc" rows="" cols="" placeholder="商品描述，0-1200字符，600字以内"></textarea>
+                <textarea id="goodsDesc" style="width: 450px;height: 150px" placeholder="商品描述，0-1200字符，600字以内"></textarea>
             </div>
             <div class="publish_box">
                 <h3>认购时限：</h3>
                 <div class="layui-form">
                     <div class="layui-input-inline">
-                        <input type="date" style="width: 170px" id="startSubscribeTime">
-                    </div>
-                    &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
-                    <div class="layui-input-inline">
-                        <input type="date" style="width: 170px" id="endSubscribeTime">
+                        <input type="text" style="width: 230px" id="subscribeTime" placeholder="请选择认购时限">
                     </div>
                 </div>
             </div>
@@ -315,6 +303,17 @@
                 console.log("descImg:" + descImg);
                 $('#goodsDescImgs').val(descImg.substr(0, descImg.length - 1));
             }
+        });
+    });
+</script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#subscribeTime', //指定元素
+            range: '至',
+            min: '0'
         });
     });
 </script>

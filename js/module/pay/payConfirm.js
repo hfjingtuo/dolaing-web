@@ -6,9 +6,9 @@ $(function () {
 function selectArea(parentId, type) {
     if ("province" == type) {
         $("#city").html("").append('<option value="">请选择市</option>');
-        $("#area").html("").append('<option value="">请选择区</option>');
+        $("#district").html("").append('<option value="">请选择区</option>');
     } else if ("city" == type) {
-        $("#area").html("").append('<option value="">请选择区</option>');
+        $("#district").html("").append('<option value="">请选择区</option>');
     }
     $.ajax({
         url: SERVER_URL + "/changeArea/" + parentId,
@@ -25,7 +25,7 @@ function selectArea(parentId, type) {
                     if ("province" == type) {
                         $("#city").append('<option value=' + val.id + '>' + val.chName + '</option>');
                     } else if ("city" == type) {
-                        $("#area").append('<option value=' + val.id + '>' + val.chName + '</option>');
+                        $("#district").append('<option value=' + val.id + '>' + val.chName + '</option>');
                     }
                 }
             });
@@ -115,6 +115,7 @@ function payConfirm() {
     var phone = $("#phone").val();
     var province = parseInt($("#province").val());
     var city = parseInt($("#city").val());
+    var district = parseInt($("#district").val());
     var address = $("#address").val();
     var goodsNum = parseInt($("#goodsNum").val());
     var remarks = $("#remarks").val();
@@ -147,11 +148,11 @@ function payConfirm() {
         $("#city").focus();
         return false;
     }
-    if (!isEmpty(city)) {
-        layer.tips("请选择区", '#area', {
+    if (!isEmpty(district)) {
+        layer.tips("请选择区", '#district', {
             tips: [2, '#f76592']
         });
-        $("#area").focus();
+        $("#district").focus();
         return false;
     }
     if (!isEmpty(address)) {
@@ -167,7 +168,7 @@ function payConfirm() {
     goods.mobile = phone;
     goods.province = province;
     goods.city = city;
-    goods.area = area;
+    goods.district = district;
     goods.address = address;
     goods.goodsNum = goodsNum;
     goods.remarks = remarks;
@@ -178,10 +179,11 @@ function payConfirm() {
     ajaxObj.url = SERVER_URL + "/order/generateOrder";
     ajaxObj.data = JSON.stringify(goods);
     ajaxObj.success = function (data) {
-        var code = data.code;
-        var message = data.message;
         console.log(data);
-        if (200 == code) {
+        var code = data.code;
+        var message = data.data;
+        console.log(data);
+        if ('1000' == code) {
             location.href = "/web/pay/payComplete.html?orderId=" + message;
         } else if (500 == code) {
             layer.alert(message);
