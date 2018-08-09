@@ -21,7 +21,7 @@ BuyerCenter.CONTENT_HTML_1 = '<h1 class="center_right_tip">十分抱歉，</br>�
 BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
     '<div class="operation">' +
     '<div class="batch fl">' +
-    '<input type="checkbox" name=""  value="" class="fl"/>' +
+    '<input type="checkbox" name=""  value="" class="fl selectAll"/>' +
     '<h5 class="fl">全选</h5>' +
     '<button type="button"  class="batchReceive">批量收货</button>' +
     '</div>' +
@@ -47,14 +47,14 @@ BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
     '<ul class="orders"  id="orderList">' +
     '</ul>' +
     '<!--操作栏-->' +
-    '<div  id="pageView" class="operation" style="margin-top: 25px;margin-bottom: 55px;">' +
+    '<div class="operation" style="margin-top: 25px;margin-bottom: 55px;">' +
     '<div class="batch fl">' +
-    '<input type="checkbox" name=""  value="" class="fl"/>' +
+    '<input type="checkbox" name=""  value="" class="fl selectAll"/>' +
     '<h5 class="fl">全选</h5>' +
     '<button type="button"  class="batchReceive" >批量收货</button>' +
     '</div>' +
-    '<div class="pages fr">' +
-    '<ul>' +
+    '<div class="pages fr"   id="pageView">' +
+    '<ul >' +
     '<li class="pages_last">上一页</li>' +
     '<li class="pages_cur">1</li>' +
     '<li class="pages_next">下一页</li>' +
@@ -79,10 +79,10 @@ BuyerCenter.infoMenus = function(){
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur"  onclick="Dolaing.center.farmer.tabMenu(1)">我的订单</li>' +
-        '<li  onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
+        '<li class="center_left_list_cur"  onclick="Dolaing.center.buyer.tabMenu(1)">我的订单</li>' +
+        '<li  onclick="Dolaing.center.buyer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out"onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
+        '<h2 class="center_out"onclick="Dolaing.center.buyer.tabMenu(3)">用户退出</h2>' +
         '</div>';
 
     //买家订单列表
@@ -92,10 +92,10 @@ BuyerCenter.infoMenus = function(){
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur"  onclick="Dolaing.center.farmer.tabMenu(1)">我的订单</li>' +
-        '<li  onclick="Dolaing.center.farmer.tabMenu(2)">修改密码</li>' +
+        '<li class="center_left_list_cur"  onclick="Dolaing.center.buyer.tabMenu(1)">我的订单</li>' +
+        '<li  onclick="Dolaing.center.buyer.tabMenu(2)">修改密码</li>' +
         '</ul>' +
-        '<h2 class="center_out"onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
+        '<h2 class="center_out"onclick="Dolaing.center.buyer.tabMenu(3)">用户退出</h2>' +
         '</div>' +
         '<!--银行卡-->' +
         '<div class="bank_card">' +
@@ -150,15 +150,15 @@ BuyerCenter.addContent = function(){
 /**
  * 批量收货
  */
-BuyerCenter.batchReceive = function (){
+BuyerCenter.batchReceive = function (id){
     var ids = "" ;
     var flag = true ;
     if(id != null && id !=""){ //单个收货
         ids = id ;
     }else { //批量收货
         $("#orderList input[type='checkbox']:checked").each(function(){
-            if($(this).val().split("-")[1] != 2 ){ //如果不是已发货的订单不允许收货
-                layer.alert("请选择已收货的订单进行发货");
+            if($(this).val().split("-")[1] != 3 ){ //如果不是已发货的订单不允许收货
+                layer.alert("请选择已发货的订单进行收货");
                 flag = false ;
                 return false ;
             }
@@ -178,7 +178,7 @@ BuyerCenter.batchReceive = function (){
         success: function (data) {
             if(data !=null && data.code == '1000'){
                 layer.alert("已完成收货");
-                SellerOrder.findRecords();
+                BuyerCenter.findRecords();
             }else{
                 layer.alert(data.msg, {
                     icon: 0
@@ -234,7 +234,7 @@ BuyerCenter.findRecords = function(){
 BuyerCenter.buildDataView = function(order){
     var _html ='<li>' +
         '<div class="orders_words">' +
-        '<input type="checkbox" name="" id="" value="">' +
+        '<input type="checkbox" name="" id="" value="'+order.id+'-'+order.orderStatusFullCode+'" >' +
         '<h5>订单号：'+order.orderSn+'&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：'+order.createTime+'&nbsp;&nbsp;|&nbsp;&nbsp;<span>店铺：'+order.shopName+'</span></h5>' +
         '</div>' ;
     var goods = null ;
@@ -260,9 +260,9 @@ BuyerCenter.buildDataView = function(order){
             '</div>' ;
 
         if(order.orderStatusFullCode == "1"){
-            operate = '<a href="#">去付款</a>';
+            operate = '<a href="javascript:BuyerCenter.goPayHtml(\''+order.id+'\')">去付款</a>';
         }else if(order.orderStatusFullCode == "3"){
-            operate = '<a href="#">确认收货</a>';
+            operate = '<a href="javascript:BuyerCenter.batchReceive(\''+order.id+'\')">确认收货</a>';
         }
         _html += '<div class="orders_box_operate" style="width: 95px;">' +
             '<h3 class="view_detail" style="width: 95px;">'+operate+'</h3>' +
@@ -329,6 +329,14 @@ BuyerCenter.findTradeRecords = function(){
             }
         }
     }
+}
+
+/**
+ * 去支付页面
+ * @param id
+ */
+BuyerCenter.goPayHtml = function(id){
+   window.location.href = SERVER_URL+"/web/pay/ay/payComplete.html?orderId="+id;
 }
 
 /**
