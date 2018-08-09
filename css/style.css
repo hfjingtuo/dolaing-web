@@ -64,7 +64,7 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .login_box_btn:hover{background: url(../img/btn_login_selected.png) no-repeat;}
 .login_box_btn:hover h3{color: white;}
 
-.login_box_tab{width: 554px;height: 70px; overflow: hidden;margin-top: 80px;border-top: 1px solid #f0edeb;}
+.login_box_tab{width: 554px;height: 0px; overflow: hidden;margin-top: 30px;border-top: 1px solid #f0edeb;}
 .login_box_tab li{width: 184px;float: left;line-height: 70px;height: 70px;font-size: 18px;color: #808080;text-align: center;background: #f7f7f7;cursor: pointer;}
 .login_box_tab li:hover{background: white;color:#f5a856;}
 .login_box_tab_cur{background: white !important;color:#f5a856 !important;}
