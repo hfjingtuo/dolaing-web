@@ -141,12 +141,6 @@ function getzf(num) {
     return num;
 }
 
-function goLogin() {
-    var redirectUrl = location.href;
-    $.cookie('redirectUrl', redirectUrl, { path: "/"});
-    location.href = "/login.html";
-}
-
 function goLogout() {
     $.cookie('redirectUrl', '', {expires: -1});
     location.href = "/login.html";
@@ -175,17 +169,18 @@ var Dolaing = {
  * 初始化数据字典
  */
 Dolaing.dictionary = function (dictName) {
-    $.ajax({
-        url: SERVER_URL + "/getDictionary/" + dictName,
-        method: "GET",
-        cache: false,
-        dataType: 'json',
+    var ajaxObj = {
+        url: SERVER_URL + "/getDictionary?dictName=" + dictName,
         success: function (data) {
-            $.each(data, function (i, val) {
-                $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
-            });
+            console.log(data.data);
+            if (data != null && data.code == '1000') {
+                $.each(data.data, function (i, val) {
+                    $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                });
+            }
         }
-    });
+    }
+    ajaxData(ajaxObj);
 }
 
 /**
@@ -213,7 +208,6 @@ Dolaing.view.info = function () {
         '<ul class="top_ul">' +
         '<li><a href="/index.html">' +
         '<h4 class="fl">网站首页</h4>' +
-        '<!--<img src="img/nav_arrow_down.png" class="fl nav_arrow"/>-->' +
         '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
         '</a></li>' +
         '<li><a href="#">' +
@@ -261,24 +255,24 @@ Dolaing.view.info = function () {
  * @type {{getUrl: Dolaing.center.getUrl}}
  */
 Dolaing.center = {
-    farmer : {
-        tabMenu : function(menuId){
-            if(menuId == "1"){
+    farmer: {
+        tabMenu: function (menuId) {
+            if (menuId == "1") {
                 window.location.href = "/web/farmer/farmerCenter.html";
-            }else if(menuId == "2"){
+            } else if (menuId == "2") {
                 window.location.href = "/web/member/changePassword.html";
-            }else if(menuId == "3"){
+            } else if (menuId == "3") {
                 goLogout();
             }
         }
     },
-    buyer : {
-        tabMenu : function(menuId){
-            if(menuId == "1"){ //交易记录
+    buyer: {
+        tabMenu: function (menuId) {
+            if (menuId == "1") { //交易记录
                 window.location.href = "/web/buyer/buyerCenter.html";
-            }else if(menuId == "2"){
+            } else if (menuId == "2") {
                 window.location.href = "/web/member/changePassword.html";
-            }else if(menuId == "3"){
+            } else if (menuId == "3") {
                 goLogout();
             }
         }
@@ -295,7 +289,7 @@ Dolaing.center = {
                 window.location.href = "/web/seller/sellerOrders.html";
             } else if (menuId == "5") {  //修改密码
                 window.location.href = "/web/member/changePassword.html";
-            }else if(menuId == "6"){
+            } else if (menuId == "6") {
                 goLogout();
             }
         }
@@ -310,7 +304,6 @@ Dolaing.center = {
         }
     }
 }
-
 
 /**
  * 验证是否为空
@@ -329,7 +322,7 @@ Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
 
     if (fieldObj instanceof Array) {
         for (var i = 0; i < fieldObj.length; i++) {
-            if (fieldObj[i].value == null || (fieldObj[i].value+"").trim() == "") {
+            if (fieldObj[i].value == null || (fieldObj[i].value + "").trim() == "") {
                 layer.alert(prefix + fieldObj[i].name + suffix);
                 return false;
             }
@@ -344,7 +337,6 @@ Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
     return true;
 
 }
-
 
 /**
  * 分页
@@ -375,28 +367,25 @@ Dolaing.page.view = function (pageNo, totalPages, total, pageFun) {
  */
 
 Dolaing.date = {
-    formatCh : function(dataStr){
-        return dataStr.substr(0,4)+"年"+dataStr.substr(5,2)+"月"+dataStr.substr(8,2)+"日"
+    formatCh: function (dataStr) {
+        return dataStr.substr(0, 4) + "年" + dataStr.substr(5, 2) + "月" + dataStr.substr(8, 2) + "日"
     }
 }
 
 /**
  * 全选框 点击之后 将 rangeId 内的所有checkbox 做同样操作
  */
-Dolaing.selector = function ( className ,rangeId){
-   if($("."+className).prop('checked')){
-       $("#"+rangeId+" input[type='checkbox']").each(function(){
-           $(this).prop("checked",true);
-       });
-   }else{
-       $("#"+rangeId+" input[type='checkbox']").each(function(){
-           $(this).prop("checked",false);
-       });
-   }
+Dolaing.selector = function (className, rangeId) {
+    if ($("." + className).prop('checked')) {
+        $("#" + rangeId + " input[type='checkbox']").each(function () {
+            $(this).prop("checked", true);
+        });
+    } else {
+        $("#" + rangeId + " input[type='checkbox']").each(function () {
+            $(this).prop("checked", false);
+        });
+    }
 }
-
-
-
 
 
 /**
