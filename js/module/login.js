@@ -34,7 +34,7 @@ function login() {
                 });
             } else {
                 $.cookie('token', data.token,{ path: '/'});
-                $.cookie('accountBankCode', data.accountBankCode,{expires:7, path: '/'});
+                $.cookie('userPayAccount', JSON.stringify(data.userPayAccount),{ path: '/'});
                 $.cookie('user', JSON.stringify(data.user),{ path: '/'});
                 $.cookie('userName', userName,{ path: '/'});
                 location.href = "/index.html";

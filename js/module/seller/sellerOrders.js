@@ -18,7 +18,7 @@ $(function () {
 });
 
 SellerOrder.infoMenus = function(){
-
+    SellCenterMenu.selectMenu(4);
 }
 
 SellerOrder.findRecords = function(){

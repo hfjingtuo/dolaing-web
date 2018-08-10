@@ -1,6 +1,6 @@
 var BuyerCenter = {
     page : {
-        pageSize : 1,
+        pageSize : 10,
         pageNo : 1
     }
 };

@@ -29,23 +29,11 @@ SellerCenter.CONTENT_HTML_2 ='<h1 class="record_title">交易记录</h1>' +
     '</tr>' +
     '</thead>' +
     '<tbody id="tableBody">' +
-    '<tr>' +
-    '<td>2018年07月23日</br>03:26:30</td>' +
-    '<td>转入</td>' +
-    '<td>由平台转入定金</br>订单编号：975663746128473</td>' +
-    '<td>300.00</td>' +
-    '<td>交易成功</td>' +
-    '</tr>' +
     '</tbody>' +
     '</table>' +
     '<!--操作栏-->' +
-    '<div class="operation" id="pageView" style="margin-top: 25px;margin-bottom: 55px;">' +
-    '<div class="pages fr">' +
-    '<ul>' +
-    '<li class="pages_last">上一页</li>' +
-    '<li class="pages_cur">1</li>' +
-    '<li class="pages_next">下一页</li>' +
-    '</ul>' +
+    '<div class="operation" style="margin-top: 25px;margin-bottom: 55px;">' +
+    '<div class="pages fr" id="pageView">' +
     '</div>' +
     '</div>';
 
@@ -56,18 +44,44 @@ SellerCenter.CONTENT_HTML_2 ='<h1 class="record_title">交易记录</h1>' +
 /**
  * 获取菜单
  * @param type
- */
+
 SellerCenter.infoMenus = function(){
+    var openTime = "";
+    var userNameText = "";
+    var bank = "" ;
+    var bankName = "";
+    var bankImage = "";
+    var cardNoLastFour =  "";
+    var shopName = "";
+    var brandName = "";
+    var businessScope = "" ;
+    var address = "" ;
+    if (Dolaing.user.userPayAccount != null ) {
+        bank = Dolaing.center.getBank(Dolaing.user.userPayAccount.bankCode) ;
+        bankName = bank == null ?"":bank.name ;
+        bankImage = bank == null ?"":bank.image ;
+        openTime = Dolaing.user.userPayAccount.createTime.substr(2,2)+"/"+Dolaing.user.userPayAccount.createTime.substr(5,2)+"/"+Dolaing.user.userPayAccount.createTime.substr(8,2);
+        userNameText = Dolaing.user.userPayAccount.userNameText ;
+        cardNoLastFour = Dolaing.user.userPayAccount.cardNoLastFour ;
+    }
+    if(Dolaing.user.mallShopVo != null ){
+        shopName = Dolaing.user.mallShopVo.shopName;
+        brandName = Dolaing.user.mallShopVo.brandName;
+        businessScope = Dolaing.user.mallShopVo.businessScope;
+        address = Dolaing.user.mallShopVo.provinceLabel +" " + Dolaing.user.mallShopVo.cityLabel;
+    }
+
+
     //买家未开户
     SellerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
         '<img src="/img/img_goods1.jpg" class="fl"/>' +
-        '<h2 class="fl">共荣农业合作社</br><span>好评率98%</span></h2>' +
+        '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
-        '<h3>品牌名称：奔富1988</h3>' +
-        '<h3>经营范围：果蔬种植销售</h3>' +
-        '<h3>所在地区：贵州省 清镇市</h3>' +
+        '<h3>品牌名称：'+brandName+'</h3>' +
+        '<h3>经营范围：'+businessScope+'</h3>' +
+        '<h3>所在地区：'+address+'</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
         '<li class="center_left_list_cur" onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>' +
@@ -83,11 +97,11 @@ SellerCenter.infoMenus = function(){
         '<div class="data2">' +
         '<div>' +
         '<img src="img/img_goods1.jpg" class="fl"/>' +
-        '<h2 class="fl">共荣农业合作社</br><span>好评率98%</span></h2>' +
+        '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
-        '<h3>品牌名称：奔富1988</h3>' +
-        '<h3>经营范围：果蔬种植销售</h3>' +
-        '<h3>所在地区：贵州省 清镇市</h3>' +
+        '<h3>品牌名称：'+brandName+'</h3>' +
+        '<h3>经营范围：'+businessScope+'</h3>' +
+        '<h3>所在地区：'+address+'</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
         '<li class="center_left_list_cur" onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>' +
@@ -102,38 +116,38 @@ SellerCenter.infoMenus = function(){
         '<div class="bank_card">' +
         '<img src="/img/img_bank_logo.png" class="fl"/>' +
         '<div class="fl bank_card1">' +
-        '<h2>建设银行</h2>' +
-        '<h3>尾号7890</h3>' +
+        '<h2>'+bankName+'</h2>' +
+        '<h3>尾号'+cardNoLastFour+'</h3>' +
         '</div>' +
         '<h3 class="fr" style="margin: 46px 20px 0 0;">已绑定</h3>' +
         '<div class="bank_card2">' +
-        '<h3 class="fl">王二麻子</h3>' +
-        '<h3 class="fr">18/08/01</h3>' +
+        '<h3 class="fl">'+userNameText+'</h3>' +
+        '<h3 class="fr">'+openTime+'</h3>' +
         '</div>' +
         '</div>';
 }
 
 
-
-
-
-/**
- * 添加菜单
  */
-SellerCenter.addMenu = function(){
 
-    if(Dolaing.user.payAccountFlag){
-        $("#menuCenter").html(SellerCenter.MENU_HTML_2);
-    }else{
-        $("#menuCenter").html(SellerCenter.MENU_HTML_1);
-    }
-}
+
+// /**
+//  * 添加菜单
+//  */
+// SellerCenter.addMenu = function(){
+//
+//     if(Dolaing.user.userPayAccount !=null ){
+//         $("#menuCenter").html(SellerCenter.MENU_HTML_2);
+//     }else{
+//         $("#menuCenter").html(SellerCenter.MENU_HTML_1);
+//     }
+// }
 
 /**
  * 添加内容
  */
 SellerCenter.addContent = function(){
-    if(Dolaing.user.payAccountFlag){
+    if(Dolaing.user.userPayAccount !=null){
         $("#contentCenter").html(SellerCenter.CONTENT_HTML_2);
         SellerCenter.findTradeRecords();
     }else{
@@ -148,8 +162,9 @@ SellerCenter.toOpenAccount = function () {
 
 
 $(function () {
-    SellerCenter.infoMenus();
-    SellerCenter.addMenu();
+    // SellerCenter.infoMenus();
+    // SellerCenter.addMenu();
+    SellCenterMenu.selectMenu(1);
     SellerCenter.addContent();
 });
 
@@ -186,11 +201,15 @@ SellerCenter.findTradeRecords = function(){
                             '<td>'+status+'</td>' +
                             '</tr>';
                     });
+                    console.log("当前页"+data.data.current +" 总页数:"+data.data.pages +" 总数："+data.data.total);
+                    if(data.data.records == null || data.data.records.length == 0 ){
+                        html += '<tr><td colspan="5">无数据</td></tr>';
+                        $("#pageView").html("");
+                    }else{
+                        $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
+                    }
 
                     $("#tableBody").html(html);
-                    //todo
-                    console.log("当前页"+data.data.current +" 总页数:"+data.data.pages +" 总数："+data.data.total);
-                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {

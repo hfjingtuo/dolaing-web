@@ -83,7 +83,6 @@ Account.marginRegisterSms = function(){
         url: SERVER_URL+"/payAccount/marginRegisterSms",
         data : JSON.stringify(Account.data),
         success: function (data) {
-            console.log(data);
             if(data !=null && data.code == '1000'){
                 $(".btnSendCode").attr("disabled", "disabled");
                 $(".btnSendCode").css("color", "red");
