@@ -1,8 +1,13 @@
 $(function () {
     /***初始化左侧菜单**/
     SellCenterMenu.selectMenu(2);
-    /**初始化品类下拉框**/
-    Dolaing.dictionary("catId");
+    var goodsId = $.query.get("id");
+    if (goodsId != null && goodsId != "") {
+        getPublishedGoods(goodsId);
+    }else {
+        /**初始化品类下拉框**/
+        Dolaing.dictionary("catId");
+    }
     /**获取下级的所有农户**/
     getAllFarmer();
 });
@@ -212,6 +217,76 @@ function publishGoods() {
             });
         } else if (500 == code) {
             layer.alert(message);
+        }
+    }
+    ajaxData(ajaxObj);
+}
+
+function getPublishedGoods(goodsId) {
+    var ajaxObj = {
+        url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
+        success: function (data) {
+            if (data != null && data.code == '1000') {
+                if (data.data != null) {
+                    var goodsMasterImgHtml = "";
+                    var landImgHtml = "";
+                    var goodsDescImgHtml = "";
+
+                    var goodsMasterImg = null;
+                    var landImg = null;
+                    var goodsDescImg = null;
+
+                    var mallGoods = data.data.mallGoods;
+
+                    $("#goodsId").val(mallGoods.id);
+                    $("#catIdVal").val(mallGoods.catId);
+                    console.log("====" + $("#catIdVal").val())
+                    $("#goodsName").val(mallGoods.goodsName);
+                    $("#shopPrice").val(mallGoods.shopPrice);
+                    $("#depositRatio").val(mallGoods.depositRatio * 100);
+                    $("#breeds").val(mallGoods.breeds);
+                    $("#plantingCycle").val(mallGoods.plantingCycle);
+                    $("#expectPartOutput").val(mallGoods.expectPartOutput);
+                    $("#landSn").val(mallGoods.landSn);
+                    $("#landAddress").val(mallGoods.landAddress);
+                    $("#landPartArea").val(mallGoods.landPartArea);
+                    $("#goodsNumber").val(mallGoods.goodsNumber);
+                    $("#goodsDesc").val(mallGoods.goodsDesc);
+                    $("#subscribeTime").val(mallGoods.startSubscribeTime.substr(0, 10) + " 至 " + mallGoods.endSubscribeTime.substr(0, 10));
+
+                    var goodsMasterImgs = mallGoods.goodsMasterImgs.split(",");
+                    goodsMasterImgHtml += "<li><img src='/img/bg_upload.png' id='uploadMasterImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    for (var i = 0; i < goodsMasterImgs.length; i++) {
+                        goodsMasterImg = goodsMasterImgs[i];
+                        goodsMasterImgHtml += "<li><img src='" + IMAGE_URL + goodsMasterImg + "' style='width: 150px;height: 150px'></li>"
+                    }
+                    $("#showMasterImgs").html(goodsMasterImgHtml);
+
+                    var landImgs = mallGoods.landImgs.split(",");
+                    landImgHtml += "<li><img src='/img/bg_upload.png' id='uploadLandImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    for (var i = 0; i < landImgs.length; i++) {
+                        landImg = landImgs[i];
+                        landImgHtml += "<li><img src='" + IMAGE_URL + landImgs + "' style='width: 150px;height: 150px'></li>"
+                    }
+                    $("#showLandImgs").html(landImgHtml);
+
+                    var goodsDescImgs = mallGoods.goodsDescImgs.split(",");
+                    goodsDescImgHtml += "<li><img src='/img/bg_upload.png' id='uploadDescImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    for (var i = 0; i < goodsDescImgs.length; i++) {
+                        goodsDescImg = goodsDescImgs[i];
+                        goodsDescImgHtml += "<li><img src='" + IMAGE_URL + goodsDescImg + "' style='width: 150px;height: 150px'></li>"
+                    }
+                    $("#showDescImgs").html(goodsDescImgHtml);
+
+                    /**初始化品类下拉框**/
+                    Dolaing.dictionary("catId");
+                }
+            } else {
+                layer.alert(data.message, function (index) {
+                    location.href = "/web/seller/publishedGoods.html";
+                    layer.close(index);
+                });
+            }
         }
     }
     ajaxData(ajaxObj);

@@ -32,13 +32,13 @@
     <!--左侧菜单-->
     <div class="fl center_left" id="menuCenter"></div>
     <!--右侧内容区-->
-    <div class="fl center_right">
+    <div class="fl center_right" id="contentCenter">
         <h1 class="center_right_title">已发布的产品</h1>
         <div class="operation">
             <div class="batch fl">
-                <input type="checkbox" name="" id="" value="" class="fl"/>
+                <input type="checkbox" class="fl selectAll"/>
                 <h5 class="fl">全选</h5>
-                <button type="button">批量删除</button>
+                <button type="button" class="batchDelete">批量删除</button>
             </div>
         </div>
         <!--列表标题-->
@@ -51,17 +51,24 @@
                 <div class="" style="width: 128px;"> 操作</div>
             </div>
         </div>
-        <!--订单列表-->
-        <ul class="orders" id="root">
-
-        </ul>
+        <!--已发布商品列表-->
+        <ul class="orders" id="root"></ul>
 
         <!--操作栏-->
-        <div class="operation" style="margin-top: 25px;margin-bottom: 55px;" id="pageView">
-
+        <div class="operation" style="margin-top: 25px;margin-bottom: 55px;">
+            <div class="batch fl">
+                <input type="checkbox" name=""  value="" class="fl selectAll"/>
+                <h5 class="fl">全选</h5>
+                <button type="button" class="batchDelete">批量删除</button>
+            </div>
+            <div class="pages fr"  id="pageView">
+                <ul>
+                    <li class="pages_last">上一页</li>
+                    <li class="pages_cur">1</li>
+                    <li class="pages_next">下一页</li>
+                </ul>
+            </div>
         </div>
-
-
     </div>
 </div>
 

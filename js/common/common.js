@@ -95,13 +95,6 @@ function ajaxData(ajaxObj) {
     });
 }
 
-//设置全局变量
-var indexData = {
-    pageSize: 9,
-    pageNo: 1,
-    html: ""
-};
-
 /**
  * 获取时间
  * @param str
@@ -169,13 +162,19 @@ var Dolaing = {
  * 初始化数据字典
  */
 Dolaing.dictionary = function (dictName) {
+    var optionVal = $("#" + dictName + "Val").val();
+    console.log("optionVal="+optionVal);
     var ajaxObj = {
         url: SERVER_URL + "/getDictionary?dictName=" + dictName,
         success: function (data) {
             console.log(data.data);
             if (data != null && data.code == '1000') {
                 $.each(data.data, function (i, val) {
-                    $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                    if (optionVal == val.dictValue) {
+                        $("#catId").append('<option selected value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                    } else {
+                        $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                    }
                 });
             }
         }
@@ -198,7 +197,7 @@ Dolaing.view.info = function () {
         loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="#">【注册】</a>';
     } else {
         Dolaing.user = JSON.parse(user);
-        Dolaing.user.userPayAccount = userPayAccount == null ? null :  JSON.parse(userPayAccount) ;
+        Dolaing.user.userPayAccount = userPayAccount == null ? null : JSON.parse(userPayAccount);
         centerUrl = Dolaing.center.getUrl();
         loginStatusHtml = '欢迎您！<a href=\"' + centerUrl + '\">' + userName + '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
     }
@@ -207,7 +206,7 @@ Dolaing.view.info = function () {
         '<ul class="top_ul">' +
         '<li><a href="/index.html">' +
         '<h4 class="fl">网站首页</h4>' +
-        '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
+        '<img src="/img/img_nav_line.png" class="fl nav_line" />' +
         '</a></li>' +
         '<li><a href="#">' +
         '<h4 class="fl">关注我们</h4>' +
@@ -302,56 +301,56 @@ Dolaing.center = {
             return "/web/farmer/farmerCenter.html";
         }
     },
-    getBank : function(bankCode){ //根据银行编号获取银行名称和图标
-        var bank ;
+    getBank: function (bankCode) { //根据银行编号获取银行名称和图标
+        var bank;
         switch (bankCode) {
             case "0102" :
-                bank = {name:"中国工商银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国工商银行", image: "", code: bankCode};
+                break;
             case "0103" :
-                bank = {name:"中国农业银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国农业银行", image: "/img/农行.png", code: bankCode};
+                break;
             case "0104" :
-                bank = {name:"中国银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国银行", image: "", code: bankCode};
+                break;
             case "0105" :
-                bank = {name:"中国建设银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国建设银行", image: "/img/img_bank_logo.png", code: bankCode};
+                break;
             case "0301" :
-                bank = {name:"交通银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "交通银行", image: "", code: bankCode};
+                break;
             case "0302" :
-                bank = {name:"中信银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中信银行", image: "", code: bankCode};
+                break;
             case "0303" :
-                bank = {name:"中国光大银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国光大银行", image: "", code: bankCode};
+                break;
             case "0304" :
-                bank = {name:"华夏银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "华夏银行", image: "", code: bankCode};
+                break;
             case "0305" :
-                bank = {name:"中国民生银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "中国民生银行", image: "", code: bankCode};
+                break;
             case "0306" :
-                bank = {name:"广东发展银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "广东发展银行", image: "", code: bankCode};
+                break;
             case "0307" :
-                bank = {name:"深圳发展银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "深圳发展银行", image: "", code: bankCode};
+                break;
             case "0308" :
-                bank = {name:"招商银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "招商银行", image: "", code: bankCode};
+                break;
             case "0309" :
-                bank = {name:"兴业银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "兴业银行", image: "", code: bankCode};
+                break;
             case "0310" :
-                bank = {name:"上海浦东发展银行" , image :"" ,code : bankCode} ;
-                break ;
+                bank = {name: "上海浦东发展银行", image: "", code: bankCode};
+                break;
             default:
-                bank = null ;
+                bank = null;
         }
 
-        return bank ;
+        return bank;
 
 
     }
@@ -397,7 +396,7 @@ Dolaing.validate.checkBlank = function (fieldObj, prefix, suffix) {
  * 数据总条数
  */
 Dolaing.page.view = function (pageNo, totalPages, total, pageFun) {
-    var pageView ='<ul><li class="pages_last" onclick="page(' + ((pageNo - 1) <= 0 ? 1 : (pageNo - 1)) + ')">上一页</li>';
+    var pageView = '<ul><li class="pages_last" onclick="page(' + ((pageNo - 1) <= 0 ? 1 : (pageNo - 1)) + ')">上一页</li>';
 
     for (var i = 1; i <= totalPages; i++) {
         if (i == pageNo) {

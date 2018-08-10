@@ -39,44 +39,46 @@ function selectArea(parentId, type) {
 function initGoodsData() {
     var goodsId = $.query.get("goodsId");
     var goodsNum = $.query.get("goodsNum");
-    $.ajax({
-        type: "GET",
-        url: SERVER_URL + "/goods/detail/" + goodsId,
+    var ajaxObj = {
+        url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
         success: function (data) {
             console.log(data);
-            if (500 == data.code) {
+            if (data != null && data.code == '1000') {
+                if (data.data != null) {
+                    var mallGoods = data.data.mallGoods;
+                    var mallShop = data.data.mallShop;
+                    var depositRatio = mallGoods.depositRatio;//定金比例
+                    $("#goodsId").val(mallGoods.id);
+                    $("#depositRatioVal").val(depositRatio);
+                    $("#shopId").val(mallShop.id);
+                    $("#shopName").text("店铺：" + mallShop.shopName);
+                    $("#inventory").val(mallGoods.goodsNumber);//库存
+                    $("#goodsNum").val(goodsNum);//购物车
+                    $("#goodsName").text(mallGoods.goodsName);
+                    //$("#deliveryTime").text("预计发货时间：" + getDateByAdd(mallGoods.endSubscribeTime, parseInt(mallGoods.plantingCycle)));
+                    $("#deliveryTime").text("预计发货时间：" + getDate(mallGoods.endSubscribeTime));
+                    $("#goodsMasterImg").attr('src', IMAGE_URL + mallGoods.goodsMasterImgs.split(",")[0]);
+                    $("#landTotalArea").text(mallGoods.landTotalArea + "亩");
+                    $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
+                    $("#breeds").text("品种：" + mallGoods.breeds);
+                    $("#shopPrice").text(mallGoods.shopPrice);
+                    $("#price").val(mallGoods.shopPrice);
+                    $(".totalPrice").text(parseFloat(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
+                    $("#isFreeShipping").text("邮资：" + ("1" == mallGoods.isFreeShipping ? "包邮" : "自费"));
+                    $("#deposit").text(parseFloat(mallGoods.shopPrice) * goodsNum * parseFloat(depositRatio));//定金
+                    $("#retainage").text(parseFloat(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
+                    $("#depositRatio").text("下单支付认购全款，其中的 " + depositRatio * 100 + "% 作为定金发放给卖家。");
+                    $("#expectDeliverTime").text("(在" + getDate(mallGoods.expectDeliverTime) + "前卖家发货，买家确认收货后，平台向卖家支付尾款)");
+                }
+            } else {
                 layer.alert(data.message, function (index) {
                     location.href = "/index.html";
                     layer.close(index);
                 });
-            } else {
-                var mallGoods = data.mallGoods;
-                var mallShop = data.mallShop;
-                var depositRatio = mallGoods.depositRatio;//定金比例
-                $("#goodsId").val(mallGoods.id);
-                $("#depositRatioVal").val(depositRatio);
-                $("#shopId").val(mallShop.id);
-                $("#shopName").text("店铺：" + mallShop.shopName);
-                $("#inventory").val(mallGoods.goodsNumber);//库存
-                $("#goodsNum").val(goodsNum);//购物车
-                $("#goodsName").text(mallGoods.goodsName);
-                //$("#deliveryTime").text("预计发货时间：" + getDateByAdd(mallGoods.endSubscribeTime, parseInt(mallGoods.plantingCycle)));
-                $("#deliveryTime").text("预计发货时间：" + getDate(mallGoods.endSubscribeTime));
-                $("#goodsMasterImg").attr('src', IMAGE_URL + mallGoods.goodsMasterImgs.split(",")[0]);
-                $("#landTotalArea").text(mallGoods.landTotalArea + "亩");
-                $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
-                $("#breeds").text("品种：" + mallGoods.breeds);
-                $("#shopPrice").text(mallGoods.shopPrice);
-                $("#price").val(mallGoods.shopPrice);
-                $(".totalPrice").text(parseFloat(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
-                $("#isFreeShipping").text("邮资：" + ("1" == mallGoods.isFreeShipping ? "包邮" : "自费"));
-                $("#deposit").text(parseFloat(mallGoods.shopPrice) * goodsNum * parseFloat(depositRatio));//定金
-                $("#retainage").text(parseFloat(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
-                $("#depositRatio").text("下单支付认购全款，其中的 " + depositRatio * 100 + "% 作为定金发放给卖家。");
-                $("#expectDeliverTime").text("(在" + getDate(mallGoods.expectDeliverTime) + "前卖家发货，买家确认收货后，平台向卖家支付尾款)");
             }
         }
-    });
+    }
+    ajaxData(ajaxObj);
 }
 
 //加的效果

@@ -32,19 +32,17 @@
     <div class="fl center_left" id="menuCenter"></div>
     <!--右侧内容区-->
     <div class="fl center_right">
-        <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a>卖家中心</a>&nbsp;>&nbsp;发布新商品</h1>
+        <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a>卖家中心</a>&nbsp;>&nbsp;发布商品</h1>
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>商品标题：</h3>
-                <input type="text" id="goodsName" value="" placeholder="请输入该商品的标题文字" style="width: 500px;"/>
+                <input type="text" id="goodsName" placeholder="请输入该商品的标题" style="width: 500px;"/>
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       placeholder="填写商品单价" style="width: 200px;"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"  placeholder="填写商品单价" style="width: 200px;"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 180px;" maxlength="3"/>
+                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"  style="width: 180px;" maxlength="3"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">
@@ -59,6 +57,7 @@
             <h1><span>商品属性：</span>错误填写商品属性，可能会引起商品下架或搜索流量减少，影响您的正常销售，请认真准确填写！</h1>
             <div class="publish_box">
                 <h3>品类：</h3>
+                <input type="hidden" id="catIdVal">
                 <select id="catId" style="width: 200px"></select>
                 <h3 style="width: 98px;">品种：</h3>
                 <input type="text" id="breeds" style="width: 200px;"/>
