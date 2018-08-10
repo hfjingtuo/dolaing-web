@@ -3,11 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="/css/style.css" />
-		<!--<link rel="stylesheet" type="text/css" href="/css/layui.css" media="all"/>-->
-		<script type="text/javascript" src="/js/jquery-1.7.2.min.js" ></script>
-		<script type="text/javascript" src="/js/myjs.js" ></script>
-		<script src="/js/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/common/_sellMenu.js"></script>
 		<script type="text/javascript" src="/js/common/common.js" ></script>
 		<script type="text/javascript" src="/js/common/_head.js" ></script>
 		<script src="/js/module/seller/SellerCenterOrders4.js"></script>
@@ -35,40 +31,7 @@
 		
 		<div class="center auto">
 			<!--左侧菜单-->
-			<div class="fl center_left">
-				<div class="center_left_menu">
-					<div class="data2">
-						<div>
-							<img src="/img/img_goods1.jpg" class="fl"/>
-							<h2 class="fl">共荣农业合作社</br><span>好评率98%</span></h2>
-						</div>
-						<h3>品牌名称：奔富1988</h3>
-						<h3>经营范围：果蔬种植销售</h3>
-						<h3>所在地区：贵州省 清镇市</h3>
-					</div>
-					<ul class="center_left_list">
-						<li onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>
-						<li onclick="Dolaing.center.seller.tabMenu(2)">发布产品</li>
-						<li onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>
-						<li class="center_left_list_cur" onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>
-						<li onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>
-					</ul>
-					<h2 class="center_out" onclick="goLogout();">用户退出</h2>
-				</div>
-				<!--银行卡-->
-				<div class="bank_card">
-					<img src="/img/img_bank_logo.png" class="fl"/>
-					<div class="fl bank_card1">
-						<h2>建设银行</h2>
-						<h3>尾号7890</h3>
-					</div>
-					<h3 class="fr" style="margin: 46px 20px 0 0;">已绑定</h3>
-					<div class="bank_card2">
-						<h3 class="fl">王二麻子</h3>
-						<h3 class="fr">18/08/01</h3>
-					</div>
-				</div>
-			</div>
+			<div class="fl center_left" id="menuCenter"></div>
 			<!--右侧内容区-->
 			<div class="fl center_right">
 				<h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a style="cursor: pointer" onclick="Dolaing.center.seller.tabMenu(4)">订单列表</a>&nbsp;>&nbsp;订单详情</h1>

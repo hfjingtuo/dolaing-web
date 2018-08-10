@@ -34,7 +34,7 @@ SellCenterMenu.infoMenus = function(){
     SellCenterMenu.MENU_HTML_1 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
-        '<img src="/img/img_goods1.jpg" class="fl"/>' +
+        '<img src="/img/head.jpg" class="fl"/>' +
         '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
         '<h3>品牌名称：'+brandName+'</h3>' +
@@ -54,7 +54,7 @@ SellCenterMenu.infoMenus = function(){
     SellCenterMenu.MENU_HTML_2 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
-        '<img src="img/img_goods1.jpg" class="fl"/>' +
+        '<img src="/img/head.jpg" class="fl"/>' +
         '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
         '<h3>品牌名称：'+brandName+'</h3>' +
