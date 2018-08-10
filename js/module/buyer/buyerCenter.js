@@ -75,7 +75,7 @@ BuyerCenter.infoMenus = function(){
     //买家未开户
     BuyerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
         '<div class="data1">' +
-        '<img src="../../img/img_goods2.jpg"/>' +
+        '<img src="/img/head.jpg"/>' +
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
@@ -88,7 +88,7 @@ BuyerCenter.infoMenus = function(){
     //买家订单列表
     BuyerCenter.MENU_HTML_2 = '<div class="center_left_menu">' +
         '<div class="data1">' +
-        '<img src="/img/img_goods2.jpg"/>' +
+        '<img src="/img/head.jpg"/>' +
         '<h1>'+Dolaing.user.account+'</h1>' +
         '</div>' +
         '<ul class="center_left_list">' +
