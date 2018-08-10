@@ -1,9 +1,9 @@
 $(function () {
-    /**
-     * 初始化品类下拉框
-     */
+    /***初始化左侧菜单**/
+    SellCenterMenu.selectMenu(2);
+    /**初始化品类下拉框**/
     Dolaing.dictionary("catId");
-    //获取下级的所有农户
+    /**获取下级的所有农户**/
     getAllFarmer();
 });
 

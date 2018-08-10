@@ -1,4 +1,6 @@
 $(function () {
+    /***初始化左侧菜单**/
+    SellCenterMenu.selectMenu(4);
     var orderId = $.query.get("orderId");
     var account = $.cookie('userName');
     getOrderDetail6(orderId);

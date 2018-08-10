@@ -7,6 +7,8 @@ var PublishedGoods = {
 
 //预加载方法
 $(function () {
+    /***初始化左侧菜单**/
+    SellCenterMenu.selectMenu(3);
     getPublishedGoodsList();
 });
 

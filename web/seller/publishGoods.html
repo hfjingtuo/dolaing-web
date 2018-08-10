@@ -5,7 +5,8 @@
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/layui.css" media="all"/>
     <script src="/js/common/common.js"></script>
-    <script src="/js/common/_head.js" ></script>
+    <script src="/js/common/_head.js"></script>
+    <script src="/js/common/_sellMenu.js"></script>
     <script src="/js/module/seller/publishGoods.js"></script>
     <title>卖家个人中心-发布商品</title>
 </head>
@@ -28,40 +29,7 @@
 
 <div class="center auto">
     <!--左侧菜单-->
-    <div class="fl center_left">
-        <div class="center_left_menu">
-            <div class="data2">
-                <div>
-                    <img src="/img/img_goods1.jpg" class="fl"/>
-                    <h2 class="fl">共荣农业合作社</br><span>好评率98%</span></h2>
-                </div>
-                <h3>品牌名称：奔富1988</h3>
-                <h3>经营范围：果蔬种植销售</h3>
-                <h3>所在地区：贵州省 清镇市</h3>
-            </div>
-            <ul class="center_left_list">
-                <li onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>
-                <li onclick="Dolaing.center.seller.tabMenu(2)" class="center_left_list_cur">发布产品</li>
-                <li onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>
-                <li onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>
-                <li onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>
-            </ul>
-            <h2 class="center_out" onclick="Dolaing.center.seller.tabMenu(6)">用户退出</h2>
-        </div>
-        <!--银行卡-->
-        <div class="bank_card">
-            <img src="/img/img_bank_logo.png" class="fl"/>
-            <div class="fl bank_card1">
-                <h2>建设银行</h2>
-                <h3>尾号7890</h3>
-            </div>
-            <h3 class="fr" style="margin: 46px 20px 0 0;">已绑定</h3>
-            <div class="bank_card2">
-                <h3 class="fl">王二麻子</h3>
-                <h3 class="fr">18/08/01</h3>
-            </div>
-        </div>
-    </div>
+    <div class="fl center_left" id="menuCenter"></div>
     <!--右侧内容区-->
     <div class="fl center_right">
         <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a>卖家中心</a>&nbsp;>&nbsp;发布新商品</h1>
@@ -72,9 +40,11 @@
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"   placeholder="填写商品单价" style="width: 200px;"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       placeholder="填写商品单价" style="width: 200px;"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 180px;" maxlength="3"/>
+                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 180px;" maxlength="3"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">
@@ -95,7 +65,8 @@
             </div>
             <div class="publish_box">
                 <h3>生长周期：</h3>
-                <input type="text" id="plantingCycle" onpaste="return false"  onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
+                <input type="text" id="plantingCycle" onpaste="return false"
+                       onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
                 <h4 style="left: 310px;color: #333333;">天</h4>
             </div>
 
@@ -133,7 +104,8 @@
             </div>
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
-                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"  style="width: 200px;"/>
+                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 200px;"/>
                 <h4 style="left: 310px;color: #333333;">kg</h4>
             </div>
         </div>
@@ -157,7 +129,9 @@
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>上架库存数：</h3>
-                <input type="text" id="goodsNumber"   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"  style="width: 200px;"/>
+                <input type="text" id="goodsNumber"
+                       onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
+                       style="width: 200px;"/>
                 <h4 style="left: 310px;color: #333333;">件</h4>
                 <h5>总面积：1000亩预计&nbsp;&nbsp;&nbsp;&nbsp;总产量：约4546551KG&nbsp;&nbsp;&nbsp;&nbsp;预计单价：6.25元/KG</h5>
             </div>
@@ -171,7 +145,8 @@
                     <input type="file" accept="image/*"/>
                 </li>
             </ul>
-            <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。</h1>
+            <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。
+            </h1>
             <input type="hidden" id="landImgs">
             <ul class="upload" id="showLandImgs">
                 <li>
@@ -191,7 +166,8 @@
         <div class="publish">
             <div class="publish_box" style="margin-top:30px;">
                 <h3>电脑端商品描述：</h3>
-                <textarea id="goodsDesc" style="width: 450px;height: 150px" placeholder="商品描述，0-1200字符，600字以内"></textarea>
+                <textarea id="goodsDesc" style="width: 450px;height: 150px"
+                          placeholder="商品描述，0-1200字符，600字以内"></textarea>
             </div>
             <div class="publish_box">
                 <h3>认购时限：</h3>
@@ -208,8 +184,8 @@
     </div>
 </div>
 
-<script src="/js/common/_side.js" ></script>
-<script src="/js/common/_foot.js" ></script>
+<script src="/js/common/_side.js"></script>
+<script src="/js/common/_foot.js"></script>
 <script>
     /**
      * 上传图片
@@ -307,7 +283,7 @@
     });
 </script>
 <script>
-    layui.use('laydate', function(){
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
         //执行一个laydate实例
         laydate.render({
