@@ -68,71 +68,10 @@ BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
 
 
 /**
- * 获取菜单
- * @param type
- */
-BuyerCenter.infoMenus = function(){
-    //买家未开户
-    BuyerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
-        '<div class="data1">' +
-        '<img src="../../img/img_goods2.jpg"/>' +
-        '<h1>'+Dolaing.user.account+'</h1>' +
-        '</div>' +
-        '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur"  onclick="Dolaing.center.buyer.tabMenu(1)">我的订单</li>' +
-        '<li  onclick="Dolaing.center.buyer.tabMenu(2)">修改密码</li>' +
-        '</ul>' +
-        '<h2 class="center_out"onclick="Dolaing.center.buyer.tabMenu(3)">用户退出</h2>' +
-        '</div>';
-
-    //买家订单列表
-    BuyerCenter.MENU_HTML_2 = '<div class="center_left_menu">' +
-        '<div class="data1">' +
-        '<img src="/img/img_goods2.jpg"/>' +
-        '<h1>'+Dolaing.user.account+'</h1>' +
-        '</div>' +
-        '<ul class="center_left_list">' +
-        '<li class="center_left_list_cur"  onclick="Dolaing.center.buyer.tabMenu(1)">我的订单</li>' +
-        '<li  onclick="Dolaing.center.buyer.tabMenu(2)">修改密码</li>' +
-        '</ul>' +
-        '<h2 class="center_out"onclick="Dolaing.center.buyer.tabMenu(3)">用户退出</h2>' +
-        '</div>' +
-        '<!--银行卡-->' +
-        '<div class="bank_card">' +
-        '<img src="/img/img_bank_logo.png" class="fl"/>' +
-        '<div class="fl bank_card1">' +
-        '<h2>建设银行</h2>' +
-        '<h3>尾号7890</h3>' +
-        '</div>' +
-        '<h3 class="fr" style="margin: 46px 20px 0 0;">已绑定</h3>' +
-        '<div class="bank_card2">' +
-        '<h3 class="fl">王二麻子</h3>' +
-        '<h3 class="fr">18/08/01</h3>' +
-        '</div>' +
-        '</div>';
-}
-
-
-
-
-
-/**
- * 添加菜单
- */
-BuyerCenter.addMenu = function(){
-
-    if(Dolaing.user.payAccountFlag){
-       $("#menuCenter").html(BuyerCenter.MENU_HTML_2);
-    }else{
-       $("#menuCenter").html(BuyerCenter.MENU_HTML_1);
-    }
-}
-
-/**
  * 添加内容
  */
 BuyerCenter.addContent = function(){
-    if(Dolaing.user.payAccountFlag){
+    if(Dolaing.user.userPayAccount != null){
         $("#contentCenter").html(BuyerCenter.CONTENT_HTML_2);
         $(".selectAll").click(function(){
             Dolaing.selector("selectAll" , "contentCenter");
@@ -196,8 +135,7 @@ BuyerCenter.toOpenAccount = function () {
 
 
 $(function () {
-    BuyerCenter.infoMenus();
-    BuyerCenter.addMenu();
+    BuyerCenterMenu.selectMenu(1);
     BuyerCenter.addContent();
 });
 
@@ -252,7 +190,7 @@ BuyerCenter.buildDataView = function(order){
         '</div>' +
         '<div class="orders_box_state" style="width: 125px;">' +
             '<h3>' + order.orderStatusFullName + '</h3>' +
-            '<h4 class="view_detail"><a href="#">查看详情</a></h4>' +
+            '<h4 class="view_detail"><a href="javascript:BuyerCenter.goDetail(\''+order.id+'\');">查看详情</a></h4>' +
             '</div>' +
             '<div class="orders_box_price" style="width: 161px;">' +
             '<h3 style="width: 161px;font-weight: bold;">￥' + goods.goodsAmount + '元</h3>' +
@@ -337,6 +275,10 @@ BuyerCenter.findTradeRecords = function(){
  */
 BuyerCenter.goPayHtml = function(id){
    window.location.href = "/web/pay/payComplete.html?orderId="+id;
+}
+
+BuyerCenter.goDetail = function(id){
+    window.location.href = "/web/buyer/orderDetail.html?orderId="+id;
 }
 
 /**
