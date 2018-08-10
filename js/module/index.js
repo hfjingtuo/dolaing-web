@@ -1,3 +1,9 @@
+//设置全局变量
+var indexData = {
+    pageSize: 12,
+    pageNo: 1,
+    html: ""
+};
 //预加载方法
 $(function () {
     getIndex();
@@ -35,15 +41,15 @@ function goodsHtml(goods) {
     var isFreeShipping = goods.isFreeShipping;
     if ("1" == isFreeShipping) {
         isFreeShipping = "包邮";
-    }else {
+    } else {
         isFreeShipping = "自费";
     }
     var html =
         "<li title='" + goods.goodsName + "'>" +
-        "<a href='/goodsDetails.html?id=" + goods.id +"'>"+
-        "<img src=\"" + goods.goodsMasterImgs.split(",")[0] + "\" class=\"home_list_goods\"/>" +
+        "<a href='/goodsDetails.html?id=" + goods.id + "'>" +
+        "<img style='height: 270px' src=\"" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "\" class=\"home_list_goods\"/>" +
         "<h3>" + goods.goodsName + "</h3>" +
-        "<h4>" + goods.goodsBrief + "</h4>" +
+        "<h4>" + goods.goodsDesc + "</h4>" +
         "<div class=\"home_list_price\">" +
         "<h5 class=\"fl\"><span style=\"font-size: 16px;\">￥</span>&nbsp;" + goods.shopPrice + "&nbsp;" +
         "<span style=\"font-size: 14px;color: #E85526;\">元</span></h5>" +

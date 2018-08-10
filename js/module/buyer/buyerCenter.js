@@ -336,7 +336,7 @@ BuyerCenter.findTradeRecords = function(){
  * @param id
  */
 BuyerCenter.goPayHtml = function(id){
-   window.location.href = SERVER_URL+"/web/pay/ay/payComplete.html?orderId="+id;
+   window.location.href = "/web/pay/payComplete.html?orderId="+id;
 }
 
 /**

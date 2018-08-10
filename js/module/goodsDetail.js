@@ -19,15 +19,16 @@ $(function () {
                 var goodsMasterImgs = mallGoods.goodsMasterImgs.split(",");
                 for (var i = 0; i < goodsMasterImgs.length; i++) {
                     goodsMasterImg = goodsMasterImgs[i];
-                    html += "<li><img src='" + goodsMasterImg + "'/></li>";
+                    html += "<li><img src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
                 }
+                $("#bigImg").html("<img src='" + IMAGE_URL + goodsMasterImgs[0] + "'/>");
                 $("#goodsMasterImg").html(html);
 
                 $("#goodsName").text(mallGoods.goodsName);
                 $("#goodsBrief").text(mallGoods.goodsBrief);
 
                 $("#plantingCycle").text("种植周期：" + mallGoods.plantingCycle + "天");
-                $("#catId").text("品类：" + (mallGoods.catId == "" ? "清镇" + mallGoods.goodsName : ""));
+                $("#catId").text("品类：" + (mallGoods.catId == 1 ? "水果" : "蔬菜"));
                 $("#breeds").text("品种：" + mallGoods.breeds);
                 $("#brandName").text("品牌名称：" + mallShop.brandName);
 

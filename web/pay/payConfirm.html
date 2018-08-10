@@ -52,11 +52,11 @@
     <h1>确认收货地址</h1>
     <div class="confirm_address_box">
         <h2>收货联系人：</h2>
-        <input type="text" id="consignee" maxlength="8"/>
+        <input type="text" id="consignee" maxlength="20"/>
     </div>
     <div class="confirm_address_box">
         <h2>收货电话：</h2>
-        <input type="text" id="phone" maxlength="11"/>
+        <input type="text" id="phone" maxlength="20"/>
     </div>
     <div class="confirm_address_box">
         <h2>收货地址：</h2>
@@ -69,7 +69,7 @@
         <select style="width: 100px;margin-left: 12px;" id="district">
             <option value="">请选择区</option>
         </select>
-        <input type="text" id="address" placeholder="请输入详细地址" class="address_details"/>
+        <input type="text" id="address" placeholder="请输入详细地址" class="address_details" maxlength="50"/>
     </div>
 </div>
 
@@ -85,6 +85,7 @@
         <li>价格</li>
     </ul>
     <h2 style="margin-bottom: 5px;" id="shopName">店铺：凤山振兴合作社</h2>
+    <input type="hidden" id="shopId">
     <ul class="confirm_order confirm_order_list">
         <li class="confirm_order_list_goods">
             <img id="goodsMasterImg" src="/img/img_goods2.jpg" class="fl"/>
@@ -134,7 +135,7 @@
     <div class="confirm_order_progress">
         <div class="fl">
             <h3>阶段一：</h3>
-            <h3 id="depositRatio">下单支付认购全款，其中的 50% 作为定金发放给卖家。</h3>
+            <h3 id="depositRatio">下单支付认购全款，其中的 10% 作为定金发放给卖家。</h3>
             <h3 style="color: #666666;">(由于预约生产农产品的特殊性，不支持取消订单退款；请在提交订单后30分钟内付款，超时订单将被关闭)</h3>
         </div>
         <input type="hidden" id="depositRatioVal"/>

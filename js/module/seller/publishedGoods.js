@@ -1,7 +1,7 @@
 var PublishedGoods = {
-    page : {
-        pageSize : 1,
-        pageNo : 1
+    page: {
+        pageSize: 1,
+        pageNo: 1
     }
 };
 
@@ -40,8 +40,8 @@ function getPublishedGoodsList() {
  * 分页请求
  * @param pageNo
  */
-function page(pageNo){
-    PublishedGoods.page.pageNo = pageNo ;
+function page(pageNo) {
+    PublishedGoods.page.pageNo = pageNo;
     getPublishedGoodsList();
 }
 
@@ -54,7 +54,7 @@ function goodsHtml(goods) {
         " </div>" +
         " <div class='orders_box published_list'>" +
         " <div class='orders_box_goods'>" +
-        " <img src='/" + goods.goodsMasterImgs.split(",")[0] + "'/>" +
+        " <img src='" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "'/>" +
         " <div class='fl'>" +
         " <h3>" + goods.goodsName + "</h3>" +
         " </div>" +
@@ -63,7 +63,7 @@ function goodsHtml(goods) {
         " <h3>" + goods.expectPartOutput + "亩</h3>" +
         " </div>" +
         " <div class='orders_box_state'>" +
-        " <h3 style='width: 110px;'>" + goods.expectTotalOutput + "KG</h3>" +
+        " <h3 style='width: 110px;'>" + goods.expectPartOutput + "KG</h3>" +
         " </div>" +
         " <div class='orders_box_price' style='margin-right: 1px;'>" +
         " <h3 style='width: 117px;'>" + goods.shopPrice + "元</h3>" +

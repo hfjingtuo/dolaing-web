@@ -55,22 +55,23 @@ function initGoodsData() {
                 var depositRatio = mallGoods.depositRatio;//定金比例
                 $("#goodsId").val(mallGoods.id);
                 $("#depositRatioVal").val(depositRatio);
+                $("#shopId").val(mallShop.id);
                 $("#shopName").text("店铺：" + mallShop.shopName);
                 $("#inventory").val(mallGoods.goodsNumber);//库存
                 $("#goodsNum").val(goodsNum);//购物车
                 $("#goodsName").text(mallGoods.goodsName);
                 //$("#deliveryTime").text("预计发货时间：" + getDateByAdd(mallGoods.endSubscribeTime, parseInt(mallGoods.plantingCycle)));
                 $("#deliveryTime").text("预计发货时间：" + getDate(mallGoods.endSubscribeTime));
-                $("#goodsMasterImg").attr('src', "/" + mallGoods.goodsMasterImgs.split(",")[0]);
+                $("#goodsMasterImg").attr('src', IMAGE_URL + mallGoods.goodsMasterImgs.split(",")[0]);
                 $("#landTotalArea").text(mallGoods.landTotalArea + "亩");
                 $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
                 $("#breeds").text("品种：" + mallGoods.breeds);
                 $("#shopPrice").text(mallGoods.shopPrice);
                 $("#price").val(mallGoods.shopPrice);
-                $(".totalPrice").text(parseInt(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
+                $(".totalPrice").text(parseFloat(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
                 $("#isFreeShipping").text("邮资：" + ("1" == mallGoods.isFreeShipping ? "包邮" : "自费"));
-                $("#deposit").text(parseInt(mallGoods.shopPrice) * goodsNum * depositRatio);//定金
-                $("#retainage").text(parseInt(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
+                $("#deposit").text(parseFloat(mallGoods.shopPrice) * goodsNum * parseFloat(depositRatio));//定金
+                $("#retainage").text(parseFloat(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
                 $("#depositRatio").text("下单支付认购全款，其中的 " + depositRatio * 100 + "% 作为定金发放给卖家。");
                 $("#expectDeliverTime").text("(在" + getDate(mallGoods.expectDeliverTime) + "前卖家发货，买家确认收货后，平台向卖家支付尾款)");
             }
@@ -83,7 +84,7 @@ function add() {
     var n = $("#goodsNum").val();//购物车
     var inventory = $("#inventory").val();//库存
     var price = $("#price").val();//单价
-    var depositRatioVal = $("#depositRatioVal").val();//单价
+    var depositRatioVal = $("#depositRatioVal").val();//定金比例
     var num = parseInt(n) + 1;
     if (num > parseInt(inventory)) {
         return;
@@ -110,6 +111,7 @@ function minus() {
 }
 
 function payConfirm() {
+    var shopId = parseInt($("#shopId").val());
     var goodsId = parseInt($("#goodsId").val());
     var consignee = $("#consignee").val();
     var phone = $("#phone").val();
@@ -119,7 +121,7 @@ function payConfirm() {
     var address = $("#address").val();
     var goodsNum = parseInt($("#goodsNum").val());
     var remarks = $("#remarks").val();
-    var totalPrice = $("#shopPrice").text() * parseInt(goodsNum);
+    var totalPrice = parseFloat($("#shopPrice").text() * parseInt(goodsNum));
     if (!isEmpty(consignee)) {
         layer.tips("请输入收货联系人", '#consignee', {
             tips: [2, '#f76592']
@@ -163,6 +165,7 @@ function payConfirm() {
         return false;
     }
     var goods = {};
+    goods.shopId = shopId;
     goods.goodsId = goodsId;
     goods.consignee = consignee;
     goods.mobile = phone;
