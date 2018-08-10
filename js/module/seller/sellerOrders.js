@@ -7,7 +7,7 @@ var SellerOrder = {
 
 $(function () {
     $(".selectAll").click(function(){
-        Dolaing.selector("selectAll" , "contentCenter");
+        Dolaing.selector(this , "contentCenter");
     });
     //批量发货
     $(".batchDeliver").click(function(){

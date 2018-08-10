@@ -74,7 +74,7 @@ BuyerCenter.addContent = function(){
     if(Dolaing.user.userPayAccount != null){
         $("#contentCenter").html(BuyerCenter.CONTENT_HTML_2);
         $(".selectAll").click(function(){
-            Dolaing.selector("selectAll" , "contentCenter");
+            Dolaing.selector(this , "contentCenter");
         });
         //批量发货
         $(".batchReceive").click(function(){

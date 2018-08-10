@@ -426,8 +426,8 @@ Dolaing.date = {
 /**
  * 全选框 点击之后 将 rangeId 内的所有checkbox 做同样操作
  */
-Dolaing.selector = function (className, rangeId) {
-    if ($("." + className).prop('checked')) {
+Dolaing.selector = function (ele, rangeId) {
+    if ($(ele).prop('checked')) {
         $("#" + rangeId + " input[type='checkbox']").each(function () {
             $(this).prop("checked", true);
         });
