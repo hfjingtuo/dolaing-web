@@ -117,7 +117,7 @@ FarmerCenter.infoMenus = function(){
         '</div>' +
         '<!--银行卡-->' +
         '<div class="bank_card">' +
-        '<img src="img/img_bank_logo.png" class="fl">' +
+        '<img src="/img/img_bank_logo.png" class="fl">' +
         '<div class="fl bank_card1">' +
         '<h2>建设银行</h2>' +
         '<h3>尾号7890</h3>' +

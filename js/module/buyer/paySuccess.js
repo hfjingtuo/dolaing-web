@@ -9,9 +9,9 @@ $(function () {
     var ajaxObj = {
         url: SERVER_URL + "/order/detail?orderId=" + PaySuccess.orderId,
         success: function (data) {
-            console.log(data.data);
+            console.log(data);
             if (data != null && data.code == '1000') {
-                var orderInfo = data.orderInfo;
+                var orderInfo = data.data;
                 $("#orderSn").html(orderInfo.orderSn);
                 $("#orderCreateTime").html(orderInfo.createTime);
                 $("#consignee").html(orderInfo.consignee);
