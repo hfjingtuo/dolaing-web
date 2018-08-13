@@ -139,6 +139,7 @@ function getzf(num) {
 function goLogout() {
     $.cookie('redirectUrl', '', {expires: -1});
     location.href = "/login.html";
+    location.reload();
 }
 
 /**
@@ -165,16 +166,20 @@ var Dolaing = {
  */
 Dolaing.dictionary = function (dictName) {
     var optionVal = $("#" + dictName + "Val").val();
-    console.log("optionVal="+optionVal);
+    console.log("optionVal=" + optionVal);
     var ajaxObj = {
         url: SERVER_URL + "/getDictionary?dictName=" + dictName,
         success: function (data) {
             if (data != null && data.code == '1000') {
                 $.each(data.data, function (i, val) {
-                    if (optionVal == val.dictValue) {
-                        $("#catId").append('<option selected value=' + val.dictValue + '>' + val.dictLabel + '</option>');
-                    } else {
+                    if (optionVal == "") {
                         $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                    }else {
+                        if (optionVal == val.dictValue) {
+                            $("#catId").append('<option selected value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                        } else {
+                            $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
+                        }
                     }
                 });
             }

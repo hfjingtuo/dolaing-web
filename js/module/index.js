@@ -47,7 +47,7 @@ function goodsHtml(goods) {
     var html =
         "<li title='" + goods.goodsName + "'>" +
         "<a href='/goodsDetails.html?id=" + goods.id + "'>" +
-        "<img style='height: 270px' src=\"" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "\" class=\"home_list_goods\"/>" +
+        "<img style='height: 270px;margin-bottom: 0px;' src=\"" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "\" class=\"home_list_goods\"/>" +
         "<h3>" + goods.goodsName + "</h3>" +
         "<h4>" + goods.goodsDesc + "</h4>" +
         "<div class=\"home_list_price\">" +

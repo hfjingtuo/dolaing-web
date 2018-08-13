@@ -4,7 +4,7 @@ $(function () {
     var goodsId = $.query.get("id");
     if (goodsId != null && goodsId != "") {
         getPublishedGoods(goodsId);
-    }else {
+    } else {
         /**初始化品类下拉框**/
         Dolaing.dictionary("catId");
     }
@@ -25,6 +25,23 @@ function getAllFarmer() {
         }
     }
     ajaxData(ajaxObj);
+}
+
+function showGoodsArea() {
+    var expectPartOutput = $("#expectPartOutput").val();
+    var landPartArea = $("#landPartArea").val();
+    var goodsNumber = $("#goodsNumber").val();
+    var totalArea = 0;
+    var totalPartOutput = 0;
+    if (goodsNumber != null && goodsNumber != "") {
+        if (landPartArea != null && landPartArea != "") {
+            totalArea = landPartArea * goodsNumber;
+        }
+        if (expectPartOutput != null && expectPartOutput != "") {
+            totalPartOutput = expectPartOutput * goodsNumber;
+        }
+    }
+    $("#showGoodsArea").html("总面积：约" + totalArea + "亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约" + totalPartOutput + "KG");
 }
 
 function publishGoods() {

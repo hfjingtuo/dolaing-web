@@ -64,8 +64,7 @@
             </div>
             <div class="publish_box">
                 <h3>生长周期：</h3>
-                <input type="text" id="plantingCycle" onpaste="return false"
-                       onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
+                <input type="text" id="plantingCycle" onpaste="return false"  onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" maxlength="3" style="width: 200px;"/>
                 <h4 style="left: 310px;color: #333333;">天</h4>
             </div>
 
@@ -103,8 +102,7 @@
             </div>
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
-                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 200px;"/>
+                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 200px;" onchange="showGoodsArea()"/>
                 <h4 style="left: 310px;color: #333333;">kg</h4>
             </div>
         </div>
@@ -119,8 +117,8 @@
             </div>
             <div class="publish_box">
                 <h3>每单位土地面积：</h3>
-                <input type="text" id="landPartArea" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       placeholder="" style="width: 200px;"/>
+                <input type="text" id="landPartArea" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 200px;" onchange="showGoodsArea()"/>
+                <h4 style="left: 310px;color: #333333;">亩</h4>
                 <h3 style="width: 118px;">所属农户：</h3>
                 <select id="farmerId" style="width: 200px"></select>
             </div>
@@ -129,10 +127,9 @@
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>上架库存数：</h3>
                 <input type="text" id="goodsNumber"
-                       onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
-                       style="width: 200px;"/>
+                       onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}" style="width: 200px;" onchange="showGoodsArea()"/>
                 <h4 style="left: 310px;color: #333333;">件</h4>
-                <h5>总面积：1000亩预计&nbsp;&nbsp;&nbsp;&nbsp;总产量：约4546551KG&nbsp;&nbsp;&nbsp;&nbsp;预计单价：6.25元/KG</h5>
+                <h5 id="showGoodsArea">总面积：约0亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约0KG</h5>
             </div>
         </div>
         <div class="publish">
@@ -172,7 +169,7 @@
                 <h3>认购时限：</h3>
                 <div class="layui-form">
                     <div class="layui-input-inline">
-                        <input type="text" style="width: 230px" id="subscribeTime" placeholder="请选择认购时限">
+                        <input type="text" style="width: 230px" id="subscribeTime" placeholder="请选择认购时限"  class="layui-input">
                     </div>
                 </div>
             </div>

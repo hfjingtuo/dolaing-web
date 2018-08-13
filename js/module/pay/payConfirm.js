@@ -55,12 +55,12 @@ function initGoodsData() {
                     $("#inventory").val(mallGoods.goodsNumber);//库存
                     $("#goodsNum").val(goodsNum);//购物车
                     $("#goodsName").text(mallGoods.goodsName);
-                    //$("#deliveryTime").text("预计发货时间：" + getDateByAdd(mallGoods.endSubscribeTime, parseInt(mallGoods.plantingCycle)));
                     $("#deliveryTime").text("预计发货时间：" + getDate(mallGoods.endSubscribeTime));
                     $("#goodsMasterImg").attr('src', IMAGE_URL + mallGoods.goodsMasterImgs.split(",")[0]);
                     $("#landTotalArea").text(mallGoods.landTotalArea + "亩");
                     $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
-                    $("#breeds").text("品种：" + mallGoods.breeds);
+                    $("#catName").text(data.data.catName);
+                    $("#breeds").text(mallGoods.breeds);
                     $("#shopPrice").text(mallGoods.shopPrice);
                     $("#price").val(mallGoods.shopPrice);
                     $(".totalPrice").text(parseFloat(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价

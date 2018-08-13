@@ -2,7 +2,7 @@ $(function () {
     var goodsId = $.query.get("id");
     var ajaxObj = {
         url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
-        authorization :false ,
+        authorization: false,
         success: function (data) {
             console.log(data);
             if (data != null && data.code == '1000') {
@@ -24,7 +24,7 @@ $(function () {
                     $("#goodsBrief").text(mallGoods.goodsBrief);
 
                     $("#plantingCycle").text("种植周期：" + mallGoods.plantingCycle + "天");
-                    $("#catId").text("品类：" + (mallGoods.catId == 1 ? "水果" : "蔬菜"));
+                    $("#catId").text("品类：" + data.data.catName);
                     $("#breeds").text("品种：" + mallGoods.breeds);
                     $("#brandName").text("品牌名称：" + mallShop.brandName);
 
@@ -64,9 +64,16 @@ $(function () {
 });
 
 function subscription() {
-    var goodsId = $("#goodsId").val();
-    var goodsNum = $("#goodsNum").val();
-    window.location.href = "/web/pay/payConfirm.html?goodsId=" + goodsId + "&goodsNum=" + goodsNum;
+    var user = $.cookie('user');
+    var type = JSON.parse(user).type;
+    console.log("type=" + type);
+    if ("1" == type) {
+        var goodsId = $("#goodsId").val();
+        var goodsNum = $("#goodsNum").val();
+        window.location.href = "/web/pay/payConfirm.html?goodsId=" + goodsId + "&goodsNum=" + goodsNum;
+    }else {
+        layer.alert("您是卖家用户,不允许购买此商品")
+    }
 }
 
 function timer(timeStr) {
