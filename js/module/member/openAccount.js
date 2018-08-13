@@ -86,9 +86,11 @@ Account.marginRegisterSms = function(){
             if(data !=null && data.code == '1000'){
                 $(".btnSendCode").attr("disabled", "disabled");
                 $(".btnSendCode").css("color", "red");
+                $(".btnSendCode").unbind();
                 curCount = 60 ;
                 $(".btnSendCode").html("等待"+curCount + "秒");
                 InterValObj = window.setInterval(SetRemainTime, 1000);
+                $.cookie('openSmsTime',new Date().getTime());
                 layer.alert("已发送短信息", {
                     icon: 1
                 });
@@ -114,6 +116,9 @@ function SetRemainTime(){
         $(".btnSendCode").removeAttr("disabled");
         $(".btnSendCode").css("color", "");
         $(".btnSendCode").html("获取验证码");
+        $(".btnSendCode").click(function(){
+            Account.marginRegisterSms();
+        });
     } else {
         curCount--;
         $(".btnSendCode").html("等待"+curCount + "秒");
@@ -192,7 +197,7 @@ Account.validate = function () {
     }else if(Account.data.custType == 1){
         validateFlag = Dolaing.validate.checkBlank(
             [
-                {name:"真实姓名",value:Account.data.userNameText},
+                {name:"企业全称",value:Account.data.userNameText},
                 {name:"证件号码",value:Account.data.certId},
                 {name:"组织机构",value:Account.data.orgId},
                 {name:"银行卡号",value:Account.data.cardNo},
@@ -231,11 +236,28 @@ Account.checkPayPassword = function(){
 
 $(function () {
     var type =  $.query.get("type");
+
     if(type == "3"){ //如果是农户则只有个人
       $("#companyTab").remove();
       $("#companyForm").remove();
       $("#personTab").unbind();
     }else{
        $("#companyTab").show();
+    }
+    $(".btnSendCode").click(function(){
+        Account.marginRegisterSms();
+    });
+    //判断开户信息时间
+    var openSmsTime =  $.cookie('openSmsTime');
+    if(openSmsTime !=null && (new Date().getTime() - openSmsTime)/1000 <=60 ){
+        $(".btnSendCode").attr("disabled", "disabled");
+        $(".btnSendCode").css("color", "red");
+        $(".btnSendCode").unbind();
+        console.log("当前时间-->"+new Date().getTime());
+        console.log("上次短信发送时间-->"+openSmsTime);
+        curCount =  Math.floor(60-(new Date().getTime() - openSmsTime)/1000) ;
+        console.log("短信剩余时间-->"+curCount);
+        $(".btnSendCode").html("等待"+curCount + "秒");
+        InterValObj = window.setInterval(SetRemainTime, 1000);
     }
 });
