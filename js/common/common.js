@@ -139,7 +139,6 @@ function getzf(num) {
 function goLogout() {
     $.cookie('redirectUrl', '', {expires: -1});
     location.href = "/login.html";
-    location.reload();
 }
 
 /**
@@ -193,7 +192,6 @@ Dolaing.dictionary = function (dictName) {
  */
 Dolaing.view.info = function () {
     var token = $.cookie('token');
-    var userName = $.cookie('userName');
     var user = $.cookie('user');
     var userPayAccount = $.cookie('userPayAccount');
     var loginStatusHtml = "";
