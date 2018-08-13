@@ -11,7 +11,7 @@ BuyerCenterMenu.infoMenus = function(){
     var bankName = "";
     var bankImage = "";
     var cardNoLastFour =  "";
-    if (Dolaing.user.userPayAccount != null ) {
+    if (Dolaing.user.userPayAccount != null && Dolaing.user.userPayAccount != "") {
         bank = Dolaing.center.getBank(Dolaing.user.userPayAccount.bankCode) ;
         bankName = bank == null ?"":bank.name ;
         bankImage = bank == null ?"":bank.image ;
@@ -68,7 +68,7 @@ BuyerCenterMenu.infoMenus = function(){
  * 添加菜单
  */
 BuyerCenterMenu.addMenu = function(){
-    if(Dolaing.user.userPayAccount !=null){
+    if(Dolaing.user.userPayAccount !=null  && Dolaing.user.userPayAccount != ""){
         $("#menuCenter").html(BuyerCenterMenu.MENU_HTML_2);
     }else{
         $("#menuCenter").html(BuyerCenterMenu.MENU_HTML_1);

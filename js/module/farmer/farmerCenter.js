@@ -48,7 +48,7 @@ FarmerCenter.infoMenus = function(){
     var brandName = "";
     var businessScope = "";
     var address = "" ;
-    if (Dolaing.user.userPayAccount != null ) {
+    if (Dolaing.user.userPayAccount != null  && Dolaing.user.userPayAccount != "" ) {
         bank = Dolaing.center.getBank(Dolaing.user.userPayAccount.bankCode) ;
         bankName = bank == null ?"":bank.name ;
         bankImage = bank == null ?"":bank.image ;
@@ -56,7 +56,7 @@ FarmerCenter.infoMenus = function(){
         userNameText = Dolaing.user.userPayAccount.userNameText ;
         cardNoLastFour = Dolaing.user.userPayAccount.cardNoLastFour ;
     }
-    if(Dolaing.user.mallShopVo != null ){
+    if(Dolaing.user.mallShopVo != null && Dolaing.user.mallShopVo != "" ){
         shopName = Dolaing.user.mallShopVo.shopName;
         brandName = Dolaing.user.mallShopVo.brandName;
         businessScope = Dolaing.user.mallShopVo.businessScope;
@@ -121,7 +121,7 @@ FarmerCenter.infoMenus = function(){
  * 添加菜单
  */
 FarmerCenter.addMenu = function(){
-    if(Dolaing.user.userPayAccount != null){
+    if(Dolaing.user.userPayAccount != null && Dolaing.user.userPayAccount != ""){
         $("#menuCenter").html(FarmerCenter.MENU_HTML_2);
     }else{
         $("#menuCenter").html(FarmerCenter.MENU_HTML_1);
@@ -132,7 +132,7 @@ FarmerCenter.addMenu = function(){
  * 添加内容
  */
 FarmerCenter.addContent = function(){
-    if(Dolaing.user.userPayAccount !=null ){
+    if(Dolaing.user.userPayAccount !=null && Dolaing.user.userPayAccount != ""){
         $("#contentCenter").html(FarmerCenter.CONTENT_HTML_2);
     }else{
         $("#contentCenter").html(FarmerCenter.CONTENT_HTML_1);

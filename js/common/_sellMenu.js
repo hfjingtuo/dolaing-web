@@ -14,7 +14,7 @@ SellCenterMenu.infoMenus = function(){
     var brandName = "";
     var businessScope = "";
     var address = "" ;
-    if (Dolaing.user.userPayAccount != null ) {
+    if (Dolaing.user.userPayAccount != null  && Dolaing.user.userPayAccount != "" ) {
         bank = Dolaing.center.getBank(Dolaing.user.userPayAccount.bankCode) ;
         bankName = bank == null ?"":bank.name ;
         bankImage = bank == null ?"":bank.image ;
@@ -22,7 +22,7 @@ SellCenterMenu.infoMenus = function(){
         userNameText = Dolaing.user.userPayAccount.userNameText ;
         cardNoLastFour = Dolaing.user.userPayAccount.cardNoLastFour ;
     }
-    if(Dolaing.user.mallShopVo != null ){
+    if(Dolaing.user.mallShopVo != null && Dolaing.user.mallShopVo != "" ){
         shopName = Dolaing.user.mallShopVo.shopName;
         brandName = Dolaing.user.mallShopVo.brandName;
         businessScope = Dolaing.user.mallShopVo.businessScope;
@@ -89,7 +89,7 @@ SellCenterMenu.infoMenus = function(){
  * 添加菜单
  */
 SellCenterMenu.addMenu = function(){
-    if(Dolaing.user.userPayAccount !=null ){
+    if(Dolaing.user.userPayAccount !=null  && Dolaing.user.userPayAccount != "" ){
         $("#menuCenter").html(SellCenterMenu.MENU_HTML_2);
     }else{
         $("#menuCenter").html(SellCenterMenu.MENU_HTML_1);

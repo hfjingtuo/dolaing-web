@@ -4,8 +4,8 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
-var SERVER_URL = "http://localhost:8080/dolaing";
-var IMAGE_URL = "http://localhost:8080/dolaing/upload/";
+var SERVER_URL = "http://39.104.123.195:8067/dolaing";
+var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -198,7 +198,7 @@ Dolaing.view.info = function () {
         Dolaing.user = JSON.parse(user);
         Dolaing.user.userPayAccount = userPayAccount == null ? null : JSON.parse(userPayAccount);
         centerUrl = Dolaing.center.getUrl();
-        loginStatusHtml = '欢迎您！<a href=\"' + centerUrl + '\">' + userName + '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
+        loginStatusHtml = '欢迎您！<a href=\"' + centerUrl + '\">' + Dolaing.user.account + '</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:goLogout();">注销</a>';
     }
     var _html = '<div class="auto">' +
         '<h6 class="fl">' + loginStatusHtml + '</h6>' +
