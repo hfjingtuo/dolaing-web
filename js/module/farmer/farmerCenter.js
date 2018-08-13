@@ -16,7 +16,7 @@ FarmerCenter.CONTENT_HTML_1 = '<h1 class="center_right_tip">十分抱歉，</br>
  * 已开户的时候 显示订单记录
  * @type {string}
  */
-FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="#">首页</a>&nbsp;>&nbsp;订单列表</h1>' +
+FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;订单列表</h1>' +
     '<table border="0" cellspacing="0" cellpadding="0" class="con grid_seller seller_list_tit">' +
     '<tr>' +
     '<td>产品</td>' +
@@ -27,49 +27,7 @@ FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="#">首页</a>&n
     '</tr>' +
     '</table>' +
     '<ul class="con" id="orderList">' +
-    '<li>' +
-    '<div class="orders_words">' +
-    '<input type="checkbox" name="" id="" value="" />' +
-    '<h5>订单号：178526133249436583&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：2018-07-04 10:35:33</h5>' +
-    '</div>' +
-    '<table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
-    '<tr>' +
-    '<td>' +
-    '<img src="img/img_goods1.jpg"/>' +
-    '<div class="fl">' +
-    '<h3>凤山村20分0.1亩红心猕猴桃认购开放一二三四五六七八九十</h3>' +
-    '<h4>土地编号：0246</h4>' +
-    '<h4>认购土地面积：1亩</h4>' +
-    '</div>' +
-    '</td>' +
-    '<td class="middle">' +
-    '<h3>定金：288.00</br>未到账</h3>' +
-    '<h3 style="margin-top: 10px;">尾款：288.00</br>未到账</h3>' +
-    '</td>' +
-    '<td class="middle">' +
-    '<h3>待付款</h3>' +
-    '</td>' +
-    '<td class="middle">' +
-    '<h3>应得金额</h3>' +
-    '<h2 class="money">￥72.00</h2>' +
-    '<h3>（定金比例10%）</h3>' +
-    '<h3>总额：720.00</h3>' +
-    '</td>' +
-    '<td class="middle">' +
-    '<!--<h3 class="link">发&nbsp;&nbsp;货</h3>-->' +
-    '</td>' +
-    '</tr>' +
-    '</table>' +
-    '<h5 class="deliver">预计发货时间：2018年10月12日&nbsp;&nbsp;|&nbsp;&nbsp;预计出货：600kg</h5>' +
-    '</li>' +
-    '' +
-    '</ul>' +
-    '<div class="operation" id="pageView" style="margin-top: 25px;margin-bottom: 55px;">' +
-    '<div class="pages fr">' +
-    '<ul>' +
-    '<li class="pages_last">上一页</li>' +
-    '<li class="pages_cur">1</li>' +
-    '<li class="pages_next">下一页</li>' +
+
     '</ul>' +
     '</div>' +
     '</div>' +
@@ -80,16 +38,41 @@ FarmerCenter.CONTENT_HTML_2 = '<h1 class="record_title"><a href="#">首页</a>&n
  * @param type
  */
 FarmerCenter.infoMenus = function(){
-    //买家未开户
+    var openTime = "";
+    var userNameText = "";
+    var bank = "" ;
+    var bankName = "";
+    var bankImage = "";
+    var cardNoLastFour =  "";
+    var shopName = "";
+    var brandName = "";
+    var businessScope = "";
+    var address = "" ;
+    if (Dolaing.user.userPayAccount != null ) {
+        bank = Dolaing.center.getBank(Dolaing.user.userPayAccount.bankCode) ;
+        bankName = bank == null ?"":bank.name ;
+        bankImage = bank == null ?"":bank.image ;
+        openTime = Dolaing.user.userPayAccount.createTime.substr(2,2)+"/"+Dolaing.user.userPayAccount.createTime.substr(5,2)+"/"+Dolaing.user.userPayAccount.createTime.substr(8,2);
+        userNameText = Dolaing.user.userPayAccount.userNameText ;
+        cardNoLastFour = Dolaing.user.userPayAccount.cardNoLastFour ;
+    }
+    if(Dolaing.user.mallShopVo != null ){
+        shopName = Dolaing.user.mallShopVo.shopName;
+        brandName = Dolaing.user.mallShopVo.brandName;
+        businessScope = Dolaing.user.mallShopVo.businessScope;
+        address = Dolaing.user.mallShopVo.provinceLabel +" " + Dolaing.user.mallShopVo.cityLabel;
+    }
+
+    //订单
     FarmerCenter.MENU_HTML_1 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
-        '<img src="/img/img_goods1.jpg" class="fl">' +
-        '<h2 class="fl">共荣农业合作社<br><span>好评率98%</span></h2>' +
+        '<img src="/img/head.jpg" class="fl"/>' +
+        '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
-        '<h3>品牌名称：奔富1988</h3>' +
-        '<h3>经营范围：果蔬种植销售</h3>' +
-        '<h3>所在地区：贵州省 清镇市</h3>' +
+        '<h3>品牌名称：'+brandName+'</h3>' +
+        '<h3>经营范围：'+businessScope+'</h3>' +
+        '<h3>所在地区：'+address+'</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
         '<li class="center_left_list_cur" onclick="Dolaing.center.farmer.tabMenu(1)">订单列表</li>' +
@@ -98,16 +81,16 @@ FarmerCenter.infoMenus = function(){
         '<h2 class="center_out" onclick="Dolaing.center.farmer.tabMenu(3)">用户退出</h2>' +
         '</div>';
 
-    //买家订单列表
+    //订单列表
     FarmerCenter.MENU_HTML_2 = '<div class="center_left_menu">' +
         '<div class="data2">' +
         '<div>' +
-        '<img src="img/img_goods1.jpg" class="fl">' +
-        '<h2 class="fl">共荣农业合作社<br><span>好评率98%</span></h2>' +
+        '<img src="/img/head.jpg" class="fl"/>' +
+        '<h2 class="fl">'+shopName+'</br><span>好评率98%</span></h2>' +
         '</div>' +
-        '<h3>品牌名称：奔富1988</h3>' +
-        '<h3>经营范围：果蔬种植销售</h3>' +
-        '<h3>所在地区：贵州省 清镇市</h3>' +
+        '<h3>品牌名称：'+brandName+'</h3>' +
+        '<h3>经营范围：'+businessScope+'</h3>' +
+        '<h3>所在地区：'+address+'</h3>' +
         '</div>' +
         '<ul class="center_left_list">' +
         '<li class="center_left_list_cur" onclick="Dolaing.center.farmer.tabMenu(1)">订单列表</li>' +
@@ -117,15 +100,15 @@ FarmerCenter.infoMenus = function(){
         '</div>' +
         '<!--银行卡-->' +
         '<div class="bank_card">' +
-        '<img src="/img/img_bank_logo.png" class="fl">' +
+        '<img src="'+bankImage+'" class="fl"/>' +
         '<div class="fl bank_card1">' +
-        '<h2>建设银行</h2>' +
-        '<h3>尾号7890</h3>' +
+        '<h2>'+bankName+'</h2>' +
+        '<h3>尾号'+cardNoLastFour+'</h3>' +
         '</div>' +
         '<h3 class="fr" style="margin: 46px 20px 0 0;">已绑定</h3>' +
         '<div class="bank_card2">' +
-        '<h3 class="fl">王二麻子</h3>' +
-        '<h3 class="fr">18/08/01</h3>' +
+        '<h3 class="fl">'+userNameText+'</h3>' +
+        '<h3 class="fr">'+openTime+'</h3>' +
         '</div>' +
         '</div>';
 }
@@ -138,8 +121,7 @@ FarmerCenter.infoMenus = function(){
  * 添加菜单
  */
 FarmerCenter.addMenu = function(){
-
-    if(Dolaing.user.payAccountFlag){
+    if(Dolaing.user.userPayAccount != null){
         $("#menuCenter").html(FarmerCenter.MENU_HTML_2);
     }else{
         $("#menuCenter").html(FarmerCenter.MENU_HTML_1);
@@ -150,7 +132,7 @@ FarmerCenter.addMenu = function(){
  * 添加内容
  */
 FarmerCenter.addContent = function(){
-    if(Dolaing.user.payAccountFlag){
+    if(Dolaing.user.userPayAccount !=null ){
         $("#contentCenter").html(FarmerCenter.CONTENT_HTML_2);
     }else{
         $("#contentCenter").html(FarmerCenter.CONTENT_HTML_1);
@@ -159,7 +141,6 @@ FarmerCenter.addContent = function(){
 
 // 跳转到开户页面
 FarmerCenter.toOpenAccount = function () {
-    $("#")
     window.location.href = "/web/member/openAccount.html?type=3" ;
 }
 
@@ -188,8 +169,14 @@ FarmerCenter.findRecords = function(){
                         _html += FarmerCenter.buildDataView(record);
                     });
 
+                    if(data.data.records == null || data.data.records.length == 0 ){
+                        html += '<li style="text-align: center ; padding-top: 20px;">无数据</li>';
+                        $("#pageView").html("");
+                    }else{
+                        $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
+                    }
+
                     $("#orderList").html(_html);
-                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {

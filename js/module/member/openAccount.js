@@ -45,12 +45,12 @@ Account.register = function(){
         success: function (data) {
             if(data !=null && data.code == '1000'){
                 layer.alert('开户成功');
-                $.cookie('accountBankCode','0303',{expires:7, path: '/'});
+                $.cookie('userPayAccount', JSON.stringify(data.data.userPayAccount),{ path: '/'});
                 setTimeout(function() {
                     window.location.href = Dolaing.center.getUrl();
                 }, 1500);
             }else{
-                layer.alert(data.obj, {
+                layer.alert(data.msg, {
                     icon: 0
                 });
             }
@@ -99,7 +99,7 @@ Account.marginRegisterSms = function(){
                 //     $('#smsButton').removeAttr("disabled");
                 // }, 60000);
             }else{
-                layer.alert(data.obj, {
+                layer.alert(data.msg, {
                     icon: 0
                 });
             }

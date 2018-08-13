@@ -2,6 +2,7 @@ $(function () {
     var goodsId = $.query.get("id");
     var ajaxObj = {
         url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
+        authorization :false ,
         success: function (data) {
             console.log(data);
             if (data != null && data.code == '1000') {

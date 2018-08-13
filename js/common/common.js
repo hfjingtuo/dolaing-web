@@ -167,7 +167,6 @@ Dolaing.dictionary = function (dictName) {
     var ajaxObj = {
         url: SERVER_URL + "/getDictionary?dictName=" + dictName,
         success: function (data) {
-            console.log(data.data);
             if (data != null && data.code == '1000') {
                 $.each(data.data, function (i, val) {
                     if (optionVal == val.dictValue) {
@@ -305,46 +304,46 @@ Dolaing.center = {
         var bank;
         switch (bankCode) {
             case "0102" :
-                bank = {name: "中国工商银行", image: "", code: bankCode};
+                bank = {name: "中国工商银行", image: "/img/banks/bank_02.jpg", code: bankCode};
                 break;
             case "0103" :
-                bank = {name: "中国农业银行", image: "/img/农行.png", code: bankCode};
+                bank = {name: "中国农业银行", image: "/img/banks/bank_03.jpg", code: bankCode};
                 break;
             case "0104" :
-                bank = {name: "中国银行", image: "", code: bankCode};
+                bank = {name: "中国银行", image: "/img/banks/bank_04.jpg", code: bankCode};
                 break;
             case "0105" :
-                bank = {name: "中国建设银行", image: "/img/img_bank_logo.png", code: bankCode};
+                bank = {name: "中国建设银行", image: "/img/banks/bank_05.jpg", code: bankCode};
                 break;
             case "0301" :
-                bank = {name: "交通银行", image: "", code: bankCode};
+                bank = {name: "交通银行", image: "/img/banks/bank_06.jpg", code: bankCode};
                 break;
             case "0302" :
-                bank = {name: "中信银行", image: "", code: bankCode};
+                bank = {name: "中信银行", image: "/img/banks/bank_14.jpg", code: bankCode};
                 break;
             case "0303" :
-                bank = {name: "中国光大银行", image: "", code: bankCode};
+                bank = {name: "中国光大银行", image: "/img/banks/bank_01.jpg", code: bankCode};
                 break;
             case "0304" :
-                bank = {name: "华夏银行", image: "", code: bankCode};
+                bank = {name: "华夏银行", image: "/img/banks/bank_11.jpg", code: bankCode};
                 break;
             case "0305" :
-                bank = {name: "中国民生银行", image: "", code: bankCode};
+                bank = {name: "中国民生银行", image: "/img/banks/bank_09.jpg", code: bankCode};
                 break;
             case "0306" :
-                bank = {name: "广东发展银行", image: "", code: bankCode};
+                bank = {name: "广东发展银行", image: "/img/banks/bank_12.jpg", code: bankCode};
                 break;
             case "0307" :
-                bank = {name: "深圳发展银行", image: "", code: bankCode};
+                bank = {name: "深圳发展银行", image: "/img/banks/bank_13.jpg", code: bankCode};
                 break;
             case "0308" :
-                bank = {name: "招商银行", image: "", code: bankCode};
+                bank = {name: "招商银行", image: "/img/banks/bank_07.jpg", code: bankCode};
                 break;
             case "0309" :
-                bank = {name: "兴业银行", image: "", code: bankCode};
+                bank = {name: "兴业银行", image: "/img/banks/bank_10.jpg", code: bankCode};
                 break;
             case "0310" :
-                bank = {name: "上海浦东发展银行", image: "", code: bankCode};
+                bank = {name: "上海浦东发展银行", image: "/img/banks/bank_08.jpg", code: bankCode};
                 break;
             default:
                 bank = null;
