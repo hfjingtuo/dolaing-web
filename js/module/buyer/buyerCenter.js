@@ -71,7 +71,7 @@ BuyerCenter.CONTENT_HTML_2 ='<h1 class="center_right_title">我的订单</h1>' +
  * 添加内容
  */
 BuyerCenter.addContent = function(){
-    if(Dolaing.user.userPayAccount != null){
+    if(Dolaing.user.userPayAccount != null && Dolaing.user.userPayAccount != ""){
         $("#contentCenter").html(BuyerCenter.CONTENT_HTML_2);
         $(".selectAll").click(function(){
             Dolaing.selector(this , "contentCenter");
@@ -155,8 +155,13 @@ BuyerCenter.findRecords = function(){
                         _html += BuyerCenter.buildDataView(record);
                     });
 
+                    if(data.data.records == null || data.data.records.length == 0 ){
+                        _html += '<li style="text-align: center ; padding-top: 20px;">无数据</li>';
+                        $("#pageView").html("");
+                    }else{
+                        $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
+                    }
                     $("#orderList").html(_html);
-                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {

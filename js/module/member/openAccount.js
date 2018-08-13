@@ -230,7 +230,7 @@ Account.checkPayPassword = function(){
 
 
 $(function () {
-    var type = Dolaing.getParameter("type");
+    var type =  $.query.get("type");
     if(type == "3"){ //如果是农户则只有个人
       $("#companyTab").remove();
       $("#companyForm").remove();
