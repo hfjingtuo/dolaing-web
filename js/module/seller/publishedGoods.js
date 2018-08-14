@@ -1,6 +1,6 @@
 var PublishedGoods = {
     page: {
-        pageSize: 1,
+        pageSize: 5,
         pageNo: 1
     }
 };

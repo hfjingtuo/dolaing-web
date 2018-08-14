@@ -123,42 +123,42 @@ function payConfirm() {
     var address = $("#address").val();
     var goodsNum = $("#goodsNum").val();
     var remarks = $("#remarks").val();
-    if (!isEmpty(consignee)) {
+    if (isEmpty(consignee)) {
         layer.tips("请输入收货联系人", '#consignee', {
             tips: [2, '#f76592']
         });
         $("#consignee").focus();
         return false;
     }
-    if (!isEmpty(phone)) {
+    if (isEmpty(phone)) {
         layer.tips("请输入联系人电话", '#phone', {
             tips: [2, '#f76592']
         });
         $("#phone").focus();
         return false;
     }
-    if (!isEmpty(province)) {
+    if (isEmpty(province)) {
         layer.tips("请选择省", '#province', {
             tips: [2, '#f76592']
         });
         $("#province").focus();
         return false;
     }
-    if (!isEmpty(city)) {
+    if (isEmpty(city)) {
         layer.tips("请选择市", '#city', {
             tips: [2, '#f76592']
         });
         $("#city").focus();
         return false;
     }
-    if (!isEmpty(district)) {
+    if (isEmpty(district)) {
         layer.tips("请选择区", '#district', {
             tips: [2, '#f76592']
         });
         $("#district").focus();
         return false;
     }
-    if (!isEmpty(address)) {
+    if (isEmpty(address)) {
         layer.tips("请输入收货具体地址", '#address', {
             tips: [2, '#f76592']
         });

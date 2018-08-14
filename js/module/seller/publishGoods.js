@@ -84,21 +84,21 @@ function publishGoods() {
     var farmerId = $("#farmerId").val();
     var subscribeTime = $("#subscribeTime").val();
 
-    if (!isEmpty(goodsName)) {
+    if (isEmpty(goodsName)) {
         layer.tips("请输入商品标题", '#goodsName', {
             tips: [2, '#f76592']
         });
         $("#goodsName").focus();
         return false;
     }
-    if (!isEmpty(shopPrice)) {
+    if (isEmpty(shopPrice)) {
         layer.tips("请输入商品单价", '#shopPrice', {
             tips: [2, '#f76592']
         });
         $("#shopPrice").focus();
         return false;
     }
-    if (!isEmpty(depositRatio)) {
+    if (isEmpty(depositRatio)) {
         layer.tips("请输入定金比例1-100", '#depositRatio', {
             tips: [2, '#f76592']
         });
@@ -106,49 +106,49 @@ function publishGoods() {
         return false;
     }
     var depositRatioRegex = /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/;
-    if (!depositRatioRegex.test(depositRatio)) {
+    if (depositRatioRegex.test(depositRatio)) {
         layer.tips("定金比例应在1-100范围内", '#depositRatio', {
             tips: [2, '#f76592']
         });
         $("#depositRatio").focus();
         return false;
     }
-    if (!isEmpty(isFreeShipping)) {
+    if (isEmpty(isFreeShipping)) {
         layer.tips("请选择是否包邮", '#isFreeShipping', {
             tips: [2, '#f76592']
         });
         $("#isFreeShipping").focus();
         return false;
     }
-    if (!isEmpty(catId)) {
+    if (isEmpty(catId)) {
         layer.tips("请选择商品品类", '#catId', {
             tips: [2, '#f76592']
         });
         $("#catId").focus();
         return false;
     }
-    if (!isEmpty(breeds)) {
+    if (isEmpty(breeds)) {
         layer.tips("请输入商品品种", '#breeds', {
             tips: [2, '#f76592']
         });
         $("#breeds").focus();
         return false;
     }
-    if (!isEmpty(plantingCycle)) {
+    if (isEmpty(plantingCycle)) {
         layer.tips("请输入生长周期", '#plantingCycle', {
             tips: [2, '#f76592']
         });
         $("#plantingCycle").focus();
         return false;
     }
-    if (!isEmpty(startPlantime)) {
+    if (isEmpty(startPlantime)) {
         layer.tips("请选择种植开始时间", '#startPlantime', {
             tips: [2, '#f76592']
         });
         $("#startPlantime").focus();
         return false;
     }
-    if (!isEmpty(endPlantime)) {
+    if (isEmpty(endPlantime)) {
         layer.tips("请选择种植结束时间", '#endPlantime', {
             tips: [2, '#f76592']
         });
@@ -163,70 +163,70 @@ function publishGoods() {
         return false;
     }
     var expectPartOutputMatch = /^(?!0+(?:\.0+)?$)\d+(?:\.\d{1,2})?$/;
-    if (!isEmpty(expectPartOutput)) {
+    if (isEmpty(expectPartOutput)) {
         layer.tips("请输入预计单位产量", '#expectPartOutput', {
             tips: [2, '#f76592']
         });
         $("#expectPartOutput").focus();
         return false;
     }
-    if (!expectPartOutputMatch.test(expectPartOutput)) {
+    if (expectPartOutputMatch.test(expectPartOutput)) {
         layer.tips("预计单位产量保留2位小数", '#expectPartOutput', {
             tips: [2, '#f76592']
         });
         $("#expectPartOutput").focus();
         return false;
     }
-    if (!isEmpty(landSn)) {
+    if (isEmpty(landSn)) {
         layer.tips("请输入土地编号", '#landSn', {
             tips: [2, '#f76592']
         });
         $("#landSn").focus();
         return false;
     }
-    if (!isEmpty(landAddress)) {
+    if (isEmpty(landAddress)) {
         layer.tips("请输入土地所在地", '#landAddress', {
             tips: [2, '#f76592']
         });
         $("#landAddress").focus();
         return false;
     }
-    if (!isEmpty(landPartArea)) {
+    if (isEmpty(landPartArea)) {
         layer.tips("请输入每单位土地面积", '#landPartArea', {
             tips: [2, '#f76592']
         });
         $("#landPartArea").focus();
         return false;
     }
-    if (!isEmpty(goodsNumber)) {
+    if (isEmpty(goodsNumber)) {
         layer.tips("请输入商品库存", '#goodsNumber', {
             tips: [2, '#f76592']
         });
         $("#goodsNumber").focus();
         return false;
     }
-    if (!isEmpty(goodsMasterImgs)) {
+    if (isEmpty(goodsMasterImgs)) {
         layer.tips("请上传商品主图", '#uploadMasterImg', {
             tips: [2, '#f76592']
         });
         $("#goodsMasterImgs").focus();
         return false;
     }
-    if (!isEmpty(landImgs)) {
+    if (isEmpty(landImgs)) {
         layer.tips("请上传商品土地图", '#uploadLandImg', {
             tips: [2, '#f76592']
         });
         $("#landImgs").focus();
         return false;
     }
-    if (!isEmpty(goodsDescImgs)) {
+    if (isEmpty(goodsDescImgs)) {
         layer.tips("请上传商品详细图", '#uploadDescImg', {
             tips: [2, '#f76592']
         });
         $("#goodsDescImgs").focus();
         return false;
     }
-    if (!isEmpty(subscribeTime)) {
+    if (isEmpty(subscribeTime)) {
         layer.tips("请选择认购时限", '#subscribeTime', {
             tips: [2, '#f76592']
         });

@@ -64,7 +64,7 @@ $(function () {
                     }
 
                     var goodsHtml = "<h2>土地现状</h2>" + landImgsHtml + "<div class='goods_main_right_content_line'></div>" +
-                        "<h2>产品介绍</h2>" + goodsDescImgHtml + "<p>" + mallGoods.goodsDesc + "</p>";
+                        "<h2>产品介绍</h2><p>" + mallGoods.goodsDesc + "</p>" + goodsDescImgHtml;
 
                     $("#goodsDesc").html(goodsHtml);
 

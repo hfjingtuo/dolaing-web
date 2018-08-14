@@ -17,6 +17,12 @@ $(function () {
                 var receiptInformation = " 收货人：" + orderInfo.consignee + "</br> 收货电话：" + orderInfo.mobile + "</br>收货地址：" + orderInfo.address;
                 $("#receiptInformation").html(receiptInformation);
                 $("#buyerOrderAmount").text("￥" + orderInfo.buyerOrderAmount);
+                var payAccount = Dolaing.user.userPayAccount;
+                if (!isEmpty(payAccount)) {
+                    $("#setPay").hide();
+                }else {
+                    $("#setPay").show();
+                }
                 timer(orderInfo.createTime);//订单倒计时
             } else {
                 layer.alert(data.message, function (index) {
