@@ -226,7 +226,7 @@
                 obj.preview(function (index, file, result) {
                     var li_html = "<li>" +
                         "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
-                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2' onclick=\"$(this).parent().find('#aa').click();\" ></li>";
+                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
                     $('#showLandImgs').append(li_html);
                 });
             }
@@ -257,7 +257,7 @@
                 obj.preview(function (index, file, result) {
                     var li_html = "<li>" +
                         "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
-                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2' onclick=\"$(this).parent().find('#aa').click();\" ></li>";
+                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
                     $('#showDescImgs').append(li_html);
                 });
             }

@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="/css/style.css" />
-		<script src="/js/common/_sellMenu.js"></script>
 		<script type="text/javascript" src="/js/common/common.js" ></script>
 		<script type="text/javascript" src="/js/common/_head.js" ></script>
-		<script src="/js/module/seller/SellerCenterOrders6.js"></script>
+		<script type="text/javascript" src="/js/common/_sellMenu.js" ></script>
+		<script src="/js/module/seller/SellerCenterOrders.js"></script>
 		<title>卖家个人中心-订单详情</title>
 	</head>
 	<body>
@@ -35,13 +35,8 @@
 				<h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a style="cursor: pointer" onclick="Dolaing.center.seller.tabMenu(4)">订单列表</a>&nbsp;>&nbsp;订单详情</h1>
 				<!--状态线-->
 				<div class="order_line">
-					<ul class="order_line2">
-						<li><img src="/img/icon_point_1.png"/></li>
-						<li><img src="/img/icon_point_2.png"/></li>
-						<li><img src="/img/icon_point_3.png"/></li>
-						<li><img src="/img/icon_point_4.png"/></li>
-						<li><img src="/img/icon_point_5.png"/></li>
-						<li><img src="/img/icon_point_6.png"/></li>
+					<ul class="order_line2" id="imgOrderLine">
+
 					</ul>
 					<ul class="order_line1">
 						<li>
@@ -82,7 +77,7 @@
 				<div class="details" id="orderDetails">
 
 				</div>
-				<div class="details" style="margin-bottom: 60px;" id="payDetails">
+				<div class="details" id="payDetails">
 
 				</div>
 			</div>

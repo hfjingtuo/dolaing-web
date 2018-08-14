@@ -32,7 +32,7 @@ function getAllFarmer(farmerId) {
                         } else {
                             $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
                         }
-                    }else {
+                    } else {
                         $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
                     }
                 });
@@ -371,5 +371,16 @@ function getPublishedGoods(goodsId) {
 
 function deleteImg(obj) {
     var goodsMasterImgs = $("#goodsMasterImgs").val();
+    var ajaxObj = {};
+    ajaxObj.url = SERVER_URL + "/delete/goodsImage?fileName=" + goodsMasterImgs;
+    ajaxObj.success = function (data) {
+        console.log(data);
+        var code = data.code;
+        console.log(data);
+        if ('1000' != code) {
+            layer.alert("删除图片异常");
+        }
+    }
+    ajaxData(ajaxObj);
     obj.parentNode.parentNode.removeChild(obj.parentNode);
 }
