@@ -113,17 +113,16 @@ function minus() {
 }
 
 function payConfirm() {
-    var shopId = parseInt($("#shopId").val());
-    var goodsId = parseInt($("#goodsId").val());
+    var shopId = $("#shopId").val();
+    var goodsId = $("#goodsId").val();
     var consignee = $("#consignee").val();
     var phone = $("#phone").val();
-    var province = parseInt($("#province").val());
-    var city = parseInt($("#city").val());
-    var district = parseInt($("#district").val());
+    var province = $("#province").val();
+    var city = $("#city").val();
+    var district = $("#district").val();
     var address = $("#address").val();
-    var goodsNum = parseInt($("#goodsNum").val());
+    var goodsNum = $("#goodsNum").val();
     var remarks = $("#remarks").val();
-    var totalPrice = parseFloat($("#shopPrice").text() * parseInt(goodsNum));
     if (!isEmpty(consignee)) {
         layer.tips("请输入收货联系人", '#consignee', {
             tips: [2, '#f76592']
@@ -139,14 +138,14 @@ function payConfirm() {
         return false;
     }
     if (!isEmpty(province)) {
-        layer.tips("请选择省份", '#province', {
+        layer.tips("请选择省", '#province', {
             tips: [2, '#f76592']
         });
         $("#province").focus();
         return false;
     }
     if (!isEmpty(city)) {
-        layer.tips("请选择城市", '#city', {
+        layer.tips("请选择市", '#city', {
             tips: [2, '#f76592']
         });
         $("#city").focus();
@@ -166,16 +165,17 @@ function payConfirm() {
         $("#address").focus();
         return false;
     }
+    var totalPrice = parseFloat($("#shopPrice").text() * (goodsNum));
     var goods = {};
-    goods.shopId = shopId;
-    goods.goodsId = goodsId;
+    goods.shopId = parseInt(shopId);
+    goods.goodsId = parseInt(goodsId);
     goods.consignee = consignee;
     goods.mobile = phone;
-    goods.province = province;
-    goods.city = city;
-    goods.district = district;
+    goods.province = parseInt(province);
+    goods.city = parseInt(city);
+    goods.district = parseInt(district);
     goods.address = address;
-    goods.goodsNum = goodsNum;
+    goods.goodsNum = parseInt(goodsNum);
     goods.remarks = remarks;
     goods.buyerOrderAmount = totalPrice;
 
