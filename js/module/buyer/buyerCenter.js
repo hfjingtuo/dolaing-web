@@ -86,10 +86,18 @@ BuyerCenter.addContent = function(){
     }
 }
 
+BuyerCenter.batchReceive = function (id){
+    layer.confirm('确认收货吗？', {
+        btn: ['确认', '取消']
+    }, function(){
+        BuyerCenter.batchReceiveForm(id);
+    });
+}
+
 /**
  * 批量收货
  */
-BuyerCenter.batchReceive = function (id){
+BuyerCenter.batchReceiveForm = function (id){
     var ids = "" ;
     var flag = true ;
     if(id != null && id !=""){ //单个收货

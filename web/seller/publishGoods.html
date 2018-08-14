@@ -36,12 +36,12 @@
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
                 <h3>商品标题：</h3>
-                <input type="text" id="goodsName" placeholder="请输入该商品的标题" style="width: 500px;"/>
+                <input type="text" id="goodsName" placeholder="请输入该商品的标题" style="width: 500px;" maxlength="60"/>
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
                 <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       placeholder="填写商品单价" style="width: 200px;"/>
+                       placeholder="填写商品单价" style="width: 200px;" maxlength="15"/>
                 <h3 style="width: 118px;">定金比例：</h3>
                 <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
                        style="width: 180px;" maxlength="3"/>
@@ -81,7 +81,7 @@
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
                 <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 200px;" onchange="showGoodsArea()"/>
+                       style="width: 200px;" onchange="showGoodsArea()" maxlength="18"/>
                 <h4 style="left: 310px;color: #333333;">kg</h4>
             </div>
         </div>
@@ -90,14 +90,14 @@
             <div class="publish_box">
                 <h3>土地编号：</h3>
                 <input type="text" id="landSn" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 200px;"/>
+                       style="width: 200px;" maxlength="15"/>
                 <h3 style="width: 118px;">土地所在地：</h3>
-                <input type="text" id="landAddress" style="width: 200px;"/>
+                <input type="text" id="landAddress" style="width: 200px;" maxlength="30"/>
             </div>
             <div class="publish_box">
                 <h3>每单位土地面积：</h3>
                 <input type="text" id="landPartArea" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 200px;" onchange="showGoodsArea()"/>
+                       style="width: 200px;" onchange="showGoodsArea()" maxlength="18"/>
                 <h4 style="left: 310px;color: #333333;">亩</h4>
                 <h3 style="width: 118px;">所属农户：</h3>
                 <select id="farmerId" style="width: 200px"></select>
@@ -108,19 +108,21 @@
                 <h3>上架库存数：</h3>
                 <input type="text" id="goodsNumber"
                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"
-                       style="width: 200px;" onchange="showGoodsArea()"/>
+                       style="width: 200px;" onchange="showGoodsArea()" maxlength="15"/>
                 <h4 style="left: 310px;color: #333333;">件</h4>
                 <h5 id="showGoodsArea">总面积：约0亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约0KG</h5>
             </div>
         </div>
         <div class="publish">
-            <h1 class="layui-icon layui-icon-delete" style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张
+            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张
             </h1>
             <input type="hidden" id="goodsMasterImgs">
             <ul class="upload" id="showMasterImgs">
                 <li>
-                    <img src="/img/bg_upload.png" id="uploadMasterImg" style="width: 150px;height: 150px">
-                    <input type="file" accept="image/*"/>
+                    <img class="upload_img1"/>
+                    <img src="/img/bg_upload.png" id="uploadMasterImg" style="width: 150px;height: 150px"
+                         class="upload_img2">
+                    <input type="file" accept="image/*" id="aa"/>
                 </li>
             </ul>
             <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。
@@ -128,7 +130,9 @@
             <input type="hidden" id="landImgs">
             <ul class="upload" id="showLandImgs">
                 <li>
-                    <img src="/img/bg_upload.png" id="uploadLandImg" style="width: 150px;height: 150px">
+                    <img class="upload_img1"/>
+                    <img src="/img/bg_upload.png" id="uploadLandImg" style="width: 150px;height: 150px"
+                         class="upload_img2">
                     <input type="file" accept="image/*"/>
                 </li>
             </ul>
@@ -136,7 +140,9 @@
             <input type="hidden" id="goodsDescImgs">
             <ul class="upload" style="margin-bottom: 30px;" id="showDescImgs">
                 <li>
-                    <img src="/img/bg_upload.png" id="uploadDescImg" style="width: 150px;height: 150px">
+                    <img class="upload_img1"/>
+                    <img src="/img/bg_upload.png" id="uploadDescImg" style="width: 150px;height: 150px"
+                         class="upload_img2">
                     <input type="file" accept="image/*"/>
                 </li>
             </ul>
@@ -144,8 +150,8 @@
         <div class="publish">
             <div class="publish_box" style="margin-top:30px;">
                 <h3>电脑端商品描述：</h3>
-                <textarea id="goodsDesc" style="width: 450px;height: 150px"
-                          placeholder="商品描述，0-1200字符，600字以内"></textarea>
+                <textarea id="goodsDesc" style="width: 450px;height: 150px" placeholder="商品描述，0-1200字符，600字以内"
+                          maxlength="1000"></textarea>
             </div>
             <div class="publish_box">
                 <h3>认购时限：</h3>
@@ -181,12 +187,15 @@
             , size: 3000
             , before: function (obj) {
                 console.log(masterImg.split(",").length);
-                if (masterImg.split(",").length > 2) {
+                if (masterImg.split(",").length > 6) {
                     return layer.msg("最多允许上传5张图片", {icon: 2});
                 }
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#showMasterImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                    var li_html = "<li>" +
+                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
+                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
+                    $('#showMasterImgs').append(li_html);
                 });
             }
             , done: function (res) {
@@ -215,7 +224,10 @@
                     return layer.msg("最多允许上传1张图片");
                 }
                 obj.preview(function (index, file, result) {
-                    $('#showLandImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                    var li_html = "<li>" +
+                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
+                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
+                    $('#showLandImgs').append(li_html);
                 });
             }
             , done: function (res) {
@@ -243,7 +255,10 @@
                     return layer.msg("最多允许上传3张图片");
                 }
                 obj.preview(function (index, file, result) {
-                    $('#showDescImgs').append('<li><img src="' + result + '" alt="' + file.name + '" style="width: 150px;height: 150px"></li>')
+                    var li_html = "<li>" +
+                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
+                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
+                    $('#showDescImgs').append(li_html);
                 });
             }
             , done: function (res) {

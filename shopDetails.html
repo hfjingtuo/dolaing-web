@@ -3,67 +3,22 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <script src="js/common/common.js"></script>
-    <script type="text/javascript" src="js/myjs.js"></script>
+    <script src="/js/common/common.js"></script>
+    <script src="/js/common/_head.js"></script>
     <title>店铺详情</title>
 </head>
 <body>
-<div class="top">
-    <div class="auto">
-        <h6 class="fl" id="loginStatus">欢迎您！<a href="/login.html">【登录】</a><a href="/registerBuyer.html">【注册】</a></h6>
-        <ul class="top_ul">
-            <li><a href="index.html">
-                <h4 class="fl">网站首页</h4>
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">关注我们</h4>
-                <img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">关注我们</h4>
-                        <img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-            <li><a href="#">
-                <h4 class="fl">帮助中心</h4>
-                <img src="img/nav_arrow_down.png" class="fl nav_arrow"/>
-                <img src="img/img_nav_line.png" class="fl nav_line"/>
-                <ul class="top_list">
-                    <li><a href="#">
-                        <h4 class="fl" style="color: #F76592;">帮助中心</h4>
-                        <img src="img/nav_arrow_up.png" class="fl nav_arrow"/>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">新手入门</h4>
-                    </a></li>
-                    <li><a href="#">
-                        <h4 class="fl">入驻帮助</h4>
-                    </a></li>
-                </ul>
-            </a></li>
-        </ul>
-    </div>
-</div>
+<div class="top"></div>
 <div class="nav">
     <div class="auto">
         <a href="/index.html"><img src="/img/nav_logo.png" class="fl"/></a>
         <div class="nav_shop fl">
-            <h3>共荣农业合作社</h3>
-            <h4>品牌名：奔富1988</h4>
+            <h3 class="shopName"></h3>
+            <h4 id="userId"></h4>
         </div>
-
         <div class="enter_myorders" class="fr">
-            <img src="img/icon_nav_orders_color.png" class="fl m1"/>
-            <img src="img/icon_nav_orders_white.png" class="fl m2" style="display: none;"/>
+            <img src="/img/icon_nav_orders_color.png" class="fl m1"/>
+            <img src="/img/icon_nav_orders_white.png" class="fl m2" style="display: none;"/>
             <h4 class="fr">我的订单</h4>
         </div>
     </div>
@@ -73,7 +28,7 @@
 <div class="auto shop">
     <img src="img/banner_shop.jpg"/>
     <div class="shop_box">
-        <h3 class="fl">返回产品</h3>
+        <h3 class="fl" onclick="window.history.go(-1);">返回产品</h3>
         <ul class="fr shop_list">
             <li class="shop_list_cur">
                 <h4>诚信档案</h4>
@@ -93,17 +48,17 @@
     <div class="fl">
         <h2>营业执照信息</h2>
         <pre>
-名称：示例农贸有限公司
-类型：有限责任公司(自然人投资或控股)
-注册地址：测试地址贵州省清镇市凤山村XXXXX
-法定代表人：张伟
-注册资本：5000万人民币
-成立日期：2013年03月30日
-营业期限：2013年04月12日至无固定期限
-营业范围：经营范围限于与农业生产经营相关的项目，包括农、林、牧、渔业和农、林、牧、渔服务业，可以兼营与农业
+            名称：示例农贸有限公司
+            类型：有限责任公司(自然人投资或控股)
+            注册地址：测试地址贵州省清镇市凤山村XXXXX
+            法定代表人：张伟
+            注册资本：5000万人民币
+            成立日期：2013年03月30日
+            营业期限：2013年04月12日至无固定期限
+            营业范围：经营范围限于与农业生产经营相关的项目，包括农、林、牧、渔业和农、林、牧、渔服务业，可以兼营与农业
 	         产业化相关的农产品加工、销售，农机具销售和维修、农业技术开发和技术转让、广告经营等业务，也可以因
 	         地制宜地从事农业观光旅游、果蔬采摘等适宜发展当地农村经济的其他经营活动。
-				</pre>
+        </pre>
     </div>
 </div>
 <div class="shop_details auto">
@@ -111,16 +66,16 @@
     <div class="fl">
         <h2>经营许可证</h2>
         <pre>
-名称：示例农贸有限公司
-类型：有限责任公司(自然人投资或控股)
-经营地址：测试地址贵州省清镇市凤山村XXXXX
-负责人：张伟
-签发机关：贵阳市食品与安全xxx
-有效期限：2014年04月12日至2019年04月12日
-许可范围：测试许可范围限于与农业生产经营相关的项目，包括农、林、牧、渔业和农、林、牧、渔服务业，可以兼营与
-	         农业产业化相关的农产品加工、销售，农机具销售和维修、农业技术开发和技术转让、广告经营等业务，也可
-	         以因地制宜地从事农业观光旅游、果蔬采摘等适宜发展当地农村经济的其他经营活动。
-				</pre>
+            名称：示例农贸有限公司
+            类型：有限责任公司(自然人投资或控股)
+            经营地址：测试地址贵州省清镇市凤山村XXXXX
+            负责人：张伟
+            签发机关：贵阳市食品与安全xxx
+            有效期限：2014年04月12日至2019年04月12日
+            许可范围：测试许可范围限于与农业生产经营相关的项目，包括农、林、牧、渔业和农、林、牧、渔服务业，可以兼营与
+         农业产业化相关的农产品加工、销售，农机具销售和维修、农业技术开发和技术转让、广告经营等业务，也可
+         以因地制宜地从事农业观光旅游、果蔬采摘等适宜发展当地农村经济的其他经营活动。
+        </pre>
     </div>
 </div>
 <div class="papers auto">
@@ -141,40 +96,7 @@
     </ul>
 </div>
 
-
-<ul class="side">
-    <li>
-        <img src="img/img_side_follow.png"/>
-        <h4>关注我们</h4>
-    </li>
-    <li>
-        <img src="img/img_side_top.png"/>
-        <h4>回到顶部</h4>
-    </li>
-</ul>
-
-<div class="login_propaganda">
-    <ul class="auto">
-        <li>
-            <img src="img/img_login_1.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="img/img_login_2.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-        <li>
-            <img src="img/img_login_3.png" class="fl"/>
-            <h1>优质优价</br><span>互惠农商城乡发展</span></h1>
-        </li>
-    </ul>
-</div>
-
-
-<div class="foot">
-    <h4><a href="">加入我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a
-            href="">关于我们</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">友情链接</a></h4>
-    <h4>© 2018 dolaing.com. All Rights Reserved. 贵州XX科技有限公司 · ICP备-贵州11111111182号</h4>
-</div>
+<script src="/js/common/_side.js"></script>
+<script src="/js/common/_foot.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ function getAllFarmer(farmerId) {
                         } else {
                             $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
                         }
-                    }else {
+                    } else {
                         $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
                     }
                 });
@@ -205,6 +205,27 @@ function publishGoods() {
         $("#goodsNumber").focus();
         return false;
     }
+    if (!isEmpty(goodsMasterImgs)) {
+        layer.tips("请上传商品主图", '#uploadMasterImg', {
+            tips: [2, '#f76592']
+        });
+        $("#goodsMasterImgs").focus();
+        return false;
+    }
+    if (!isEmpty(landImgs)) {
+        layer.tips("请上传商品土地图", '#uploadLandImg', {
+            tips: [2, '#f76592']
+        });
+        $("#landImgs").focus();
+        return false;
+    }
+    if (!isEmpty(goodsDescImgs)) {
+        layer.tips("请上传商品详细图", '#uploadDescImg', {
+            tips: [2, '#f76592']
+        });
+        $("#goodsDescImgs").focus();
+        return false;
+    }
     if (!isEmpty(subscribeTime)) {
         layer.tips("请选择认购时限", '#subscribeTime', {
             tips: [2, '#f76592']
@@ -346,4 +367,20 @@ function getPublishedGoods(goodsId) {
         }
     }
     ajaxData(ajaxObj);
+}
+
+function deleteImg(obj) {
+    var goodsMasterImgs = $("#goodsMasterImgs").val();
+    var ajaxObj = {};
+    ajaxObj.url = SERVER_URL + "/delete/goodsImage?fileName=" + goodsMasterImgs;
+    ajaxObj.success = function (data) {
+        console.log(data);
+        var code = data.code;
+        console.log(data);
+        if ('1000' != code) {
+            layer.alert("删除图片异常");
+        }
+    }
+    ajaxData(ajaxObj);
+    obj.parentNode.parentNode.removeChild(obj.parentNode);
 }

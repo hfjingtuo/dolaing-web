@@ -4,10 +4,10 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
-// var SERVER_URL = "http://39.104.123.195:8067/dolaing";
-// var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
-var SERVER_URL = "http://localhost:8080/dolaing";
-var IMAGE_URL = "http://localhost:8080/dolaing/upload/";
+var SERVER_URL = "http://39.104.123.195:8067/dolaing";
+var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
+// var SERVER_URL = "http://localhost:8067/dolaing";
+// var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -66,7 +66,7 @@ function ajaxData(ajaxObj) {
         },
         async: (ajaxObj.async == null ? true : false),
         success: function (data) {
-            if (data.code == null || data.code == "502") {
+            if (data.code == null || data.code == "502" || data.code == "700") {
                 window.location.href = "/login.html";
                 return;
             }
@@ -137,10 +137,11 @@ function getzf(num) {
 }
 
 function goLogout() {
-    $.cookie('redirectUrl', '', {expires: -1});
+    $.cookie('redirectUrl', '', {expires: -1,path: '/'});
+    $.cookie('user', '', {expires: -1,path: '/'});
+    $.cookie('token', '', {expires: -1,path: '/'});
     location.href = "/login.html";
 }
-
 /**
  * 非空判断
  */

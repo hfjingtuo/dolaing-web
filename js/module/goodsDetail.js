@@ -28,7 +28,6 @@ $(function () {
                     $("#breeds").text("品种：" + mallGoods.breeds);
                     $("#brandName").text("品牌名称：" + mallShop.brandName);
 
-                    $("#goodsDesc").text(mallGoods.goodsDesc);
                     $("#landSn").text("地块编号：" + mallGoods.landSn);
                     $("#landAddress").text("所在地：" + mallGoods.landAddress);
                     $("#landPartArea").text("每单位土地面积：" + mallGoods.landPartArea + ("2" == mallGoods.landPartAreaUnit ? "亩" : "公顷"));
@@ -44,7 +43,30 @@ $(function () {
                     var deliveryDays = parseInt(endSubscribeDays) + parseInt(mallGoods.plantingCycle);//预计发货时间=认购结束时间+生长周期
                     $("#deliveryDays").text("生产完成后" + deliveryDays + "天内发货");
                     $("#endSubscribeTime").text("预计最晚：" + getDate(mallGoods.endSubscribeTime));
-                    $("#area").text("所在地区：" + (1 == mallGoods.province ? "贵州省" : "贵州省") + (1 == mallGoods.city ? "清镇市" : "清镇市"));
+                    $("#area").text("所在地区：" + data.data.address);
+
+                    /***********土地现状*****/
+                    $("#landImg").html("<img src='" + IMAGE_URL + mallGoods.landImgs.split(',')[0] + "'/>");
+                    /************产品介绍***/
+                    var landImgsHtml = "";
+                    var landImg = "";
+                    var landImgs = mallGoods.landImgs.split(",");
+                    for (var i = 0; i < landImgs.length; i++) {
+                        landImg = landImgs[i];
+                        landImgsHtml += "<img src='" + IMAGE_URL + landImg + "'/>";
+                    }
+                    var goodsDescImgHtml = "";
+                    var goodsDescImg;
+                    var goodsDescImgs = mallGoods.goodsDescImgs.split(",");
+                    for (var i = 0; i < goodsDescImgs.length; i++) {
+                        goodsDescImg = goodsDescImgs[i];
+                        goodsDescImgHtml += "<img src='" + IMAGE_URL + goodsDescImg + "'/>";
+                    }
+
+                    var goodsHtml = "<h2>土地现状</h2>" + landImgsHtml + "<div class='goods_main_right_content_line'></div>" +
+                        "<h2>产品介绍</h2>" + goodsDescImgHtml + "<p>" + mallGoods.goodsDesc + "</p>";
+
+                    $("#goodsDesc").html(goodsHtml);
 
                     $("#userId").text("店主：" + mallShop.userId);
                     $(".shopName").text(mallShop.shopName);
@@ -69,7 +91,7 @@ function subscription() {
     console.log("type=" + type);
     if (user == null || type == null) {
         window.location.href = "/login.html";
-    }else if (type != null && "1" == type) {
+    } else if (type != null && "1" == type) {
         var goodsId = $("#goodsId").val();
         var goodsNum = $("#goodsNum").val();
         window.location.href = "/web/pay/payConfirm.html?goodsId=" + goodsId + "&goodsNum=" + goodsNum;

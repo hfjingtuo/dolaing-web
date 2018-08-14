@@ -12,7 +12,7 @@
             loadingwidth: 64,
             loadingheight: 64,
             resizespeed: 400,
-            fadespeed: 400,
+            fadespeed: 4000,
             skinfolder: "skins/",
             loadingimage: "lightbox-loading.gif",
             nextimage: "lightbox-next.png",
