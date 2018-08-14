@@ -1,4 +1,13 @@
+//设置全局变量
+var leftData = {
+    pageSize: 2,
+    pageNo: 1,
+    html: ""
+};
+
 $(function () {
+    /*****加载左侧商品列表*********/
+    getLeftGoods();
     var goodsId = $.query.get("id");
     var ajaxObj = {
         url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
@@ -84,6 +93,55 @@ $(function () {
     }
     ajaxData(ajaxObj);
 });
+
+/**
+ * 加载左侧商品列表
+ */
+function getLeftGoods() {
+    $.ajax({
+        type: "post",
+        data: "pageNo=" + leftData.pageNo + "&pageSize=" + leftData.pageSize,
+        url: SERVER_URL + "/index",
+        success: function (data) {
+            var goodsList = data.list;
+            console.log(goodsList);
+            if (goodsList != null && goodsList.length != 0) {
+                var goods = null;
+                for (var i = 0; i < goodsList.length; i++) {
+                    goods = goodsList[i];
+                    leftData.html += goodsHtml(goods);
+                    countdown(goods.endSubscribeTime, goods.id);//认购倒计时
+                }
+                $("#leftGoods").html(leftData.html);
+            }
+        }
+    });
+}
+
+function goodsHtml(goods) {
+    var isFreeShipping = goods.isFreeShipping;
+    if (1 == isFreeShipping) {
+        isFreeShipping = "包邮";
+    } else {
+        isFreeShipping = "自费";
+    }
+    var html =
+        "<li title='" + goods.goodsName + "'>" +
+        "<a href='/goodsDetails.html?id=" + goods.id + "'>" +
+        "<img src='" + IMAGE_URL + goods.goodsMasterImgs.split(',')[0] + "' class='home_list_goods'/>" +
+        "<h3>" + goods.goodsName + "</h3>" +
+        "<h4>" + goods.goodsDesc + "</h4>" +
+        "<div class=\"home_list_price\">" +
+        "<h5 class=\"fl\"><span style=\"font-size: 16px;\">￥</span>&nbsp;"+ goods.shopPrice+"&nbsp;" +
+        "<span style=\"font-size: 14px;color: #E85526;\">元</span>\n" +
+        " </h5>" +
+        " <img src=\"/img/sign_free.png\" class=\"fr\"/>" +
+        "<h6>"+ isFreeShipping +"</h6>" +
+        " </div>" +
+        " <h6 class=\"home_list_time\">剩余：<span id='timer" + goods.id + "'></span></h6>" +
+        "</a></li>"
+    return html;
+}
 
 function subscription() {
     var user = Dolaing.user;
