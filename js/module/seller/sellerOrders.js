@@ -158,17 +158,5 @@ function page(pageNo){
  * @param id
  */
 function lookOrderDetail(orderStatus, sellerReceiveStatus, id) {
-    if (orderStatus == 1 && sellerReceiveStatus == 0) {
-        window.location.href = "/web/seller/SellerCenterOrders1.html?orderId=" + id;
-    }else if (orderStatus == 2 && sellerReceiveStatus == 1) {
-        window.location.href = "/web/seller/SellerCenterOrders2.html?orderId=" + id;
-    } else if (orderStatus == 2 && sellerReceiveStatus == 2) {
-        window.location.href = "/web/seller/SellerCenterOrders3.html?orderId=" + id;
-    } else if (orderStatus == 3 && sellerReceiveStatus == 3) {
-        window.location.href = "/web/seller/SellerCenterOrders4.html?orderId=" + id;
-    } else if (orderStatus == 100 && sellerReceiveStatus == 3) {
-        window.location.href = "/web/seller/SellerCenterOrders5.html?orderId=" + id;
-    }else if (orderStatus == 100 && sellerReceiveStatus == 4) {
-        window.location.href = "/web/seller/SellerCenterOrders6.html?orderId=" + id;
-    }
+    window.location.href = "/web/seller/SellerCenterOrders.html?orderId=" + id + "&sellerReceiveStatus=" + sellerReceiveStatus + "&orderStatus=" + orderStatus;
 }
