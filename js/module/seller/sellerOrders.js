@@ -59,9 +59,9 @@ SellerOrder.buildDataView = function(order){
         _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
             '                    <tr>' +
             '                        <td>' +
-            '                            <img src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
+            '                            <img style="cursor: pointer;" onclick="SellerOrder.goGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
             '                            <div class="fl">' +
-            '                                <h3>'+goods.goodsName+'</h3>' +
+            '                                <h3 style="cursor: pointer;" onclick="SellerOrder.goGoodsDetail('+goods.goodsId+')" >'+goods.goodsName+'</h3>' +
             '                                <h4>土地编号：'+goods.landSn+'</h4>' +
             '                                <h4>认购土地面积：'+goods.buyLandArea+goods.landPartAreaUnitName+'</h4>' +
             '                            </div>' +
@@ -149,6 +149,10 @@ SellerOrder.batchDeliver = function(id){
 function page(pageNo){
     SellerOrder.page.pageNo = pageNo ;
     SellerOrder.findRecords();
+}
+
+SellerOrder.goGoodsDetail = function (id) {
+    window.location.href = "/goodsDetails.html?id="+id;
 }
 
 /**

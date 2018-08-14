@@ -194,17 +194,19 @@ BuyerCenter.buildDataView = function(order){
         goods = order.orderGoodsVos[i] ;
         _html += '<div class="orders_box">' +
         '<div class="orders_box_goods" style="width: 466px;">' +
-        '<img src="'+IMAGE_URL+goods.goodsMasterImg+'">' +
+        '<img style="cursor: pointer;" onclick="BuyerCenter.goGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'">' +
         '<div class="fl">' +
-        '<h3>' + goods.goodsName + '</h3>' +
+        '<h3  style="cursor: pointer;" onclick="BuyerCenter.goGoodsDetail('+goods.goodsId+')">' + goods.goodsName + '</h3>' +
         ' <h4>土地编号：' + goods.landSn + '</h4>' +
         '<h4>认购土地面积：' + goods.buyLandArea + goods.landPartAreaUnitName + '</h4>' +
         '</div>' +
         '</div>' +
         '<div class="orders_box_state" style="width: 125px;">' +
-            '<h3>' + order.orderStatusFullName + '</h3>' +
-            '<h4 class="view_detail"><a href="javascript:BuyerCenter.goDetail(\''+order.id+'\');">查看详情</a></h4>' +
-            '</div>' +
+            '<h3>' + order.orderStatusFullName + '</h3>' ;
+        if( order.orderStatusFullCode != "4"){
+            _html += '<h4 class="view_detail"><a href="javascript:BuyerCenter.goDetail(\''+order.id+'\');">查看详情</a></h4>' ;
+        }
+        _html +=  '</div>' +
             '<div class="orders_box_price" style="width: 161px;">' +
             '<h3 style="width: 161px;font-weight: bold;">￥' + goods.goodsAmount + '元</h3>' +
             '<h4 style="width: 161px;font-size: 12px;color: #666666;">（含运费：￥0元）</h4>' +
@@ -292,6 +294,10 @@ BuyerCenter.goPayHtml = function(id){
 
 BuyerCenter.goDetail = function(id){
     window.location.href = "/web/buyer/orderDetail.html?orderId="+id;
+}
+
+BuyerCenter.goGoodsDetail = function (id) {
+    window.location.href = "/goodsDetails.html?id="+id;
 }
 
 /**
