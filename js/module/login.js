@@ -33,8 +33,9 @@ function login() {
                     tips: [2, "#f76592"]
                 });
             } else {
+                var userPayAccount = (data.userPayAccount == null || data.userPayAccount == "") ? "" : data.userPayAccount;
                 $.cookie('token', data.token,{ path: '/'});
-                $.cookie('userPayAccount', JSON.stringify(data.userPayAccount),{ path: '/'});
+                $.cookie('userPayAccount', userPayAccount==""? null : JSON.stringify(userPayAccount),{ path: '/'});
                 $.cookie('user', JSON.stringify(data.user),{ path: '/'});
                 $.cookie('userName', userName,{ path: '/'});
                 location.href = "/index.html";

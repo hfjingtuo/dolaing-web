@@ -4,10 +4,10 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
-var SERVER_URL = "http://39.104.123.195:8067/dolaing";
-var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
-// var SERVER_URL = "http://localhost:8067/dolaing";
-// var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
+// var SERVER_URL = "http://39.104.123.195:8067/dolaing";
+// var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
+var SERVER_URL = "http://localhost:8067/dolaing";
+var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -474,4 +474,97 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
 function splitTime(time) {
     var times = time.split(" ");
     return times[0] + "</br>" + times[1];
+}
+
+
+/**
+ * 验证是否为邮箱
+ * @param str
+ * @returns {boolean}
+ */
+Dolaing.validate.isEmail = function (str) {
+    var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+    return reg.test(str);
+}
+
+/**
+ * 验证是否为手机号
+ * @param str
+ * @returns {boolean}
+ */
+Dolaing.validate.isMobile = function (str) {
+    var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(19[0-9]{1})|(17[0-9]{1})|(14[0-9]{1}))+\d{8})$/;
+    //如果为1开头则验证手机号码
+    if (str.substring(0, 1) == "1") {
+        if (!reg.test(str) || str.length != 11) {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * 验证是否为座机号
+ * @param str
+ * @returns {boolean}
+ */
+Dolaing.validate.isPhone = function (str) {
+    var reg = /^(?:(?:0\d{2,3})-)?(?:\d{7,8})(-(?:\d{3,}))?$/;
+    //如果为0开头则验证固定电话号码
+    if (str.substring(0, 1) == "0") {
+        if (!reg.test(str)) {
+            return false;
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * 身份证验证
+ * @param idCard
+ * @returns {boolean}
+ */
+Dolaing.validate.isPersonNo = function(idCard){
+    //15位和18位身份证号码的正则表达式
+    var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+    //如果通过该验证，说明身份证格式正确，但准确性还需计算
+    if (regIdCard.test(idCard)) {
+        if (idCard.length == 18) {
+            var idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); //将前17位加权因子保存在数组里
+            var idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2); //这是除以11后，可能产生的11位余数、验证码，也保存成数组
+            var idCardWiSum = 0; //用来保存前17位各自乖以加权因子后的总和
+            for (var i = 0; i < 17; i++) {
+                idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i];
+            }
+            var idCardMod = idCardWiSum % 11;//计算出校验码所在数组的位置
+            var idCardLast = idCard.substring(17);//得到最后一位身份证号码
+            //如果等于2，则说明校验码是10，身份证号码最后一位应该是X
+            if (idCardMod == 2) {
+                if (idCardLast == "X" || idCardLast == "x") {
+                    return true;
+                    //alert("恭喜通过验证啦！");
+                } else {
+                    return false;
+                    //alert("身份证号码错误！");
+                }
+            } else {
+                //用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+                if (idCardLast == idCardY[idCardMod]) {
+                    //alert("恭喜通过验证啦！");
+                    return true;
+                } else {
+                    return false;
+                    //alert("身份证号码错误！");
+                }
+            }
+        }
+    } else {
+        //alert("身份证格式不正确!");
+        return false;
+    }
+
 }

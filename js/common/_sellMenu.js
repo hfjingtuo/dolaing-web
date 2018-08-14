@@ -43,9 +43,9 @@ SellCenterMenu.infoMenus = function(){
         '</div>' +
         '<ul class="center_left_list">' +
         '<li  onclick="Dolaing.center.seller.tabMenu(1)">交易记录</li>' +
-        '<li  onclick="Dolaing.center.seller.tabMenu(2)">发布产品</li>' +
-        '<li  onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>' +
-        '<li  onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>' +
+        // '<li  onclick="Dolaing.center.seller.tabMenu(2)">发布产品</li>' +
+        // '<li  onclick="Dolaing.center.seller.tabMenu(3)">已发布产品</li>' +
+        // '<li  onclick="Dolaing.center.seller.tabMenu(4)">订单列表</li>' +
         '<li  onclick="Dolaing.center.seller.tabMenu(5)">修改密码</li>' +
         '</ul>' +
         '<h2 class="center_out" onclick="goLogout();">用户退出</h2>' +
