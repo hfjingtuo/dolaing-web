@@ -373,7 +373,7 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .bank_card2{width: 240px;background: url(../img/bg_bank_name.png) no-repeat;overflow: hidden;height: 46px;padding: 0 20px;}
 .bank_card2 h3{height: 46px;line-height: 46px;}
 
-.center_right{width: 900px;background: white;min-height: 782px;}
+.center_right{width: 900px;background: white;min-height: 436px;}
 .center_right_tip{width: 850px;margin: 0 25px;border-bottom: 1px solid #E6E6E6;color: #ee8564;font-size: 24px;text-align: center;line-height: 36px;padding: 70px 0; }
 
 /***初始页-支付设置***/
