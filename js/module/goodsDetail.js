@@ -64,14 +64,16 @@ $(function () {
 });
 
 function subscription() {
-    var user = $.cookie('user');
-    var type = JSON.parse(user).type;
+    var user = Dolaing.user;
+    var type = user.type;
     console.log("type=" + type);
-    if ("1" == type) {
+    if (user == null || type == null) {
+        window.location.href = "/login.html";
+    }else if (type != null && "1" == type) {
         var goodsId = $("#goodsId").val();
         var goodsNum = $("#goodsNum").val();
         window.location.href = "/web/pay/payConfirm.html?goodsId=" + goodsId + "&goodsNum=" + goodsNum;
-    }else {
+    } else {
         layer.alert("您是卖家用户,不允许购买此商品")
     }
 }

@@ -30,7 +30,6 @@ function getPublishedGoodsList() {
                     $(data.data.records).each(function (index, record) {
                         _html += goodsHtml(record);
                     });
-
                     $("#root").html(_html);
                     $("#pageView").html(Dolaing.page.view(data.data.current, data.data.pages, data.data.total));
                 }

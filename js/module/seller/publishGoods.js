@@ -1,25 +1,40 @@
 $(function () {
     /***初始化左侧菜单**/
     SellCenterMenu.selectMenu(2);
+
     var goodsId = $.query.get("id");
     if (goodsId != null && goodsId != "") {
+        /***初始化商品编辑页数据**/
         getPublishedGoods(goodsId);
     } else {
         /**初始化品类下拉框**/
         Dolaing.dictionary("catId");
+        /**初始化种植时间下拉框**/
+        for (var month = 1; month < 13; month++) {
+            $("#startPlantime").append('<option value=' + month + '>' + month + '月</option>');
+            $("#endPlantime").append('<option value=' + month + '>' + month + '月</option>');
+        }
+        /**获取下级的所有农户**/
+        getAllFarmer(null);
     }
-    /**获取下级的所有农户**/
-    getAllFarmer();
 });
 
-function getAllFarmer() {
+function getAllFarmer(farmerId) {
     var ajaxObj = {
         url: SERVER_URL + "/getAllFarmer",
         success: function (data) {
             console.log(data.data);
             if (data != null && data.code == '1000') {
                 $.each(data.data, function (i, val) {
-                    $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
+                    if (farmerId != null) {
+                        if (val.account == farmerId) {
+                            $("#farmerId").append('<option selected value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
+                        } else {
+                            $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
+                        }
+                    }else {
+                        $("#farmerId").append('<option value=' + val.account + '>' + val.account + '【' + val.name + '】</option>');
+                    }
                 });
             }
         }
@@ -27,6 +42,9 @@ function getAllFarmer() {
     ajaxData(ajaxObj);
 }
 
+/**
+ * 动态计算商品产量、土地面积信息
+ */
 function showGoodsArea() {
     var expectPartOutput = $("#expectPartOutput").val();
     var landPartArea = $("#landPartArea").val();
@@ -241,8 +259,9 @@ function publishGoods() {
 
 function getPublishedGoods(goodsId) {
     var ajaxObj = {
-        url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
+        url: SERVER_URL + "/publishedGoods/detail?goodsId=" + goodsId,
         success: function (data) {
+            console.log(data);
             if (data != null && data.code == '1000') {
                 if (data.data != null) {
                     var goodsMasterImgHtml = "";
@@ -253,11 +272,10 @@ function getPublishedGoods(goodsId) {
                     var landImg = null;
                     var goodsDescImg = null;
 
-                    var mallGoods = data.data.mallGoods;
+                    var mallGoods = data.data;
 
                     $("#goodsId").val(mallGoods.id);
                     $("#catIdVal").val(mallGoods.catId);
-                    console.log("====" + $("#catIdVal").val())
                     $("#goodsName").val(mallGoods.goodsName);
                     $("#shopPrice").val(mallGoods.shopPrice);
                     $("#depositRatio").val(mallGoods.depositRatio * 100);
@@ -270,6 +288,27 @@ function getPublishedGoods(goodsId) {
                     $("#goodsNumber").val(mallGoods.goodsNumber);
                     $("#goodsDesc").val(mallGoods.goodsDesc);
                     $("#subscribeTime").val(mallGoods.startSubscribeTime.substr(0, 10) + " 至 " + mallGoods.endSubscribeTime.substr(0, 10));
+
+                    //加载商品产量、土地面积信息
+                    showGoodsArea();
+                    /**获取下级的所有农户**/
+                    getAllFarmer(mallGoods.farmerId);
+
+                    var plantime = mallGoods.plantime.split(",");
+                    var startPlantime = plantime[0];
+                    var endPlantime = plantime[1];
+                    for (var month = 1; month < 13; month++) {
+                        if (startPlantime == month) {
+                            $("#startPlantime").append('<option selected value=' + month + '>' + month + '月</option>');
+                        } else {
+                            $("#startPlantime").append('<option value=' + month + '>' + month + '月</option>');
+                        }
+                        if (endPlantime == month) {
+                            $("#endPlantime").append('<option selected value=' + month + '>' + month + '月</option>');
+                        } else {
+                            $("#endPlantime").append('<option value=' + month + '>' + month + '月</option>');
+                        }
+                    }
 
                     var goodsMasterImgs = mallGoods.goodsMasterImgs.split(",");
                     goodsMasterImgHtml += "<li><img src='/img/bg_upload.png' id='uploadMasterImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"

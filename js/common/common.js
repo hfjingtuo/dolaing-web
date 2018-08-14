@@ -6,8 +6,8 @@ document.write("<script language=javascript src='/js/jquery.cookie.js'></script>
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
 // var SERVER_URL = "http://39.104.123.195:8067/dolaing";
 // var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
-var SERVER_URL = "http://localhost:8067/dolaing";
-var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
+var SERVER_URL = "http://localhost:8080/dolaing";
+var IMAGE_URL = "http://localhost:8080/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -139,7 +139,6 @@ function getzf(num) {
 function goLogout() {
     $.cookie('redirectUrl', '', {expires: -1});
     location.href = "/login.html";
-    location.reload();
 }
 
 /**
@@ -193,14 +192,13 @@ Dolaing.dictionary = function (dictName) {
  */
 Dolaing.view.info = function () {
     var token = $.cookie('token');
-    var userName = $.cookie('userName');
     var user = $.cookie('user');
     var userPayAccount = $.cookie('userPayAccount');
     var loginStatusHtml = "";
     var centerUrl = "";
 
     if (token == null || user == null) {
-        loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="#">【注册】</a>';
+        loginStatusHtml = '欢迎您！<a href="/login.html">【登录】</a><a href="/registerBuyer.html">【注册】</a>';
     } else {
         Dolaing.user = JSON.parse(user);
         Dolaing.user.userPayAccount = userPayAccount == null ? null : JSON.parse(userPayAccount);
@@ -209,7 +207,7 @@ Dolaing.view.info = function () {
     }
     var _html = '<div class="auto">' +
         '<h6 class="fl">' + loginStatusHtml + '</h6>' +
-        '<ul class="top_ul">' +
+        /*'<ul class="top_ul">' +
         '<li><a href="/index.html">' +
         '<h4 class="fl">网站首页</h4>' +
         '<img src="/img/img_nav_line.png" class="fl nav_line" />' +
@@ -248,7 +246,7 @@ Dolaing.view.info = function () {
         '</a></li>' +
         '</ul>' +
         '</a></li>' +
-        '</ul>' +
+        '</ul>' +*/
         '</div>';
     $(".top").html(_html);
 };
