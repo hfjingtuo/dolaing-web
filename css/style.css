@@ -487,9 +487,11 @@ h1,h2,h3,h4,h5,h6{ font-weight:normal;}
 .publish_box textarea{width: 400px;height: 80px; padding:15px 20px;background: #f7f5f2;border: 1px solid #E6E6E6;border-radius: 5px;float: left;outline: none;}
 .publish_box select{width: 242px;height: 52px;background: #f7f5f2;border: 1px solid #E6E6E6;border-radius: 5px;text-indent: 20px;float: left;cursor: pointer;}
 .upload{overflow: hidden;margin-left: 205px;width: 504px;}
-.upload li{width: 140px;float: left;cursor: pointer;margin-top: 20px;}
-.upload li:nth-child(3n-1){margin-left:42px;margin-right: 42px;}
+.upload li{width: 154px;float: left;cursor: pointer;margin-top: 20px;position: relative;}
+.upload li:nth-child(3n-1){margin-left:20px;margin-right: 20px;}
 .upload li input{display: none;}
+.upload_img1{position: absolute;top: 0;right: 0;}
+.upload_img2{width: 140px;height: 140px;margin-top: 14px;}
 
 /****已发布产品*****/
 .published_list>div:nth-child(1){width: 355px;}
