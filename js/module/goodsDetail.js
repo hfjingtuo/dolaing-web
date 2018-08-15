@@ -8,6 +8,7 @@ var leftData = {
 $(function () {
     /*****加载左侧商品列表*********/
     getLeftGoods();
+    /*****加载商品详情页*********/
     var goodsId = $.query.get("id");
     var ajaxObj = {
         url: SERVER_URL + "/goods/detail?goodsId=" + goodsId,
@@ -16,7 +17,8 @@ $(function () {
             console.log(data);
             if (data != null && data.code == '1000') {
                 if (data.data != null) {
-                    var html = "";
+                    var bigImgHtml = "";
+                    var goodsMasterImgHtml = "";
                     var goodsMasterImg = null;
                     var mallGoods = data.data.mallGoods;
                     var mallShop = data.data.mallShop;
@@ -24,10 +26,17 @@ $(function () {
                     var goodsMasterImgs = mallGoods.goodsMasterImgs.split(",");
                     for (var i = 0; i < goodsMasterImgs.length; i++) {
                         goodsMasterImg = goodsMasterImgs[i];
-                        html += "<li><img src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
+                        if (i == 0) {
+                            bigImgHtml += "<li style='display: block;'><img src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
+                            goodsMasterImgHtml += "<li><img class='img_small_cur' src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
+                        } else {
+                            bigImgHtml += "<li><img src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
+                            goodsMasterImgHtml += "<li><img src='" + IMAGE_URL + goodsMasterImg + "'/></li>";
+                        }
                     }
-                    $("#bigImg").html("<img src='" + IMAGE_URL + goodsMasterImgs[0] + "'/>");
-                    $("#goodsMasterImg").html(html);
+                    $("#bigImg").html(bigImgHtml);
+                    $("#goodsMasterImg").html(goodsMasterImgHtml);
+                    //$("ul").removeAttr("id");
 
                     $("#goodsName").text(mallGoods.goodsName);
                     $("#goodsBrief").text(mallGoods.goodsBrief);
@@ -47,7 +56,7 @@ $(function () {
 
                     $("#isFreeShipping").text("1" == mallGoods.isFreeShipping ? "包邮" : "自费");
 
-                    $("#deposit").text("定金：￥" + mallGoods.shopPrice * mallGoods.depositRatio + "元");//定金=单价*定金比例
+                    $("#deposit").text("定金：￥" + new BigDecimal(mallGoods.shopPrice + "").multiply(new BigDecimal(mallGoods.depositRatio + "")).setScale(2) + "元");//定金=单价*定金比例
                     var endSubscribeDays = checkTime(parseInt((new Date(mallGoods.endSubscribeTime) - new Date) / 1000 / 60 / 60 / 24, 10));//认购结束剩余的天数
                     var deliveryDays = parseInt(endSubscribeDays) + parseInt(mallGoods.plantingCycle);//预计发货时间=认购结束时间+生长周期
                     $("#deliveryDays").text("生产完成后" + deliveryDays + "天内发货");
@@ -74,7 +83,6 @@ $(function () {
 
                     var goodsHtml = "<h2>土地现状</h2>" + landImgsHtml + "<div class='goods_main_right_content_line'></div>" +
                         "<h2>产品介绍</h2><p>" + mallGoods.goodsDesc + "</p>" + goodsDescImgHtml;
-
                     $("#goodsDesc").html(goodsHtml);
 
                     $("#userId").text("店主：" + mallShop.userId);
@@ -132,11 +140,11 @@ function goodsHtml(goods) {
         "<h3>" + goods.goodsName + "</h3>" +
         "<h4>" + goods.goodsDesc + "</h4>" +
         "<div class=\"home_list_price\">" +
-        "<h5 class=\"fl\"><span style=\"font-size: 16px;\">￥</span>&nbsp;"+ goods.shopPrice+"&nbsp;" +
+        "<h5 class=\"fl\"><span style=\"font-size: 16px;\">￥</span>&nbsp;" + goods.shopPrice + "&nbsp;" +
         "<span style=\"font-size: 14px;color: #E85526;\">元</span>\n" +
         " </h5>" +
         " <img src=\"/img/sign_free.png\" class=\"fr\"/>" +
-        "<h6>"+ isFreeShipping +"</h6>" +
+        "<h6>" + isFreeShipping + "</h6>" +
         " </div>" +
         " <h6 class=\"home_list_time\">剩余：<span id='timer" + goods.id + "'></span></h6>" +
         "</a></li>"

@@ -40,11 +40,9 @@
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       placeholder="填写商品单价" style="width: 200px;" maxlength="15"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" placeholder="填写商品单价" style="width: 200px;" maxlength="15"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
-                       style="width: 180px;" maxlength="3"/>
+                <input type="number" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 180px;" maxlength="3" min="0" max="100"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">

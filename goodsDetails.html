@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="js/layui/css/layui.css">
     <script src="/js/common/common.js"></script>
     <script src="/js/common/_head.js" ></script>
+    <script src="/js/MathContext.js"></script>
+    <script src="/js/BigDecimal.js"></script>
     <script src="/js/module/goodsDetail.js"></script>
     <title>产品详情</title>
 </head>
@@ -31,7 +33,6 @@
 <div class="auto shop">
     <img src="/img/banner_shop.jpg"/>
     <div class="shop_box">
-        <!--<h3 class="fl">返回产品</h3>-->
         <ul class="fr shop_list">
             <li><a href="shopDetails.html">
                 <h4>诚信档案</h4>
@@ -48,11 +49,16 @@
 <!--商品详情1-->
 <div class="auto goods" style="background: white;">
     <div class="goods_left fl">
-        <ul class="img_big">
-            <li style="display: block;" id="bigImg"><img src="img/img_goods1.jpg"/></li>
+        <!--<ul class="img_big" >
+            <li style="display: block;"><img src="http://localhost:8067/dolaing/upload/images/goods/201808/2018081414585913.jpg"></li>
+            <li><img src="http://localhost:8067/dolaing/upload/images/goods/201808/2018081011005343.png"></li>
         </ul>
-        <ul class="img_small" id="goodsMasterImg">
-        </ul>
+        <ul class="img_small">
+            <li><img class="img_small_cur" src="http://localhost:8067/dolaing/upload/images/goods/201808/2018081414585913.jpg"></li>
+            <li><img src="http://localhost:8067/dolaing/upload/images/goods/201808/2018081011005343.png"></li>
+        </ul>-->
+        <ul class="img_big" id="bigImg"></ul>
+        <ul class="img_small" id="goodsMasterImg"></ul>
     </div>
     <div class="goods_right fl">
         <h1 id="goodsName"></h1>
