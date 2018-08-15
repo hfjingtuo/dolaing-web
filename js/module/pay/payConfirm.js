@@ -47,7 +47,14 @@ function initGoodsData() {
                 if (data.data != null) {
                     var mallGoods = data.data.mallGoods;
                     var mallShop = data.data.mallShop;
-                    var depositRatio = mallGoods.depositRatio;//定金比例
+
+                    goodsNum = new BigDecimal(goodsNum + "");
+                    var depositRatio = new BigDecimal(mallGoods.depositRatio + "");//定金比例
+                    var shopPrice = new BigDecimal(mallGoods.shopPrice + "");//商品价格
+                    var deposit = depositRatio.multiply(shopPrice).multiply(goodsNum).setScale(2);//定金
+                    var totalPrice = shopPrice.multiply(goodsNum).setScale(2);//商品总价
+                    var retainage = totalPrice - deposit;//尾款
+
                     $("#goodsId").val(mallGoods.id);
                     $("#depositRatioVal").val(depositRatio);
                     $("#shopId").val(mallShop.id);
@@ -61,12 +68,12 @@ function initGoodsData() {
                     $("#expectTotalOutputUnit").text(mallGoods.expectTotalOutputUnit + "kg");
                     $("#catName").text(data.data.catName);
                     $("#breeds").text(mallGoods.breeds);
-                    $("#shopPrice").text(mallGoods.shopPrice);
-                    $("#price").val(mallGoods.shopPrice);
-                    $(".totalPrice").text(parseFloat(mallGoods.shopPrice) * parseInt(goodsNum));//商品总价
-                    $("#isFreeShipping").text("邮资：" + ("1" == mallGoods.isFreeShipping ? "包邮" : "自费"));
-                    $("#deposit").text(parseFloat(mallGoods.shopPrice) * goodsNum * parseFloat(depositRatio));//定金
-                    $("#retainage").text(parseFloat(mallGoods.shopPrice) * goodsNum * (1 - depositRatio));//尾款
+                    $("#shopPrice").text(shopPrice);
+                    $("#price").val(shopPrice);
+                    $(".totalPrice").text(totalPrice);//商品总价
+                    $("#isFreeShipping").text("邮资：包邮");
+                    $("#deposit").text(deposit);//定金
+                    $("#retainage").text(retainage.toFixed(2));//尾款
                     $("#depositRatio").text("下单支付认购全款，其中的 " + depositRatio * 100 + "% 作为定金发放给卖家。");
                     $("#expectDeliverTime").text("(在" + getDate(mallGoods.expectDeliverTime) + "前卖家发货，买家确认收货后，平台向卖家支付尾款)");
                 }
@@ -92,9 +99,18 @@ function add() {
         return;
     }
     $("#goodsNum").val(num);
-    $(".totalPrice").text(parseInt(price) * parseInt(num));//商品总价
-    $("#deposit").text(parseInt(price) * num * depositRatioVal);//定金
-    $("#retainage").text(parseInt(price) * num * (1 - depositRatioVal));//尾款
+
+    num = new BigDecimal(num + "");
+    depositRatioVal = new BigDecimal(depositRatioVal + "");
+    price = new BigDecimal(price + "");//商品价格
+
+    var totalPrice = price.multiply(num).setScale(2);//商品总价
+    var deposit = price.multiply(num).multiply(depositRatioVal).setScale(2);//定金
+    var retainage = totalPrice - deposit;//尾款
+
+    $(".totalPrice").text(totalPrice);//商品总价
+    $("#deposit").text(deposit);//定金
+    $("#retainage").text(retainage.toFixed(2));//尾款
 }
 
 //减的效果
@@ -107,9 +123,18 @@ function minus() {
     }
     var num = parseInt(n) - 1;
     $("#goodsNum").val(num);
-    $(".totalPrice").text(parseInt(price) * parseInt(num));//商品总价
-    $("#deposit").text(parseInt(price) * num * depositRatioVal);//定金
-    $("#retainage").text(parseInt(price) * num * (1 - depositRatioVal));//尾款
+
+    num = new BigDecimal(num + "");
+    depositRatioVal = new BigDecimal(depositRatioVal + "");
+    price = new BigDecimal(price + "");//商品价格
+
+    var totalPrice = price.multiply(num).setScale(2);//商品总价
+    var deposit = price.multiply(num).multiply(depositRatioVal).setScale(2);//定金
+    var retainage = totalPrice - deposit;//尾款
+
+    $(".totalPrice").text(totalPrice);//商品总价
+    $("#deposit").text(deposit);//定金
+    $("#retainage").text(retainage.toFixed(2));//尾款
 }
 
 function payConfirm() {

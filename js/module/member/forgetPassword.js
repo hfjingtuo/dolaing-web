@@ -29,7 +29,7 @@ var curCount;//当前剩余秒数
 $(function () {
     $("#btnSendCode").on('click', function () {
         var userName = $("#userName").val().trim();
-        var phoneRegex = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+        var phoneRegex = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
         if (userName == "") {
             layer.tips("请输入手机号", '#userName', {
                 tips: [2, '#f76592']
@@ -125,7 +125,7 @@ function confirmSubmit() {
     var pwd = $("#pwd").val().trim();
     var confirmPwd = $("#confirmPwd").val().trim();
     var msgCode = $("#msgCode").val().trim();
-    var phoneRegex = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+    var phoneRegex = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
     if (userName == "") {
         layer.tips("请输入手机号", '#userName', {
             tips: [2, '#f76592']

@@ -20,8 +20,10 @@ $(function () {
                 var payAccount = Dolaing.user.userPayAccount;
                 if (!isEmpty(payAccount)) {
                     $("#setPay").hide();
+                    $("#payComplete").show();
                 }else {
                     $("#setPay").show();
+                    $("#payComplete").hide();
                 }
                 timer(orderInfo.createTime);//订单倒计时
             } else {

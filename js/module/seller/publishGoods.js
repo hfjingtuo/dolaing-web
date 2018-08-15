@@ -105,8 +105,9 @@ function publishGoods() {
         $("#depositRatio").focus();
         return false;
     }
-    var depositRatioRegex = /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/;
-    if (depositRatioRegex.test(depositRatio)) {
+    //var depositRatioRegex = /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/;
+    var depositRatioRegex=/(^[1-9][0-9]$|^[0-9]$|^100$)/;
+    if (!depositRatioRegex.test(depositRatio)) {
         layer.tips("定金比例应在1-100范围内", '#depositRatio', {
             tips: [2, '#f76592']
         });
@@ -170,7 +171,7 @@ function publishGoods() {
         $("#expectPartOutput").focus();
         return false;
     }
-    if (expectPartOutputMatch.test(expectPartOutput)) {
+    if (!expectPartOutputMatch.test(expectPartOutput)) {
         layer.tips("预计单位产量保留2位小数", '#expectPartOutput', {
             tips: [2, '#f76592']
         });
