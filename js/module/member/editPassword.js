@@ -64,9 +64,10 @@ function confirmSubmitEditPwd() {
             });
             $("#rePwd").focus();
         } else {
-            layer.alert("修改密码成功", function (index) {
-                layer.close(index);
-                location.href = "/web/seller/publishedGoods.html";
+            layer.confirm('修改密码成功', {
+                btn: ['确认']
+            }, function(){
+                goLogout();
             });
         }
     }
