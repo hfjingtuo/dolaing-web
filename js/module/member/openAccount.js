@@ -182,8 +182,8 @@ Account.validate = function () {
                 {name:"真实姓名",value:Account.data.userNameText},
                 {name:"证件号码",value:Account.data.certId},
                 {name:"银行卡号",value:Account.data.cardNo},
-                {name:"手机号",value:Account.data.mobile},
-                {name:"支付密码",value:Account.data.payPassWord}
+                {name:"支付密码",value:Account.data.payPassWord},
+                {name:"手机号",value:Account.data.mobile}
             ]
         );
         if(!validateFlag){
@@ -201,8 +201,8 @@ Account.validate = function () {
                 {name:"证件号码",value:Account.data.certId},
                 {name:"组织机构",value:Account.data.orgId},
                 {name:"银行卡号",value:Account.data.cardNo},
-                {name:"手机号",value:Account.data.mobile},
-                {name:"支付密码",value:Account.data.payPassWord}
+                {name:"支付密码",value:Account.data.payPassWord},
+                {name:"手机号",value:Account.data.mobile}
             ]
         );
         if(!validateFlag){

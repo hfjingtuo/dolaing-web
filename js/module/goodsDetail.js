@@ -56,7 +56,7 @@ $(function () {
 
                     $("#isFreeShipping").text("1" == mallGoods.isFreeShipping ? "包邮" : "自费");
 
-                    $("#deposit").text("定金：￥" + new BigDecimal(mallGoods.shopPrice + "").multiply(new BigDecimal(mallGoods.depositRatio + "")).setScale(2) + "元");//定金=单价*定金比例
+                    $("#deposit").text(mallGoods.shopPrice +"元/件");//单价
                     var endSubscribeDays = checkTime(parseInt((new Date(mallGoods.endSubscribeTime) - new Date) / 1000 / 60 / 60 / 24, 10));//认购结束剩余的天数
                     var deliveryDays = parseInt(endSubscribeDays) + parseInt(mallGoods.plantingCycle);//预计发货时间=认购结束时间+生长周期
                     $("#deliveryDays").text("生产完成后" + deliveryDays + "天内发货");
@@ -90,6 +90,8 @@ $(function () {
                     $("#businessScope").text("经营范围：" + mallShop.businessScope);
 
                     timer(mallGoods.endSubscribeTime);//认购倒计时
+                    //绑定事件
+                    bindImageMouseover();
                 }
             } else {
                 layer.alert(data.message, function (index) {
@@ -101,6 +103,19 @@ $(function () {
     }
     ajaxData(ajaxObj);
 });
+
+
+/**
+ * 添加图片悬浮事件
+ */
+
+function bindImageMouseover(){
+   $("#goodsMasterImg li").mouseover(function(){
+        $(this).siblings().find("img").removeClass("img_small_cur");
+        $(this).find("img").removeClass("img_small_cur").addClass("img_small_cur");
+        $("#bigImg").html("<li style='display: block;'><img src='"  + $(this).find("img").attr("src") + "'/></li>");
+    });
+}
 
 /**
  * 加载左侧商品列表
