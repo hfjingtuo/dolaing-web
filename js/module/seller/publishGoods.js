@@ -1,3 +1,12 @@
+/**
+ * 图片全局变量
+ * @type {string}
+ */
+var MASTERIMG_URL = "";
+var LANDIMG_URL = "";
+var GOODSDESCIMG_URL = "";
+
+
 $(function () {
     /***初始化左侧菜单**/
     SellCenterMenu.selectMenu(2);
@@ -62,6 +71,10 @@ function showGoodsArea() {
     $("#showGoodsArea").html("总面积：约" + totalArea + "亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约" + totalPartOutput + "KG");
 }
 
+/**
+ * 发布商品
+ * @returns {boolean}
+ */
 function publishGoods() {
     var goodsId = $("#goodsId").val();//编辑商品
     var goodsName = $("#goodsName").val();
@@ -99,7 +112,7 @@ function publishGoods() {
         $("#shopPrice").focus();
         return false;
     }
-    var shopPriceRegex=/^[0-9]*$/;
+    var shopPriceRegex = /^[0-9]*$/;
     if (!shopPriceRegex.test(shopPrice)) {
         layer.tips("商品单价格式不正确", '#shopPrice', {
             tips: [2, '#f76592']
@@ -263,7 +276,41 @@ function publishGoods() {
             formData.append("descImgs", descImgs);
         }
     } else {
+        var masterImgInputs = $("#showMasterImgs input[name='masterImg']");
+        var landImgInputs = $("#showLandImgs input[name='landImg']");
+        var descImgInputs = $("#showDescImgs input[name='descImg']");
 
+        var masterImgsSize = $("#showMasterImgs li").length;
+        var landImgsSize = $("#showLandImgs li").length;
+        var descImgsSize = $("#showDescImgs li").length;
+
+        if (masterImgInputs.length + masterImgsSize == 0) {
+            layer.alert("请上传商品主图");
+            return false;
+        }
+        if (landImgInputs.length + landImgsSize == 0) {
+            layer.alert("请上传商品土地图");
+            return false;
+        }
+        if (descImgInputs.length + descImgsSize == 0) {
+            layer.alert("请上传商品详细图");
+            return false;
+        }
+
+        for (var i = 0; i < masterImgInputs.length; i++) {
+            masterImgs = masterImgInputs[i].files[0];
+            console.log(masterImgs[0]);
+            formData.append("masterImgs", masterImgs);
+        }
+        landImgs = landImgInputs[0].files[0];
+        formData.append("landImgs", landImgs);
+        for (var i = 0; i < descImgInputs.length; i++) {
+            descImgs = descImgInputs[i].files[0];
+            formData.append("descImgs", descImgs);
+        }
+        formData.append("masterImgsUrl", MASTERIMG_URL.substr(0, MASTERIMG_URL.length - 1));
+        formData.append("landImgsUrl", LANDIMG_URL.substr(0, LANDIMG_URL.length - 1));
+        formData.append("descImgsUrl", GOODSDESCIMG_URL.substr(0, GOODSDESCIMG_URL.length - 1));
     }
     if (isEmpty(goodsDesc)) {
         layer.tips("请填写商品描述", '#goodsDesc', {
@@ -328,6 +375,10 @@ function publishGoods() {
     });
 }
 
+/**
+ * 上传图片
+ * @param type
+ */
 function uploadImg(type) {
     var masterImgs = $('#uploadMasterImg')[0].files;
     var landImgs = $('#uploadLandImg')[0].files;
@@ -338,8 +389,9 @@ function uploadImg(type) {
     var maxImgSize = 3 * 1024 * 1024;
 
     console.log("type=" + type);
-    console.log("masterImgs=" + masterImgs.length);
     console.log("masterImgsSize=" + masterImgsSize);
+    console.log("landImgsSize=" + landImgsSize);
+    console.log("descImgsSize=" + descImgsSize);
 
     if ("masterImg" == type) {
         if (masterImgs.length > 5) {
@@ -431,6 +483,31 @@ function uploadImg(type) {
     }
 }
 
+/**
+ * 删除图片
+ */
+function deleteImg(obj, type) {
+    if ("masterImg" == type) {
+        console.log("=" + MASTERIMG_URL);
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        MASTERIMG_URL = MASTERIMG_URL.replace(imgUrl, "");
+        console.log("==" + MASTERIMG_URL);
+    } else if ("landImg" == type) {
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        LANDIMG_URL = LANDIMG_URL.replace(imgUrl, "");
+        console.log("==" + LANDIMG_URL);
+    } else if ("goodsDescImg" == type) {
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        GOODSDESCIMG_URL = GOODSDESCIMG_URL.replace(imgUrl, "");
+        console.log("==" + GOODSDESCIMG_URL);
+    }
+    obj.parentNode.parentNode.removeChild(obj.parentNode);
+}
+
+/**
+ * 加载已发布商品详情页
+ * @param goodsId
+ */
 function getPublishedGoods(goodsId) {
     var ajaxObj = {
         url: SERVER_URL + "/publishedGoods/detail?goodsId=" + goodsId,
@@ -490,11 +567,11 @@ function getPublishedGoods(goodsId) {
                         "<input id=\"uploadMasterImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('masterImg')\" multiple/></li>";
                     for (var i = 0; i < goodsMasterImgs.length; i++) {
                         goodsMasterImg = goodsMasterImgs[i];
-                        goodsMasterImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
-                            "<img src='" + IMAGE_URL + goodsMasterImg + "'style='width: 150px;height: 150px' class='upload_img2'></li>";
+                        goodsMasterImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"masterImg\")'/>" +
+                            "<img src='" + IMAGE_URL + goodsMasterImg + "' alt='" + goodsMasterImg + "' style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showMasterImgs").html(goodsMasterImgHtml);
-                    $('#goodsMasterImgs').val(mallGoods.goodsMasterImgs);
+                    MASTERIMG_URL = mallGoods.goodsMasterImgs + ",";
 
                     var landImgs = mallGoods.landImgs.split(",");
                     landImgHtml += "<li>" +
@@ -502,11 +579,11 @@ function getPublishedGoods(goodsId) {
                         "<input id=\"uploadLandImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('landImg')\" multiple/></li>";
                     for (var i = 0; i < landImgs.length; i++) {
                         landImg = landImgs[i];
-                        landImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
-                            "<img src='" + IMAGE_URL + landImg + "'style='width: 150px;height: 150px' class='upload_img2'></li>";
+                        landImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"landImg\")'/>" +
+                            "<img src='" + IMAGE_URL + landImg + "'alt='" + landImg + "'  style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showLandImgs").html(landImgHtml);
-                    $('#landImgs').val(mallGoods.landImgs);
+                    LANDIMG_URL = mallGoods.landImgs + ",";
 
                     var goodsDescImgs = mallGoods.goodsDescImgs.split(",");
                     goodsDescImgHtml += "<li>" +
@@ -514,11 +591,11 @@ function getPublishedGoods(goodsId) {
                         "<input id=\"uploadDescImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('descImg')\" multiple/></li>";
                     for (var i = 0; i < goodsDescImgs.length; i++) {
                         goodsDescImg = goodsDescImgs[i];
-                        goodsDescImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
-                            "<img src='" + IMAGE_URL + goodsDescImg + "'style='width: 150px;height: 150px' class='upload_img2'></li>";
+                        goodsDescImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"goodsDescImg\")'/>" +
+                            "<img src='" + IMAGE_URL + goodsDescImg + "' alt='" + goodsDescImg + "'  style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showDescImgs").html(goodsDescImgHtml);
-                    $('#goodsDescImgs').val(mallGoods.goodsDescImgs);
+                    GOODSDESCIMG_URL = mallGoods.goodsDescImgs + ",";
 
                     /**初始化品类下拉框**/
                     Dolaing.dictionary("catId");

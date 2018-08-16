@@ -114,29 +114,26 @@
             </div>
         </div>
         <div class="publish">
-            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张（一次可上传多张图片）</h1>
-            <input type="hidden" id="goodsMasterImgs">
+            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张</h1>
             <ul class="upload" id="showMasterImgs">
-                <li id="masterImgLi">
+                <li>
                     <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadMasterImg').click();">
-                    <input id="uploadMasterImg" type="file" name="file" accept="image/*" onchange="uploadImg('masterImg')" multiple/>
+                    <input id="uploadMasterImg" type="file" name="file" accept="image/*" onchange="uploadImg('masterImg')"/>
                 </li>
             </ul>
             <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。
             </h1>
-            <input type="hidden" id="landImgs">
             <ul class="upload" id="showLandImgs">
                 <li>
                     <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadLandImg').click();">
                     <input id="uploadLandImg" type="file" name="file" accept="image/*" onchange="uploadImg('landImg')"/>
                 </li>
             </ul>
-            <h1 style="margin-top: 30px;text-align: left;"><span>商品详情图：</span>详情大小不能超过3MB，最多允许上传3张（一次可上传多张图片）</h1>
-            <input type="hidden" id="goodsDescImgs">
+            <h1 style="margin-top: 30px;text-align: left;"><span>商品详情图：</span>详情大小不能超过3MB，最多允许上传3张</h1>
             <ul class="upload" style="margin-bottom: 30px;" id="showDescImgs">
                 <li>
                     <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadDescImg').click();">
-                    <input id="uploadDescImg" type="file" name="file" accept="image/*" onchange="uploadImg('descImg')" multiple/>
+                    <input id="uploadDescImg" type="file" name="file" accept="image/*" onchange="uploadImg('descImg')"/>
                 </li>
             </ul>
         </div>
