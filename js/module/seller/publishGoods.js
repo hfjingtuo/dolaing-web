@@ -280,9 +280,9 @@ function publishGoods() {
         var landImgInputs = $("#showLandImgs input[name='landImg']");
         var descImgInputs = $("#showDescImgs input[name='descImg']");
 
-        var masterImgsSize = $("#showMasterImgs li").length;
-        var landImgsSize = $("#showLandImgs li").length;
-        var descImgsSize = $("#showDescImgs li").length;
+        var masterImgsSize = $("#showMasterImgs li").length -1 ;
+        var landImgsSize = $("#showLandImgs li").length -1;
+        var descImgsSize = $("#showDescImgs li").length -1;
 
         if (masterImgInputs.length + masterImgsSize == 0) {
             layer.alert("请上传商品主图");
