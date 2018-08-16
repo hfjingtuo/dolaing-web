@@ -194,9 +194,9 @@ BuyerCenter.buildDataView = function(order){
         goods = order.orderGoodsVos[i] ;
         _html += '<div class="orders_box">' +
         '<div class="orders_box_goods" style="width: 466px;">' +
-        '<img style="cursor: pointer;" onclick="BuyerCenter.goGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'">' +
+        '<img style="cursor: pointer;" onclick="Dolaing.openGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'">' +
         '<div class="fl">' +
-        '<h3  style="cursor: pointer;" onclick="BuyerCenter.goGoodsDetail('+goods.goodsId+')">' + goods.goodsName + '</h3>' +
+        '<h3  style="cursor: pointer;" onclick="Dolaing.openGoodsDetail('+goods.goodsId+')">' + goods.goodsName + '</h3>' +
         ' <h4>土地编号：' + goods.landSn + '</h4>' +
         '<h4>认购土地面积：' + goods.buyLandArea + goods.landPartAreaUnitName + '</h4>' +
         '</div>' +
@@ -296,9 +296,6 @@ BuyerCenter.goDetail = function(id){
     window.location.href = "/web/buyer/orderDetail.html?orderId="+id;
 }
 
-BuyerCenter.goGoodsDetail = function (id) {
-    window.location.href = "/goodsDetails.html?id="+id;
-}
 
 /**
  * 分页请求
