@@ -76,9 +76,12 @@ SellerOrder.buildDataView = function(order){
             '                            <h3>农户：'+goods.farmerId+'</h3>' +
             '                        </td>' +
             '                        <td class="middle">' +
-            '                            <h3>'+order.orderStatusFullName+'</h3>' +
-            '                            <h3 class="link" onclick="lookOrderDetail(' + order.orderStatusFullCode + ',' + order.sellerReceiveStatus + ',' + order.id + ')">查看详情</h3>' +
-            '                        </td>' +
+            '                            <h3>'+order.orderStatusFullName+'</h3>';
+            if( order.orderStatusFullCode != "4"){
+                _html +=  '<h3 class="link" onclick="lookOrderDetail(' + order.orderStatusFullCode + ',' + order.sellerReceiveStatus + ',' + order.id + ')">查看详情</h3>';
+
+            } ;
+        _html +='                        </td>' +
             '                        <td class="middle">' +
             '                            <h3>应得金额</h3>' +
             '                            <h2 class="money">￥'+order.sellerReceivableAmount+'</h2>' +
