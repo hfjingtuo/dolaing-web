@@ -35,14 +35,16 @@
         <h1 class="record_title"><a href="/index.html">首页</a>&nbsp;>&nbsp;<a>卖家中心</a>&nbsp;>&nbsp;发布商品</h1>
         <div class="publish">
             <div class="publish_box" style="margin-top: 40px;">
+                <input type="hidden" id="goodsId" value="">
                 <h3>商品标题：</h3>
                 <input type="text" id="goodsName" placeholder="请输入该商品的标题" style="width: 500px;" maxlength="60"/>
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
-                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" placeholder="填写商品单价" style="width: 200px;" maxlength="15"/>
+                <input type="text" id="shopPrice" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       placeholder="填写商品单价" style="width: 200px;" maxlength="15"/>
                 <h3 style="width: 118px;">定金比例：</h3>
-                <input type="number" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 180px;" maxlength="3" min="0" max="100"/>
+                <input type="text" id="depositRatio" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 180px;" maxlength="3" min="0" max="100"/>
                 <h4>%</h4>
             </div>
             <div class="publish_box">
@@ -78,7 +80,8 @@
             </div>
             <div class="publish_box">
                 <h3>预计单位产量：</h3>
-                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')" style="width: 200px;" onchange="showGoodsArea()" maxlength="18"/>
+                <input type="text" id="expectPartOutput" onkeyup="this.value=this.value.replace(/[^\d\.]/g,'')"
+                       style="width: 200px;" onchange="showGoodsArea()" maxlength="18"/>
                 <h4 style="right: 435px;color: #333333;">kg</h4>
             </div>
         </div>
@@ -111,15 +114,12 @@
             </div>
         </div>
         <div class="publish">
-            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张
-            </h1>
+            <h1 style="text-align: left"><span>商品主图：</span>宝贝主图大小不能超过3MB，最多允许上传5张（一次可上传多张图片）</h1>
             <input type="hidden" id="goodsMasterImgs">
             <ul class="upload" id="showMasterImgs">
-                <li>
-                    <img class="upload_img1"/>
-                    <img src="/img/bg_upload.png" id="uploadMasterImg" style="width: 150px;height: 150px"
-                         class="upload_img2">
-                    <input type="file" accept="image/*" id="aa"/>
+                <li id="masterImgLi">
+                    <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadMasterImg').click();">
+                    <input class="masterImg" id="uploadMasterImg" type="file" name="file" accept="image/*" onchange="uploadImg('masterImg')" multiple/>
                 </li>
             </ul>
             <h1 style="margin-top: 30px;text-align: left"><span>商品土地图：</span>土地图大小不能超过3MB，最多允许上传1张，上传规范的土地图片，能让您的商品详情显示效果更好。
@@ -127,20 +127,16 @@
             <input type="hidden" id="landImgs">
             <ul class="upload" id="showLandImgs">
                 <li>
-                    <img class="upload_img1"/>
-                    <img src="/img/bg_upload.png" id="uploadLandImg" style="width: 150px;height: 150px"
-                         class="upload_img2">
-                    <input type="file" accept="image/*"/>
+                    <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadLandImg').click();">
+                    <input id="uploadLandImg" type="file" name="file" accept="image/*" onchange="uploadImg('landImg')"/>
                 </li>
             </ul>
-            <h1 style="margin-top: 30px;text-align: left;"><span>商品详情图：</span>详情大小不能超过3MB，最多允许上传3张</h1>
+            <h1 style="margin-top: 30px;text-align: left;"><span>商品详情图：</span>详情大小不能超过3MB，最多允许上传3张（一次可上传多张图片）</h1>
             <input type="hidden" id="goodsDescImgs">
             <ul class="upload" style="margin-bottom: 30px;" id="showDescImgs">
                 <li>
-                    <img class="upload_img1"/>
-                    <img src="/img/bg_upload.png" id="uploadDescImg" style="width: 150px;height: 150px"
-                         class="upload_img2">
-                    <input type="file" accept="image/*"/>
+                    <img src="/img/bg_upload.png" style="width: 150px;height: 150px" class="upload_img2" onclick="$(this).parent().find('#uploadDescImg').click();">
+                    <input id="uploadDescImg" type="file" name="file" accept="image/*" onchange="uploadImg('descImg')" multiple/>
                 </li>
             </ul>
         </div>
@@ -153,7 +149,8 @@
                 <h3>认购时限：</h3>
                 <div class="layui-form">
                     <div class="layui-input-inline">
-                        <input type="text" style="width: 230px" id="subscribeTime" placeholder="请选择认购时限"  class="layui-input">
+                        <input type="text" style="width: 230px" id="subscribeTime" placeholder="请选择认购时限"
+                               class="layui-input">
                     </div>
                 </div>
             </div>
@@ -166,111 +163,6 @@
 
 <script src="/js/common/_side.js"></script>
 <script src="/js/common/_foot.js"></script>
-<script>
-    /**
-     * 上传图片
-     */
-    layui.use('upload', function () {
-        var $ = layui.jquery, upload = layui.upload;
-        var masterImg = "";
-        var landImg = "";
-        var descImg = "";
-        //商品主图片上传
-        upload.render({
-            elem: '#uploadMasterImg'
-            , url: SERVER_URL + '/upload/goodsImage'
-            , size: 3000
-            , before: function (obj) {
-                console.log(masterImg.split(",").length);
-                if (masterImg.split(",").length > 6) {
-                    return layer.msg("最多允许上传5张图片", {icon: 2});
-                }
-                //预读本地文件示例，不支持ie8
-                obj.preview(function (index, file, result) {
-                    var li_html = "<li>" +
-                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
-                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
-                    $('#showMasterImgs').append(li_html);
-                });
-            }
-            , done: function (res) {
-                var code = res.code;
-                var message = res.message;
-                console.log("message==" + message);
-                //如果上传失败
-                if (200 != code) {
-                    return layer.msg("上传失败,重试", {icon: 2});
-                } else {
-                    masterImg += message + ",";
-                }
-                console.log("mainImg:" + masterImg);
-                $('#goodsMasterImgs').val(masterImg.substr(0, masterImg.length - 1));
-            }
-        });
-
-        //商品土地图
-        upload.render({
-            elem: '#uploadLandImg'
-            , url: SERVER_URL + '/upload/goodsImage'
-            , size: 3000
-            , before: function (obj) {
-                console.log(landImg.split(",").length);
-                if (landImg.split(",").length > 2) {
-                    return layer.msg("最多允许上传1张图片");
-                }
-                obj.preview(function (index, file, result) {
-                    var li_html = "<li>" +
-                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
-                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
-                    $('#showLandImgs').append(li_html);
-                });
-            }
-            , done: function (res) {
-                var code = res.code;
-                var message = res.message;
-                console.log("message==" + message);
-                if (200 != code) {
-                    return layer.msg('上传失败,重试');
-                } else {
-                    landImg += message + ",";
-                }
-                console.log("landImg:" + landImg);
-                $('#landImgs').val(landImg.substr(0, landImg.length - 1));
-            }
-        });
-
-        //商品详情图
-        upload.render({
-            elem: '#uploadDescImg'
-            , url: SERVER_URL + '/upload/goodsImage'
-            , size: 3000
-            , before: function (obj) {
-                console.log(descImg.split(",").length);
-                if (descImg.split(",").length > 4) {
-                    return layer.msg("最多允许上传3张图片");
-                }
-                obj.preview(function (index, file, result) {
-                    var li_html = "<li>" +
-                        "<img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this)'/>" +
-                        "<img src='" + result + "' alt=" + file.name + " style='width: 150px;height: 150px' class='upload_img2'></li>";
-                    $('#showDescImgs').append(li_html);
-                });
-            }
-            , done: function (res) {
-                var code = res.code;
-                var message = res.message;
-                console.log("message==" + message);
-                if (200 != code) {
-                    return layer.msg('上传失败,重试');
-                } else {
-                    descImg += message + ",";
-                }
-                console.log("descImg:" + descImg);
-                $('#goodsDescImgs').val(descImg.substr(0, descImg.length - 1));
-            }
-        });
-    });
-</script>
 <script>
     layui.use('laydate', function () {
         var laydate = layui.laydate;
