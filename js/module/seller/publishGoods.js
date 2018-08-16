@@ -63,15 +63,7 @@ function showGoodsArea() {
 }
 
 function publishGoods() {
-
-    var masterImageInputs = $("#showMasterImgs input[name='masterImage']") ;
-    for (var i = 0; i < masterImageInputs.length; i++) {
-        console.log(masterImageInputs[i].length >0 ? masterImageInputs[i][0] : "") ;
-    }
-
-    return ;
-
-    var goodsId = $("#goodsId").val();//编辑商品会有值
+    var goodsId = $("#goodsId").val();//编辑商品
     var goodsName = $("#goodsName").val();
     var shopPrice = $("#shopPrice").val();
     var depositRatio = $("#depositRatio").val();
@@ -183,11 +175,11 @@ function publishGoods() {
         layer.tips("种植开始时间不能大于结束时间", '#startPlantime', {
             tips: [2, '#f76592']
         });
-        $("#endPlantime").focus();
+        $("#startPlantime").focus();
         return false;
     }
     if (startPlantime == endPlantime) {
-        layer.tips("种植结束时间要大于开始时间", '#startPlantime', {
+        layer.tips("种植结束时间要大于开始时间", '#endPlantime', {
             tips: [2, '#f76592']
         });
         $("#endPlantime").focus();
@@ -236,31 +228,42 @@ function publishGoods() {
         $("#goodsNumber").focus();
         return false;
     }
+    var formData = new FormData();
 
     var masterImgs = "";
     var landImgs = "";
     var descImgs = "";
     if (isEmpty(goodsId)) {
-        masterImgs = $('.masterImg')[0].files;
-        landImgs = $('#uploadLandImg')[0].files;
-        descImgs = $('#uploadDescImg')[0].files;
+        var masterImgInputs = $("#showMasterImgs input[name='masterImg']");
+        var landImgInputs = $("#showLandImgs input[name='landImg']");
+        var descImgInputs = $("#showDescImgs input[name='descImg']");
 
-        if (masterImgs.length == 0) {
+        if (masterImgInputs.length == 0) {
             layer.alert("请上传商品主图");
             return false;
         }
-        if (landImgs.length == 0) {
+        if (landImgInputs.length == 0) {
             layer.alert("请上传商品土地图");
             return false;
         }
-        if (descImgs.length == 0) {
+        if (descImgInputs.length == 0) {
             layer.alert("请上传商品详细图");
             return false;
         }
+
+        for (var i = 0; i < masterImgInputs.length; i++) {
+            masterImgs = masterImgInputs[i].files[0];
+            console.log(masterImgs[0]);
+            formData.append("masterImgs", masterImgs);
+        }
+        landImgs = landImgInputs[0].files[0];
+        formData.append("landImgs", landImgs);
+        for (var i = 0; i < descImgInputs.length; i++) {
+            descImgs = descImgInputs[i].files[0];
+            formData.append("descImgs", descImgs);
+        }
     } else {
-        masterImgs = $('#masterImgs').val();
-        landImgs = $('#landImgs').val();
-        descImgs = $('#descImgs').val();
+
     }
     if (isEmpty(goodsDesc)) {
         layer.tips("请填写商品描述", '#goodsDesc', {
@@ -277,7 +280,6 @@ function publishGoods() {
         return false;
     }
 
-    var formData = new FormData();
     formData.append("goodsId", goodsId);
     formData.append("goodsName", goodsName);
     formData.append("shopPrice", shopPrice);
@@ -294,17 +296,8 @@ function publishGoods() {
     formData.append("goodsNumber", goodsNumber);
     formData.append("goodsDesc", goodsDesc);
     formData.append("farmerId ", farmerId);
-
     formData.append("startSubscribeTime", startSubscribeTime);
     formData.append("endSubscribeTime", endSubscribeTime);
-
-    for (var i = 0; i < masterImgs.length; i++) {
-        formData.append("masterImgs", masterImgs[i]);
-    }
-    formData.append("landImgs", landImgs[0]);
-    for (var i = 0; i < descImgs.length; i++) {
-        formData.append("descImgs", descImgs[i]);
-    }
 
     var Authorization = "Bearer " + $.cookie('token');
     $.ajax({
@@ -342,7 +335,6 @@ function uploadImg(type) {
     var masterImgsSize = $("#showMasterImgs li").length;
     var landImgsSize = $("#showLandImgs li").length;
     var descImgsSize = $("#showDescImgs li").length;
-    var li_html = "";
     var maxImgSize = 3 * 1024 * 1024;
 
     console.log("type=" + type);
@@ -359,25 +351,23 @@ function uploadImg(type) {
             return;
         }
         for (let file of masterImgs) {
-            let img = new Image;
-            img.src = URL.createObjectURL(file);
-            img.title = file.name;
-
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
                 return;
             }
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
 
             var newInput = $("#uploadMasterImg").clone();
             newInput.removeAttr("id");
-            newInput.attr("name","masterImage");
+            newInput.attr("name", "masterImg");
             newInput.removeAttr("onchange");
-            newInput.css("display","none");
+            newInput.css("display", "none");
             var newLi = document.createElement("li");
             $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
                 "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
             $(newLi).append(newInput);
-
         }
         $('#showMasterImgs').append(newLi);
     } else if ("landImg" == type) {
@@ -390,19 +380,25 @@ function uploadImg(type) {
             return;
         }
         for (let file of landImgs) {
-            let img = new Image;
-            img.src = URL.createObjectURL(file);
-            img.title = file.name;
-
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
                 return;
             }
-            li_html +=
-                "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
-                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'></li>";
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
+
+            var newInput = $("#uploadLandImg").clone();
+            newInput.removeAttr("id");
+            newInput.attr("name", "landImg");
+            newInput.removeAttr("onchange");
+            newInput.css("display", "none");
+            var newLi = document.createElement("li");
+            $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
+                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
+            $(newLi).append(newInput);
         }
-        $('#showLandImgs').append(li_html);
+        $('#showLandImgs').append(newLi);
     } else if ("descImg" == type) {
         if (descImgs.length > 3) {
             layer.alert("商品详情图最多允许上传3张");
@@ -413,19 +409,25 @@ function uploadImg(type) {
             return;
         }
         for (let file of descImgs) {
-            let img = new Image;
-            img.src = URL.createObjectURL(file);
-            img.title = file.name;
-
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
                 return;
             }
-            li_html +=
-                "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
-                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'></li>";
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
+
+            var newInput = $("#uploadDescImg").clone();
+            newInput.removeAttr("id");
+            newInput.attr("name", "descImg");
+            newInput.removeAttr("onchange");
+            newInput.css("display", "none");
+            var newLi = document.createElement("li");
+            $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
+                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
+            $(newLi).append(newInput);
         }
-        $('#showDescImgs').append(li_html);
+        $('#showDescImgs').append(newLi);
     }
 }
 
