@@ -45,7 +45,7 @@ Account.register = function(){
         success: function (data) {
             if(data !=null && data.code == '1000'){
                 layer.alert('开户成功');
-                $.cookie('userPayAccount', JSON.stringify(data.data.userPayAccount),{ path: '/'});
+                $.cookie('userPayAccount', JSON.stringify(data.data),{ path: '/'});
                 setTimeout(function() {
                     window.location.href = Dolaing.center.getUrl();
                 }, 1500);

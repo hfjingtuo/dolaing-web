@@ -33,8 +33,13 @@ SellerOrder.findRecords = function(){
                         _html += SellerOrder.buildDataView(record);
                     });
 
+                    if(data.data.records == null || data.data.records.length == 0 ){
+                        _html += '<li style="text-align: center ; padding-top: 20px;">无数据</li>';
+                        $("#pageView").html("");
+                    }else{
+                        $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
+                    }
                     $("#orderList").html(_html);
-                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {
