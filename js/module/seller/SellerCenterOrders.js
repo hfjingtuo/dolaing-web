@@ -29,6 +29,7 @@ $(function () {
     }
 });
 
+var total = 0; // 商品总金额
 function getOrderDetail(orderId, orderNum) {
     var getData = "?orderId=" + orderId;
     $.ajax({
@@ -42,6 +43,7 @@ function getOrderDetail(orderId, orderNum) {
                 });
             } else {
                 var orderInfoVo = data.orderInfoVo;
+                total = orderInfoVo.goodsAmount;
                 var goodsInfo = orderInfoVo.orderGoodsVos[0];
                 var orderDetailHtml = buildOrderDetailHtml(orderInfoVo, goodsInfo, orderNum);
                 if (orderNum == 1 || orderNum == 2) {
@@ -239,7 +241,7 @@ function buildOrderDetailHtml(order, goods, orderNum) {
 }
 
 var payDetailHtml = "";
-var deposit = 0; // 定金
+
 function getPayDetail(orderId, orderNum, sellerReceiveStatus) {
     var getData = "?orderId=" + orderId + "&processType=" + 1;
     var ajaxObj = {
@@ -250,7 +252,6 @@ function getPayDetail(orderId, orderNum, sellerReceiveStatus) {
                 var payDetailInfo = data.data;
                 payDetailHtml += buildPayDetailHtml(payDetailInfo, orderNum, sellerReceiveStatus);
                 if (orderNum == 6) {
-                    deposit = payDetailInfo.amount;
                     $("#payDetails").css('margin-bottom', '60');
                     getPayDetail2(orderId, sellerReceiveStatus);
                 } else {
@@ -269,17 +270,17 @@ function getPayDetail(orderId, orderNum, sellerReceiveStatus) {
 function buildPayDetailHtml(payDetail, orderNum, sellerReceiveStatus) {
     var arrivalTime = "";
     if ((orderNum == 3 && sellerReceiveStatus == 2) || orderNum == 4 || orderNum == 5 || orderNum == 6) {
-        arrivalTime = "<h3>到账时间：" + payDetail.updateTime + "</h3>";
+        arrivalTime = "<h3>到账时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.updateTime) + "</h3>";
     }
     var _html = "<div class=\"details_part\">" +
         "<img src=\"/img/icon_order_details_3.png\" class=\"fl\" style=\"margin-top: 30px;\"/>" +
         "<div class=\"fl details_part_list\">" +
-        "<h3>付款方式：" + payDetail.paymentName + "</h3>" +
-        "<h3>付款时间：" + payDetail.createTime + "</h3>" +
+        "<h3>付款方式：" + (payDetail == null || payDetail == "" ? '--' : payDetail.paymentName) + "</h3>" +
+        "<h3>付款时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.createTime) + "</h3>" +
         arrivalTime +
-        "<h3>证联交易号：" + payDetail.seqId + "</h3>" +
+        "<h3>证联交易号：" + (payDetail == null || payDetail == "" ? '--' : payDetail.seqId) + "</h3>" +
         "</div>" +
-        "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + payDetail.amount + "</span>" +
+        "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + (payDetail == null || payDetail == "" ? '--' : payDetail.amount) + "</span>" +
         "</br><span style=\"color: #F76096;margin-right: 4px;\">定金</span></h1>" +
         "</div>";
     return _html;
@@ -308,17 +309,16 @@ function getPayDetail2(orderId, sellerReceiveStatus) {
 function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
     var arrivalTime = "";
     if (sellerReceiveStatus == 4) {
-        arrivalTime = "<h3>到账时间：" + payDetail.updateTime + "</h3>";
+        arrivalTime = "<h3>到账时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.updateTime) + "</h3>";
     }
-    var total = deposit + payDetail.amount;
     var _html = "<div class=\"details_part\">" +
         "<div class=\"fl details_part_list\" style=\"margin-left: 90px;\">" +
-        "<h3>付款方式：" + payDetail.paymentName + "</h3>" +
-        "<h3>付款时间：" + payDetail.createTime + "</h3>" +
+        "<h3>付款方式：" + (payDetail == null || payDetail == "" ? '--' : payDetail.paymentName) + "</h3>" +
+        "<h3>付款时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.createTime) + "</h3>" +
         arrivalTime +
-        "<h3>证联交易号：" + payDetail.seqId + "</h3>" +
+        "<h3>证联交易号：" + (payDetail == null || payDetail == "" ? '--' : payDetail.seqId) + "</h3>" +
         "</div>" +
-        "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + payDetail.amount + "</span>" +
+        "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + (payDetail == null || payDetail == "" ? '--' : payDetail.amount) + "</span>" +
         "</br><span style=\"color: #F76096;margin-right: 4px;\">尾款</span></h1>" +
         "</div>" +
         "<div class=\"details_part\">" +
@@ -326,7 +326,7 @@ function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
         "<h3>含运费（0元）</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" style=\"margin-top: 20px;\">￥" +
-        "<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + total + "</span>" +
+        "<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" +  total + "</span>" +
         "</br><span style=\"color: #F76096;margin-right: 4px;\">总计</span>" +
         "</h1>" +
         "</div>";
@@ -339,11 +339,18 @@ function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
  * @returns {boolean}
  */
 function ship(id) {
+    if (id == null || id == "") {
+        layer.alert("发货失败");
+        return false;
+    }
     var ajaxObj = {
         url: SERVER_URL + "/orderRecord/batchDeliver?ids=" + id,
         success: function (data) {
             if (data != null && data.code == '1000') {
-                layer.alert("已完成发货");
+                layer.alert("已完成发货", function (index) {
+                    window.location.href = "/web/seller/SellerCenterOrders.html?orderId=" + id + "&sellerReceiveStatus=" + 2 + "&orderStatus=" + 3;
+                    layer.close(index);
+                });
             } else {
                 layer.alert(data.msg, {
                     icon: 0
