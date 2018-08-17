@@ -181,7 +181,7 @@ function register() {
         return false;
     }
     if (!protocol) {
-        layer.alert("您还没有阅读并同意《商品发布协议》");
+        layer.alert("您还没有阅读并同意《用户注册协议》");
         return false;
     }
     $.ajax({
