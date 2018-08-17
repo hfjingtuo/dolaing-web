@@ -7,25 +7,25 @@ $(function () {
     if (orderStatus == 1 && sellerReceiveStatus == 0) {
         orderNum = 1;
         $("#payDetails").hide();
-    } else if (orderStatus == 2 && sellerReceiveStatus == 1) {
+    } else if (orderStatus == 2 && sellerReceiveStatus == 0) {
         orderNum = 2;
         $("#payDetails").hide();
-    } else if (orderStatus == 2 && sellerReceiveStatus == 2) {
+    } else if (orderStatus == 2 && (sellerReceiveStatus == 1 || sellerReceiveStatus == 2)) {
         orderNum = 3;
         $("#payDetails").show();
-    } else if (orderStatus == 3 && sellerReceiveStatus == 3) {
+    } else if (orderStatus == 3) {
         $("#payDetails").show();
         orderNum = 4;
-    } else if (orderStatus == 100 && sellerReceiveStatus == 3) {
+    } else if (orderStatus == 100 && (sellerReceiveStatus != 3 && sellerReceiveStatus != 4)) {
         $("#payDetails").show();
         orderNum = 5;
-    } else if (orderStatus == 100 && sellerReceiveStatus == 4) {
+    } else if (orderStatus == 100 && (sellerReceiveStatus == 3 || sellerReceiveStatus == 4)) {
         $("#payDetails").show();
         orderNum = 6;
     }
     getOrderDetail(orderId, orderNum);
     if (orderNum == 3 || orderNum == 4 || orderNum == 5 || orderNum == 6) {
-        getPayDetail(orderId, orderNum);
+        getPayDetail(orderId, orderNum, sellerReceiveStatus);
     }
 });
 
@@ -108,6 +108,12 @@ function buildOrderDetailHtml(order, goods, orderNum) {
             "</div>" +
             "</div>";
     } else if (orderNum == 3) {
+        var shipHtml = "";
+        if (order.sellerReceiveStatus == 2) {
+            shipHtml = "<div class=\" btn_order\">" +
+                '<h3 onclick="ship(\'' + order.id + '\')">发货</h3>' +
+                "</div>";
+        }
         $("#imgOrderLine").html("<li><img src=\"/img/icon_point_1.png\"/></li>" +
             "<li><img src=\"/img/icon_point_2.png\"/></li>" +
             "<li><img src=\"/img/icon_point_3-2.png\"/></li>");
@@ -127,9 +133,7 @@ function buildOrderDetailHtml(order, goods, orderNum) {
             "<h3>实付金额：￥<span>" + order.buyerMoneyPaid + "</span></h3>" +
             "<h3>农户ID：" + goods.farmerId + "</h3>" +
             "</div>" +
-            "<div class=\" btn_order\">" +
-            "<h3>发货</h3>" +
-            "</div>" +
+            shipHtml +
             "</div>" +
             "<div class=\"details_part\">" +
             "<img src=\"/img/icon_order_details_2.png\" class=\"fl\"/>" +
@@ -236,23 +240,23 @@ function buildOrderDetailHtml(order, goods, orderNum) {
 
 var payDetailHtml = "";
 var deposit = 0; // 定金
-function getPayDetail(orderId, orderNum) {
-    var getData = "?orderId=" + orderId  + "&processType=" + 1;
+function getPayDetail(orderId, orderNum, sellerReceiveStatus) {
+    var getData = "?orderId=" + orderId + "&processType=" + 1;
     var ajaxObj = {
         type: "GET",
         url: SERVER_URL + "/accountRecord/getPayDetail" + getData,
         success: function (data) {
             if (data != null && data.code == '1000') {
                 var payDetailInfo = data.data;
-                payDetailHtml += buildPayDetailHtml(payDetailInfo);
+                payDetailHtml += buildPayDetailHtml(payDetailInfo, orderNum, sellerReceiveStatus);
                 if (orderNum == 6) {
                     deposit = payDetailInfo.amount;
                     $("#payDetails").css('margin-bottom', '60');
-                    getPayDetail2(orderId);
+                    getPayDetail2(orderId, sellerReceiveStatus);
                 } else {
                     $("#payDetails").html(payDetailHtml);
                 }
-            }else {
+            } else {
                 layer.alert(data.msg, {
                     icon: 0
                 });
@@ -262,13 +266,17 @@ function getPayDetail(orderId, orderNum) {
     ajaxData(ajaxObj);
 }
 
-function buildPayDetailHtml(payDetail) {
+function buildPayDetailHtml(payDetail, orderNum, sellerReceiveStatus) {
+    var arrivalTime = "";
+    if ((orderNum == 3 && sellerReceiveStatus == 2) || orderNum == 4 || orderNum == 5 || orderNum == 6) {
+        arrivalTime = "<h3>到账时间：" + payDetail.updateTime + "</h3>";
+    }
     var _html = "<div class=\"details_part\">" +
         "<img src=\"/img/icon_order_details_3.png\" class=\"fl\" style=\"margin-top: 30px;\"/>" +
         "<div class=\"fl details_part_list\">" +
         "<h3>付款方式：" + payDetail.paymentName + "</h3>" +
         "<h3>付款时间：" + payDetail.createTime + "</h3>" +
-        "<h3>到账时间：" + payDetail.updateTime + "</h3>" +
+        arrivalTime +
         "<h3>证联交易号：" + payDetail.seqId + "</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + payDetail.amount + "</span>" +
@@ -277,7 +285,7 @@ function buildPayDetailHtml(payDetail) {
     return _html;
 }
 
-function getPayDetail2(orderId) {
+function getPayDetail2(orderId, sellerReceiveStatus) {
     var getData = "?orderId=" + orderId + "&processType=" + 2;
     var ajaxObj = {
         type: "GET",
@@ -285,9 +293,9 @@ function getPayDetail2(orderId) {
         success: function (data) {
             if (data != null && data.code == '1000') {
                 var payDetailInfo = data.data;
-                payDetailHtml += buildPayDetailHtml2(payDetailInfo);
+                payDetailHtml += buildPayDetailHtml2(payDetailInfo, sellerReceiveStatus);
                 $("#payDetails").html(payDetailHtml);
-            }else {
+            } else {
                 layer.alert(data.msg, {
                     icon: 0
                 });
@@ -297,13 +305,17 @@ function getPayDetail2(orderId) {
     ajaxData(ajaxObj);
 }
 
-function buildPayDetailHtml2(payDetail) {
+function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
+    var arrivalTime = "";
+    if (sellerReceiveStatus == 4) {
+        arrivalTime = "<h3>到账时间：" + payDetail.updateTime + "</h3>";
+    }
     var total = deposit + payDetail.amount;
     var _html = "<div class=\"details_part\">" +
         "<div class=\"fl details_part_list\" style=\"margin-left: 90px;\">" +
         "<h3>付款方式：" + payDetail.paymentName + "</h3>" +
         "<h3>付款时间：" + payDetail.createTime + "</h3>" +
-        "<h3>到账时间：" + payDetail.updateTime + "</h3>" +
+        arrivalTime +
         "<h3>证联交易号：" + payDetail.seqId + "</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + payDetail.amount + "</span>" +
@@ -319,5 +331,27 @@ function buildPayDetailHtml2(payDetail) {
         "</h1>" +
         "</div>";
     return _html;
+}
+
+/**
+ * 发货
+ * @param id
+ * @returns {boolean}
+ */
+function ship(id) {
+    var ajaxObj = {
+        url: SERVER_URL + "/orderRecord/batchDeliver?ids=" + id,
+        success: function (data) {
+            if (data != null && data.code == '1000') {
+                layer.alert("已完成发货");
+            } else {
+                layer.alert(data.msg, {
+                    icon: 0
+                });
+            }
+        }
+    }
+    ajaxData(ajaxObj);
+
 }
 
