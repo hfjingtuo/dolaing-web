@@ -269,8 +269,10 @@ function getPayDetail(orderId, orderNum, sellerReceiveStatus) {
 
 function buildPayDetailHtml(payDetail, orderNum, sellerReceiveStatus) {
     var arrivalTime = "";
+    var arrivalStatus = "<br><span style=\"color: #F76096;margin-right: -8px;\">(到账中)</span>";
     if ((orderNum == 3 && sellerReceiveStatus == 2) || orderNum == 4 || orderNum == 5 || orderNum == 6) {
         arrivalTime = "<h3>到账时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.updateTime) + "</h3>";
+        arrivalStatus = "<br><span style=\"color: #F76096;margin-right: -8px;\">(已到账)</span>";
     }
     var _html = "<div class=\"details_part\">" +
         "<img src=\"/img/icon_order_details_3.png\" class=\"fl\" style=\"margin-top: 30px;\"/>" +
@@ -281,7 +283,9 @@ function buildPayDetailHtml(payDetail, orderNum, sellerReceiveStatus) {
         "<h3>证联交易号：" + (payDetail == null || payDetail == "" ? '--' : payDetail.seqId) + "</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + (payDetail == null || payDetail == "" ? '--' : payDetail.amount) + "</span>" +
-        "</br><span style=\"color: #F76096;margin-right: 4px;\">定金</span></h1>" +
+        "</br><span style=\"color: #F76096;margin-right: 4px;\">定金</span>" +
+        arrivalStatus +
+        "</h1>" +
         "</div>";
     return _html;
 }
@@ -308,8 +312,10 @@ function getPayDetail2(orderId, sellerReceiveStatus) {
 
 function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
     var arrivalTime = "";
+    var arrivalStatus = "<br><span style=\"color: #F76096;margin-right: -8px;\">(到账中)</span>";
     if (sellerReceiveStatus == 4) {
         arrivalTime = "<h3>到账时间：" + (payDetail == null || payDetail == "" ? '--' : payDetail.updateTime) + "</h3>";
+        arrivalStatus = "<br><span style=\"color: #F76096;margin-right: -8px;\">(已到账)</span>";
     }
     var _html = "<div class=\"details_part\">" +
         "<div class=\"fl details_part_list\" style=\"margin-left: 90px;\">" +
@@ -319,7 +325,9 @@ function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
         "<h3>证联交易号：" + (payDetail == null || payDetail == "" ? '--' : payDetail.seqId) + "</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" >￥<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + (payDetail == null || payDetail == "" ? '--' : payDetail.amount) + "</span>" +
-        "</br><span style=\"color: #F76096;margin-right: 4px;\">尾款</span></h1>" +
+        "</br><span style=\"color: #F76096;margin-right: 4px;\">尾款</span>" +
+        arrivalStatus +
+        "</h1>" +
         "</div>" +
         "<div class=\"details_part\">" +
         "<div class=\"fl details_part_list\" style=\"margin-left: 90px;margin-top: 27px;\">" +
