@@ -37,7 +37,6 @@ function login() {
                 $.cookie('token', data.token,{ path: '/'});
                 $.cookie('userPayAccount', userPayAccount==""? null : JSON.stringify(userPayAccount),{ path: '/'});
                 $.cookie('user', JSON.stringify(data.user),{ path: '/'});
-                $.cookie('userName', userName,{ path: '/'});
                 location.href = "/index.html";
             }
         },

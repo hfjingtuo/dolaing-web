@@ -1,24 +1,4 @@
 /**
- * 验证手机号是否被注册
- */
-function validUserName() {
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: SERVER_URL + "/validUserName",
-        data: "userName=" + $("#userName").val().trim(),
-        success: function (data) {
-            var message = data.message;
-            if (501 == data.code) {
-                layer.tips(message, '#userName', {
-                    tips: [2, '#f76592']
-                });
-            }
-        }
-    });
-}
-
-/**
  * 验证码获取
  */
 var InterValObj; //timer变量，控制时间
@@ -90,7 +70,12 @@ $(function () {
                 var message = data.message;
                 var code = data.code;
                 console.log(message);
-                if (200 == code) {
+                if (500 == code) {
+                    layer.tips(message, '#userName', {
+                        tips: [2, '#f76592']
+                    });
+                    $("#userName").focus();
+                } else if (200 == code) {
                     curCount = count;
                     // 设置button效果，开始计时
                     $("#btnSendCode").attr("disabled", "disabled");
@@ -107,7 +92,7 @@ $(function () {
                         tips: [2, '#f76592']
                     });
                     $("#msgCode").focus();
-                }else{
+                } else {
                     layer.tips(message, '#msgCode', {
                         tips: [2, '#f76592']
                     });
@@ -144,6 +129,7 @@ function register() {
     var pwd = $("#pwd").val().trim();
     var confirmPwd = $("#confirmPwd").val().trim();
     var msgCode = $("#msgCode").val().trim();
+    var protocol = $("#protocol").is(':checked');
     var phoneRegex = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
     if (userName == "") {
         layer.tips("请输入用户名", '#userName', {
@@ -192,6 +178,10 @@ function register() {
             tips: [2, '#f76592']
         });
         $("#msgCode").focus();
+        return false;
+    }
+    if (!protocol) {
+        layer.alert("您还没有阅读并同意《商品发布协议》");
         return false;
     }
     $.ajax({

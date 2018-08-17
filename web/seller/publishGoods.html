@@ -37,7 +37,7 @@
             <div class="publish_box" style="margin-top: 40px;">
                 <input type="hidden" id="goodsId" value="">
                 <h3>商品标题：</h3>
-                <input type="text" id="goodsName" placeholder="请输入该商品的标题" style="width: 500px;" maxlength="60"/>
+                <input type="text" id="goodsName" placeholder="请输入该商品的标题,1-60个字符" style="width: 500px;" maxlength="60"/>
             </div>
             <div class="publish_box">
                 <h3>商品金额(元)：</h3>
@@ -151,6 +151,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="agreement" style="margin: 50px 0 30px 300px;">
+            <input type="checkbox" id="protocol" class="fl"/>
+            <label class="fl">我已阅读并同意<span>《商品发布协议》</span></label>
         </div>
         <div class="btn_submit" style="margin-bottom: 50px;margin-top: 45px;">
             <h3 onclick="publishGoods()" id="publishGoods">发布商品</h3>

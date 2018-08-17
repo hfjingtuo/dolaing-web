@@ -68,7 +68,7 @@ function showGoodsArea() {
             totalPartOutput = expectPartOutput * goodsNumber;
         }
     }
-    $("#showGoodsArea").html("总面积：约" + totalArea + "亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约" + totalPartOutput + "KG");
+    $("#showGoodsArea").html("总面积：约" + totalArea.toFixed(2) + "亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约" + totalPartOutput.toFixed(2) + "KG");
 }
 
 /**
@@ -97,9 +97,17 @@ function publishGoods() {
     var subscribeTimes = subscribeTime.split("至");
     var startSubscribeTime = subscribeTimes[0];
     var endSubscribeTime = subscribeTimes[1];
+    var protocol = $("#protocol").is(':checked');
 
     if (isEmpty(goodsName)) {
         layer.tips("请输入商品标题", '#goodsName', {
+            tips: [2, '#f76592']
+        });
+        $("#goodsName").focus();
+        return false;
+    }
+    if (goodsName.length > 0 && goodsName.length < 60) {
+        layer.tips("商品标题应在1-60字符内", '#goodsName', {
             tips: [2, '#f76592']
         });
         $("#goodsName").focus();
@@ -114,7 +122,7 @@ function publishGoods() {
     }
     var shopPriceRegex = /^[0-9]*$/;
     if (!shopPriceRegex.test(shopPrice)) {
-        layer.tips("商品单价格式不正确", '#shopPrice', {
+        layer.tips("只接受大于1的整数", '#shopPrice', {
             tips: [2, '#f76592']
         });
         $("#shopPrice").focus();
@@ -280,9 +288,9 @@ function publishGoods() {
         var landImgInputs = $("#showLandImgs input[name='landImg']");
         var descImgInputs = $("#showDescImgs input[name='descImg']");
 
-        var masterImgsSize = $("#showMasterImgs li").length -1 ;
-        var landImgsSize = $("#showLandImgs li").length -1;
-        var descImgsSize = $("#showDescImgs li").length -1;
+        var masterImgsSize = $("#showMasterImgs li").length - 1;
+        var landImgsSize = $("#showLandImgs li").length - 1;
+        var descImgsSize = $("#showDescImgs li").length - 1;
 
         if (masterImgInputs.length + masterImgsSize == 0) {
             layer.alert("请上传商品主图");
@@ -324,6 +332,10 @@ function publishGoods() {
             tips: [2, '#f76592']
         });
         $("#subscribeTime").focus();
+        return false;
+    }
+    if (!protocol) {
+        layer.alert("您还没有阅读并同意《商品发布协议》");
         return false;
     }
 
@@ -505,7 +517,7 @@ function deleteImg(obj, type) {
 }
 
 /**
- * 加载已发布商品详情页
+ * 加载已发布商品编辑详情页
  * @param goodsId
  */
 function getPublishedGoods(goodsId) {
@@ -514,7 +526,7 @@ function getPublishedGoods(goodsId) {
         success: function (data) {
             console.log(data);
             if (data != null && data.code == '1000') {
-                if (data.data != null) {
+                if (data.data != null && data.data) {
                     var goodsMasterImgHtml = "";
                     var landImgHtml = "";
                     var goodsDescImgHtml = "";
