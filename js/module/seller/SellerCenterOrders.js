@@ -2,7 +2,7 @@ $(function () {
     var orderId = $.query.get("orderId");
     var sellerReceiveStatus = $.query.get("sellerReceiveStatus");
     var orderStatus = $.query.get("orderStatus");
-    var account = $.cookie('userName');
+    // var account = $.cookie('userName');
     var orderNum = 0;
     if (orderStatus == 1 && sellerReceiveStatus == 0) {
         orderNum = 1;
@@ -25,7 +25,7 @@ $(function () {
     }
     getOrderDetail(orderId, orderNum);
     if (orderNum == 3 || orderNum == 4 || orderNum == 5 || orderNum == 6) {
-        getPayDetail(orderId, account, orderNum);
+        getPayDetail(orderId, orderNum);
     }
 });
 
@@ -236,8 +236,8 @@ function buildOrderDetailHtml(order, goods, orderNum) {
 
 var payDetailHtml = "";
 var deposit = 0; // 定金
-function getPayDetail(orderId, account, orderNum) {
-    var getData = "?orderId=" + orderId + "&account=" + account + "&processType=" + 1;
+function getPayDetail(orderId, orderNum) {
+    var getData = "?orderId=" + orderId  + "&processType=" + 1;
     var ajaxObj = {
         type: "GET",
         url: SERVER_URL + "/accountRecord/getPayDetail" + getData,
@@ -248,7 +248,7 @@ function getPayDetail(orderId, account, orderNum) {
                 if (orderNum == 6) {
                     deposit = payDetailInfo.amount;
                     $("#payDetails").css('margin-bottom', '60');
-                    getPayDetail2(orderId, account);
+                    getPayDetail2(orderId);
                 } else {
                     $("#payDetails").html(payDetailHtml);
                 }
@@ -277,8 +277,8 @@ function buildPayDetailHtml(payDetail) {
     return _html;
 }
 
-function getPayDetail2(orderId, account) {
-    var getData = "?orderId=" + orderId + "&account=" + account + "&processType=" + 2;
+function getPayDetail2(orderId) {
+    var getData = "?orderId=" + orderId + "&processType=" + 2;
     var ajaxObj = {
         type: "GET",
         url: SERVER_URL + "/accountRecord/getPayDetail" + getData,
