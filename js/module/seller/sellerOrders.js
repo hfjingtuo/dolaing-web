@@ -33,8 +33,13 @@ SellerOrder.findRecords = function(){
                         _html += SellerOrder.buildDataView(record);
                     });
 
+                    if(data.data.records == null || data.data.records.length == 0 ){
+                        _html += '<li style="text-align: center ; padding-top: 20px;">无数据</li>';
+                        $("#pageView").html("");
+                    }else{
+                        $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
+                    }
                     $("#orderList").html(_html);
-                    $("#pageView").html(Dolaing.page.view(data.data.current,data.data.pages,data.data.total));
                 }
             }else{
                 layer.alert(data.msg, {
@@ -59,9 +64,9 @@ SellerOrder.buildDataView = function(order){
         _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
             '                    <tr>' +
             '                        <td>' +
-            '                            <img style="cursor: pointer;" onclick="SellerOrder.goGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
+            '                            <img style="cursor: pointer;" onclick="Dolaing.openGoodsDetail('+goods.goodsId+')" src="'+IMAGE_URL+goods.goodsMasterImg+'"/>' +
             '                            <div class="fl">' +
-            '                                <h3 style="cursor: pointer;" onclick="SellerOrder.goGoodsDetail('+goods.goodsId+')" >'+goods.goodsName+'</h3>' +
+            '                                <h3 style="cursor: pointer;" onclick="Dolaing.openGoodsDetail('+goods.goodsId+')" >'+goods.goodsName+'</h3>' +
             '                                <h4>土地编号：'+goods.landSn+'</h4>' +
             '                                <h4>认购土地面积：'+goods.buyLandArea+goods.landPartAreaUnitName+'</h4>' +
             '                            </div>' +
@@ -71,9 +76,12 @@ SellerOrder.buildDataView = function(order){
             '                            <h3>农户：'+goods.farmerId+'</h3>' +
             '                        </td>' +
             '                        <td class="middle">' +
-            '                            <h3>'+order.orderStatusFullName+'</h3>' +
-            '                            <h3 class="link" onclick="lookOrderDetail(' + order.orderStatusFullCode + ',' + order.sellerReceiveStatus + ',' + order.id + ')">查看详情</h3>' +
-            '                        </td>' +
+            '                            <h3>'+order.orderStatusFullName+'</h3>';
+            if( order.orderStatusFullCode != "4"){
+                _html +=  '<h3 class="link" onclick="lookOrderDetail(' + order.orderStatusFullCode + ',' + order.sellerReceiveStatus + ',' + order.id + ')">查看详情</h3>';
+
+            } ;
+        _html +='                        </td>' +
             '                        <td class="middle">' +
             '                            <h3>应得金额</h3>' +
             '                            <h2 class="money">￥'+order.sellerReceivableAmount+'</h2>' +
@@ -151,9 +159,6 @@ function page(pageNo){
     SellerOrder.findRecords();
 }
 
-SellerOrder.goGoodsDetail = function (id) {
-    window.location.href = "/goodsDetails.html?id="+id;
-}
 
 /**
  * 跳转到订单详情

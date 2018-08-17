@@ -46,7 +46,7 @@ function goodsHtml(goods) {
     }
     var html =
         "<li title='" + goods.goodsName + "'>" +
-        "<a href='/goodsDetails.html?id=" + goods.id + "'>" +
+        "<a target=\"_blank\" href='/goodsDetails.html?id=" + goods.id + "'>" +
         "<div class='home_list_goods'>" +
         "<img src='" + IMAGE_URL + goods.goodsMasterImgs.split(',')[0] + "'/></div>" +
         "<h3>" + goods.goodsName + "</h3>" +

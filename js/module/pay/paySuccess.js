@@ -7,7 +7,7 @@ var PaySuccess = {
 $(function () {
     PaySuccess.orderId = $.query.get("orderId");
     var ajaxObj = {
-        url: SERVER_URL + "/order/detail?orderId=" + PaySuccess.orderId,
+        url: SERVER_URL + "/order/detailPaied?orderId=" + PaySuccess.orderId,
         success: function (data) {
             console.log(data);
             if (data != null && data.code == '1000') {

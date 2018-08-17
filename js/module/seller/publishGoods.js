@@ -1,3 +1,12 @@
+/**
+ * 图片全局变量
+ * @type {string}
+ */
+var MASTERIMG_URL = "";
+var LANDIMG_URL = "";
+var GOODSDESCIMG_URL = "";
+
+
 $(function () {
     /***初始化左侧菜单**/
     SellCenterMenu.selectMenu(2);
@@ -62,7 +71,12 @@ function showGoodsArea() {
     $("#showGoodsArea").html("总面积：约" + totalArea + "亩 &nbsp;&nbsp;&nbsp;&nbsp;总产量：约" + totalPartOutput + "KG");
 }
 
+/**
+ * 发布商品
+ * @returns {boolean}
+ */
 function publishGoods() {
+    var goodsId = $("#goodsId").val();//编辑商品
     var goodsName = $("#goodsName").val();
     var shopPrice = $("#shopPrice").val();
     var depositRatio = $("#depositRatio").val();
@@ -78,11 +92,11 @@ function publishGoods() {
     var landPartArea = $("#landPartArea").val();
     var goodsNumber = $("#goodsNumber").val();
     var goodsDesc = $("#goodsDesc").val();
-    var goodsMasterImgs = $("#goodsMasterImgs").val();
-    var goodsDescImgs = $("#goodsDescImgs").val();
-    var landImgs = $("#landImgs").val();
     var farmerId = $("#farmerId").val();
     var subscribeTime = $("#subscribeTime").val();
+    var subscribeTimes = subscribeTime.split("至");
+    var startSubscribeTime = subscribeTimes[0];
+    var endSubscribeTime = subscribeTimes[1];
 
     if (isEmpty(goodsName)) {
         layer.tips("请输入商品标题", '#goodsName', {
@@ -98,6 +112,21 @@ function publishGoods() {
         $("#shopPrice").focus();
         return false;
     }
+    var shopPriceRegex = /^[0-9]*$/;
+    if (!shopPriceRegex.test(shopPrice)) {
+        layer.tips("商品单价格式不正确", '#shopPrice', {
+            tips: [2, '#f76592']
+        });
+        $("#shopPrice").focus();
+        return false;
+    }
+    if (parseInt(shopPrice) < 1) {
+        layer.tips("商品单价至少1元", '#shopPrice', {
+            tips: [2, '#f76592']
+        });
+        $("#shopPrice").focus();
+        return false;
+    }
     if (isEmpty(depositRatio)) {
         layer.tips("请输入定金比例1-100", '#depositRatio', {
             tips: [2, '#f76592']
@@ -105,8 +134,7 @@ function publishGoods() {
         $("#depositRatio").focus();
         return false;
     }
-    //var depositRatioRegex = /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/;
-    var depositRatioRegex=/(^[1-9][0-9]$|^[0-9]$|^100$)/;
+    var depositRatioRegex = /(^[1-9][0-9]$|^[0-9]$|^100$)/;
     if (!depositRatioRegex.test(depositRatio)) {
         layer.tips("定金比例应在1-100范围内", '#depositRatio', {
             tips: [2, '#f76592']
@@ -160,6 +188,13 @@ function publishGoods() {
         layer.tips("种植开始时间不能大于结束时间", '#startPlantime', {
             tips: [2, '#f76592']
         });
+        $("#startPlantime").focus();
+        return false;
+    }
+    if (startPlantime == endPlantime) {
+        layer.tips("种植结束时间要大于开始时间", '#endPlantime', {
+            tips: [2, '#f76592']
+        });
         $("#endPlantime").focus();
         return false;
     }
@@ -206,25 +241,82 @@ function publishGoods() {
         $("#goodsNumber").focus();
         return false;
     }
-    if (isEmpty(goodsMasterImgs)) {
-        layer.tips("请上传商品主图", '#uploadMasterImg', {
-            tips: [2, '#f76592']
-        });
-        $("#goodsMasterImgs").focus();
-        return false;
+    var formData = new FormData();
+
+    var masterImgs = "";
+    var landImgs = "";
+    var descImgs = "";
+    if (isEmpty(goodsId)) {
+        var masterImgInputs = $("#showMasterImgs input[name='masterImg']");
+        var landImgInputs = $("#showLandImgs input[name='landImg']");
+        var descImgInputs = $("#showDescImgs input[name='descImg']");
+
+        if (masterImgInputs.length == 0) {
+            layer.alert("请上传商品主图");
+            return false;
+        }
+        if (landImgInputs.length == 0) {
+            layer.alert("请上传商品土地图");
+            return false;
+        }
+        if (descImgInputs.length == 0) {
+            layer.alert("请上传商品详细图");
+            return false;
+        }
+
+        for (var i = 0; i < masterImgInputs.length; i++) {
+            masterImgs = masterImgInputs[i].files[0];
+            console.log(masterImgs[0]);
+            formData.append("masterImgs", masterImgs);
+        }
+        landImgs = landImgInputs[0].files[0];
+        formData.append("landImgs", landImgs);
+        for (var i = 0; i < descImgInputs.length; i++) {
+            descImgs = descImgInputs[i].files[0];
+            formData.append("descImgs", descImgs);
+        }
+    } else {
+        var masterImgInputs = $("#showMasterImgs input[name='masterImg']");
+        var landImgInputs = $("#showLandImgs input[name='landImg']");
+        var descImgInputs = $("#showDescImgs input[name='descImg']");
+
+        var masterImgsSize = $("#showMasterImgs li").length -1 ;
+        var landImgsSize = $("#showLandImgs li").length -1;
+        var descImgsSize = $("#showDescImgs li").length -1;
+
+        if (masterImgInputs.length + masterImgsSize == 0) {
+            layer.alert("请上传商品主图");
+            return false;
+        }
+        if (landImgInputs.length + landImgsSize == 0) {
+            layer.alert("请上传商品土地图");
+            return false;
+        }
+        if (descImgInputs.length + descImgsSize == 0) {
+            layer.alert("请上传商品详细图");
+            return false;
+        }
+
+        for (var i = 0; i < masterImgInputs.length; i++) {
+            masterImgs = masterImgInputs[i].files[0];
+            console.log(masterImgs[0]);
+            formData.append("masterImgs", masterImgs);
+        }
+        landImgs = landImgInputs[0].files[0];
+        formData.append("landImgs", landImgs);
+        for (var i = 0; i < descImgInputs.length; i++) {
+            descImgs = descImgInputs[i].files[0];
+            formData.append("descImgs", descImgs);
+        }
+        formData.append("masterImgsUrl", MASTERIMG_URL.substr(0, MASTERIMG_URL.length - 1));
+        formData.append("landImgsUrl", LANDIMG_URL.substr(0, LANDIMG_URL.length - 1));
+        formData.append("descImgsUrl", GOODSDESCIMG_URL.substr(0, GOODSDESCIMG_URL.length - 1));
     }
-    if (isEmpty(landImgs)) {
-        layer.tips("请上传商品土地图", '#uploadLandImg', {
+    if (isEmpty(goodsDesc)) {
+        layer.tips("请填写商品描述", '#goodsDesc', {
             tips: [2, '#f76592']
         });
-        $("#landImgs").focus();
-        return false;
-    }
-    if (isEmpty(goodsDescImgs)) {
-        layer.tips("请上传商品详细图", '#uploadDescImg', {
-            tips: [2, '#f76592']
-        });
-        $("#goodsDescImgs").focus();
+        $("#subscribeTime").focus();
         return false;
     }
     if (isEmpty(subscribeTime)) {
@@ -234,39 +326,42 @@ function publishGoods() {
         $("#subscribeTime").focus();
         return false;
     }
-    var subscribeTimes = subscribeTime.split("至");
-    var startSubscribeTime = new Date(subscribeTimes[0]);
-    var endSubscribeTime = new Date(subscribeTimes[1]);
-    var goods = {};
-    goods.goodsName = goodsName;
-    goods.shopPrice = shopPrice;
-    goods.depositRatio = depositRatio;
-    goods.isFreeShipping = isFreeShipping;
-    goods.catId = catId;
-    goods.breeds = breeds;
-    goods.plantingCycle = plantingCycle;
-    goods.plantime = startPlantime + "," + endPlantime;
-    goods.expectPartOutput = expectPartOutput;
-    goods.landSn = landSn;
-    goods.landAddress = landAddress;
-    goods.landPartArea = landPartArea;
-    goods.goodsNumber = goodsNumber;
-    goods.goodsDesc = goodsDesc;
-    goods.goodsMasterImgs = goodsMasterImgs;
-    goods.goodsDescImgs = goodsDescImgs;
-    goods.landImgs = landImgs;
-    goods.farmerId = farmerId;
 
-    goods.startSubscribeTime = startSubscribeTime;
-    goods.endSubscribeTime = endSubscribeTime;
+    formData.append("goodsId", goodsId);
+    formData.append("goodsName", goodsName);
+    formData.append("shopPrice", shopPrice);
+    formData.append("depositRatio", depositRatio);
+    formData.append("isFreeShipping", isFreeShipping);
+    formData.append("catId", catId);
+    formData.append("breeds", breeds);
+    formData.append("plantingCycle", plantingCycle);
+    formData.append("plantime", startPlantime + "," + endPlantime);
+    formData.append("expectPartOutput", expectPartOutput);
+    formData.append("landSn", landSn);
+    formData.append("landAddress", landAddress);
+    formData.append("landPartArea", landPartArea);
+    formData.append("goodsNumber", goodsNumber);
+    formData.append("goodsDesc", goodsDesc);
+    formData.append("farmerId ", farmerId);
+    formData.append("startSubscribeTime", startSubscribeTime);
+    formData.append("endSubscribeTime", endSubscribeTime);
 
-    var ajaxObj = {};
-    ajaxObj.url = SERVER_URL + "/publishGoods";
-    ajaxObj.data = JSON.stringify(goods);
-    ajaxObj.success = function (data) {
-        var code = data.code;
-        var message = data.message;
-        console.log(data);
+    var Authorization = "Bearer " + $.cookie('token');
+    $.ajax({
+        url: SERVER_URL + '/publishGoods',
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'JSON',
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", Authorization);
+        }
+    }).done(function (res) {
+        console.log(res);
+        var code = res.code;
+        var message = res.message;
         if (200 == code) {
             layer.alert("商品发布成功", function (index) {
                 location.href = "/web/seller/publishedGoods.html";
@@ -275,10 +370,144 @@ function publishGoods() {
         } else if (500 == code) {
             layer.alert(message);
         }
-    }
-    ajaxData(ajaxObj);
+    }).fail(function (res) {
+        layer.alert(res);
+    });
 }
 
+/**
+ * 上传图片
+ * @param type
+ */
+function uploadImg(type) {
+    var masterImgs = $('#uploadMasterImg')[0].files;
+    var landImgs = $('#uploadLandImg')[0].files;
+    var descImgs = $('#uploadDescImg')[0].files;
+    var masterImgsSize = $("#showMasterImgs li").length;
+    var landImgsSize = $("#showLandImgs li").length;
+    var descImgsSize = $("#showDescImgs li").length;
+    var maxImgSize = 3 * 1024 * 1024;
+
+    console.log("type=" + type);
+    console.log("masterImgsSize=" + masterImgsSize);
+    console.log("landImgsSize=" + landImgsSize);
+    console.log("descImgsSize=" + descImgsSize);
+
+    if ("masterImg" == type) {
+        if (masterImgs.length > 5) {
+            layer.alert("宝贝主图最多允许上传5张");
+            return;
+        }
+        if (masterImgsSize > 5) {
+            layer.alert("宝贝主图最多允许上传5张");
+            return;
+        }
+        for (let file of masterImgs) {
+            if (file.size > maxImgSize) {
+                layer.alert("图片不能超过3MB");
+                return;
+            }
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
+
+            var newInput = $("#uploadMasterImg").clone();
+            newInput.removeAttr("id");
+            newInput.attr("name", "masterImg");
+            newInput.removeAttr("onchange");
+            newInput.css("display", "none");
+            var newLi = document.createElement("li");
+            $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
+                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
+            $(newLi).append(newInput);
+        }
+        $('#showMasterImgs').append(newLi);
+    } else if ("landImg" == type) {
+        if (landImgs.length > 1) {
+            layer.alert("土地图最多允许上传1张");
+            return;
+        }
+        if (landImgsSize > 1) {
+            layer.alert("土地图最多允许上传1张");
+            return;
+        }
+        for (let file of landImgs) {
+            if (file.size > maxImgSize) {
+                layer.alert("图片不能超过3MB");
+                return;
+            }
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
+
+            var newInput = $("#uploadLandImg").clone();
+            newInput.removeAttr("id");
+            newInput.attr("name", "landImg");
+            newInput.removeAttr("onchange");
+            newInput.css("display", "none");
+            var newLi = document.createElement("li");
+            $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
+                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
+            $(newLi).append(newInput);
+        }
+        $('#showLandImgs').append(newLi);
+    } else if ("descImg" == type) {
+        if (descImgs.length > 3) {
+            layer.alert("商品详情图最多允许上传3张");
+            return;
+        }
+        if (descImgsSize > 3) {
+            layer.alert("商品详情图最多允许上传3张");
+            return;
+        }
+        for (let file of descImgs) {
+            if (file.size > maxImgSize) {
+                layer.alert("图片不能超过3MB");
+                return;
+            }
+            let img = new Image;
+            img.src = URL.createObjectURL(file);
+            img.title = file.name;
+
+            var newInput = $("#uploadDescImg").clone();
+            newInput.removeAttr("id");
+            newInput.attr("name", "descImg");
+            newInput.removeAttr("onchange");
+            newInput.css("display", "none");
+            var newLi = document.createElement("li");
+            $(newLi).append("<img src='/img/icon_delete_img.png' class='upload_img1' onclick='this.parentNode.parentNode.removeChild(this.parentNode)'/>" +
+                "<img src='" + img.src + "'style='width: 150px;height: 150px' class='upload_img2'>");
+            $(newLi).append(newInput);
+        }
+        $('#showDescImgs').append(newLi);
+    }
+}
+
+/**
+ * 删除图片
+ */
+function deleteImg(obj, type) {
+    if ("masterImg" == type) {
+        console.log("=" + MASTERIMG_URL);
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        MASTERIMG_URL = MASTERIMG_URL.replace(imgUrl, "");
+        console.log("==" + MASTERIMG_URL);
+    } else if ("landImg" == type) {
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        LANDIMG_URL = LANDIMG_URL.replace(imgUrl, "");
+        console.log("==" + LANDIMG_URL);
+    } else if ("goodsDescImg" == type) {
+        var imgUrl = $(obj).siblings()[0].alt + ",";
+        GOODSDESCIMG_URL = GOODSDESCIMG_URL.replace(imgUrl, "");
+        console.log("==" + GOODSDESCIMG_URL);
+    }
+    obj.parentNode.parentNode.removeChild(obj.parentNode);
+}
+
+/**
+ * 加载已发布商品详情页
+ * @param goodsId
+ */
 function getPublishedGoods(goodsId) {
     var ajaxObj = {
         url: SERVER_URL + "/publishedGoods/detail?goodsId=" + goodsId,
@@ -333,28 +562,40 @@ function getPublishedGoods(goodsId) {
                     }
 
                     var goodsMasterImgs = mallGoods.goodsMasterImgs.split(",");
-                    goodsMasterImgHtml += "<li><img src='/img/bg_upload.png' id='uploadMasterImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    goodsMasterImgHtml += "<li>" +
+                        "<img src=\"/img/bg_upload.png\" style=\"width: 150px;height: 150px\" class=\"upload_img2\" onclick=\"$(this).parent().find('#uploadMasterImg').click();\">\n" +
+                        "<input id=\"uploadMasterImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('masterImg')\" multiple/></li>";
                     for (var i = 0; i < goodsMasterImgs.length; i++) {
                         goodsMasterImg = goodsMasterImgs[i];
-                        goodsMasterImgHtml += "<li><img src='" + IMAGE_URL + goodsMasterImg + "' style='width: 150px;height: 150px'></li>"
+                        goodsMasterImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"masterImg\")'/>" +
+                            "<img src='" + IMAGE_URL + goodsMasterImg + "' alt='" + goodsMasterImg + "' style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showMasterImgs").html(goodsMasterImgHtml);
+                    MASTERIMG_URL = mallGoods.goodsMasterImgs + ",";
 
                     var landImgs = mallGoods.landImgs.split(",");
-                    landImgHtml += "<li><img src='/img/bg_upload.png' id='uploadLandImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    landImgHtml += "<li>" +
+                        "<img src=\"/img/bg_upload.png\" style=\"width: 150px;height: 150px\" class=\"upload_img2\" onclick=\"$(this).parent().find('#uploadLandImg').click();\">\n" +
+                        "<input id=\"uploadLandImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('landImg')\" multiple/></li>";
                     for (var i = 0; i < landImgs.length; i++) {
                         landImg = landImgs[i];
-                        landImgHtml += "<li><img src='" + IMAGE_URL + landImgs + "' style='width: 150px;height: 150px'></li>"
+                        landImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"landImg\")'/>" +
+                            "<img src='" + IMAGE_URL + landImg + "'alt='" + landImg + "'  style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showLandImgs").html(landImgHtml);
+                    LANDIMG_URL = mallGoods.landImgs + ",";
 
                     var goodsDescImgs = mallGoods.goodsDescImgs.split(",");
-                    goodsDescImgHtml += "<li><img src='/img/bg_upload.png' id='uploadDescImg' style='width: 150px;height: 150px'><input type='file' accept='image/*'/></li>"
+                    goodsDescImgHtml += "<li>" +
+                        "<img src=\"/img/bg_upload.png\" style=\"width: 150px;height: 150px\" class=\"upload_img2\" onclick=\"$(this).parent().find('#uploadDescImg').click();\">\n" +
+                        "<input id=\"uploadDescImg\" type=\"file\" name=\"file\" accept=\"image/*\" onchange=\"uploadImg('descImg')\" multiple/></li>";
                     for (var i = 0; i < goodsDescImgs.length; i++) {
                         goodsDescImg = goodsDescImgs[i];
-                        goodsDescImgHtml += "<li><img src='" + IMAGE_URL + goodsDescImg + "' style='width: 150px;height: 150px'></li>"
+                        goodsDescImgHtml += "<li><img src='/img/icon_delete_img.png' class='upload_img1' onclick='deleteImg(this,\"goodsDescImg\")'/>" +
+                            "<img src='" + IMAGE_URL + goodsDescImg + "' alt='" + goodsDescImg + "'  style='width: 150px;height: 150px' class='upload_img2'></li>";
                     }
                     $("#showDescImgs").html(goodsDescImgHtml);
+                    GOODSDESCIMG_URL = mallGoods.goodsDescImgs + ",";
 
                     /**初始化品类下拉框**/
                     Dolaing.dictionary("catId");
@@ -368,20 +609,4 @@ function getPublishedGoods(goodsId) {
         }
     }
     ajaxData(ajaxObj);
-}
-
-function deleteImg(obj) {
-    var goodsMasterImgs = $("#goodsMasterImgs").val();
-    var ajaxObj = {};
-    ajaxObj.url = SERVER_URL + "/delete/goodsImage?fileName=" + goodsMasterImgs;
-    ajaxObj.success = function (data) {
-        console.log(data);
-        var code = data.code;
-        console.log(data);
-        if ('1000' != code) {
-            layer.alert("删除图片异常");
-        }
-    }
-    ajaxData(ajaxObj);
-    obj.parentNode.parentNode.removeChild(obj.parentNode);
 }

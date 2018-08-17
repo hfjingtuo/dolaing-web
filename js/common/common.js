@@ -4,10 +4,10 @@ document.write("<script language=javascript src='/js/layui/layui.all.js'></scrip
 document.write("<script language=javascript src='/js/layui/layui.js'></script>");
 document.write("<script language=javascript src='/js/jquery.cookie.js'></script>");
 document.write("<script language=javascript src='/js/jquery.params.js'></script>");
-var SERVER_URL = "http://39.104.123.195:8067/dolaing";
-var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
-// var SERVER_URL = "http://localhost:8067/dolaing";
-// var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
+// var SERVER_URL = "http://39.104.123.195:8067/dolaing";
+// var IMAGE_URL = "http://39.104.123.195:8067/dolaing/upload/";
+var SERVER_URL = "http://localhost:8067/dolaing";
+var IMAGE_URL = "http://localhost:8067/dolaing/upload/";
 
 function ajaxData(ajaxObj) {
     if (ajaxObj.type == null || ajaxObj.type == "") {
@@ -207,12 +207,12 @@ Dolaing.view.info = function () {
     }
     var _html = '<div class="auto">' +
         '<h6 class="fl">' + loginStatusHtml + '</h6>' +
-        /*'<ul class="top_ul">' +
+        '<ul class="top_ul">' +
         '<li><a href="/index.html">' +
         '<h4 class="fl">网站首页</h4>' +
-        '<img src="/img/img_nav_line.png" class="fl nav_line" />' +
+        // '<img src="/img/img_nav_line.png" class="fl nav_line" />' +
         '</a></li>' +
-        '<li><a href="#">' +
+        /*'<li><a href="#">' +
         '<h4 class="fl">关注我们</h4>' +
         '<img src="/img/nav_arrow_down.png" class="fl nav_arrow"/>' +
         '<img src="/img/img_nav_line.png" class="fl nav_line"/>' +
@@ -245,8 +245,8 @@ Dolaing.view.info = function () {
         '<h4 class="fl">入驻帮助</h4>' +
         '</a></li>' +
         '</ul>' +
-        '</a></li>' +
-        '</ul>' +*/
+        '</a></li>' +*/
+        '</ul>' +
         '</div>';
     $(".top").html(_html);
 };
@@ -566,4 +566,9 @@ Dolaing.validate.isPersonNo = function(idCard){
         return false;
     }
 
+}
+
+
+Dolaing.openGoodsDetail = function(id){
+    window.open("/goodsDetails.html?id="+id);
 }

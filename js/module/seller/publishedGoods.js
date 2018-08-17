@@ -61,9 +61,9 @@ function goodsHtml(goods) {
         " </div>" +
         " <div class='orders_box published_list'>" +
         " <div class='orders_box_goods'>" +
-        " <img src='" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "'/>" +
+        " <img style='cursor: pointer' onclick='Dolaing.openGoodsDetail(\""+goods.id +"\")' src='" + IMAGE_URL + goods.goodsMasterImgs.split(",")[0] + "'/>" +
         " <div class='fl'>" +
-        " <h3>" + goods.goodsName + "</h3>" +
+        " <h3 style='cursor: pointer' onclick='Dolaing.openGoodsDetail(\""+ goods.id +"\")'>" + goods.goodsName + "</h3>" +
         " </div>" +
         " </div>" +
         " <div class='orders_box_state'>" +
@@ -122,4 +122,8 @@ function batchDelete(id) {
         }
         ajaxData(ajaxObj);
     });
+}
+
+function goGoodsDetail(id) {
+    window.location.href = "/goodsDetails.html?id="+id;
 }
