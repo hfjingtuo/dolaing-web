@@ -137,9 +137,14 @@ function getzf(num) {
 }
 
 function goLogout() {
-    $.cookie('user', '', {expires: -1,path: '/'});
-    $.cookie('token', '', {expires: -1,path: '/'});
-    location.href = "/login.html";
+    var ajaxObj = {};
+    ajaxObj.url = SERVER_URL + "/logout";
+    ajaxObj.success = function () {
+        $.cookie('user', '', {expires: -1,path: '/'});
+        $.cookie('token', '', {expires: -1,path: '/'});
+        location.href = "/login.html";
+    }
+    ajaxData(ajaxObj);
 }
 /**
  * 非空判断

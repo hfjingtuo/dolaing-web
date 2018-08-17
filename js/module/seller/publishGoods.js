@@ -106,7 +106,7 @@ function publishGoods() {
         $("#goodsName").focus();
         return false;
     }
-    if (goodsName.length > 0 && goodsName.length < 60) {
+    if (goodsName.length > 59) {
         layer.tips("商品标题应在1-60字符内", '#goodsName', {
             tips: [2, '#f76592']
         });
@@ -310,7 +310,9 @@ function publishGoods() {
             console.log(masterImgs[0]);
             formData.append("masterImgs", masterImgs);
         }
-        landImgs = landImgInputs[0].files[0];
+        if (landImgInputs.length > 0) {
+            landImgs = landImgInputs[0].files[0];
+        }
         formData.append("landImgs", landImgs);
         for (var i = 0; i < descImgInputs.length; i++) {
             descImgs = descImgInputs[i].files[0];
@@ -359,6 +361,9 @@ function publishGoods() {
     formData.append("endSubscribeTime", endSubscribeTime);
 
     var Authorization = "Bearer " + $.cookie('token');
+    var index = layer.load(1, {
+        shade: [0.3, '#000'] //0.1透明度的白色背景
+    });
     $.ajax({
         url: SERVER_URL + '/publishGoods',
         type: 'POST',
@@ -385,6 +390,7 @@ function publishGoods() {
     }).fail(function (res) {
         layer.alert(res);
     });
+    layer.close(index);
 }
 
 /**

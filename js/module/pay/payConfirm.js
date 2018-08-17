@@ -212,7 +212,6 @@ function payConfirm() {
         console.log(data);
         var code = data.code;
         var message = data.data;
-        console.log(data);
         if ('1000' == code) {
             location.href = "/web/pay/payComplete.html?orderId=" + message;
         } else if (500 == code) {
