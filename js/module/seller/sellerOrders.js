@@ -55,7 +55,7 @@ SellerOrder.findRecords = function(){
 SellerOrder.buildDataView = function(order){
     var _html ='<li>' +
         '                <div class="orders_words">' +
-        '                    <input type="checkbox" name=""  value="'+order.id+'-'+order.orderStatusFullCode+'" />' +
+        '                    <input type="checkbox" name=""  value="'+order.id+'-'+order.orderStatusFullCode+'-'+order.sellerReceiveStatus+'" />' +
         '                    <h5>订单号：'+order.orderSn+'&nbsp;&nbsp;|&nbsp;&nbsp;创建时间：'+order.createTime+'&nbsp;&nbsp;</h5>' +
         '                </div>' ;
     var goods = null ;
@@ -88,7 +88,7 @@ SellerOrder.buildDataView = function(order){
             '                            <h3>（定金比例'+goods.depositRatioLabel+'）</h3>' +
             '                            <h3>总额：'+goods.goodsAmount+'</h3>' +
             '                        </td>' ;
-        if(order.orderStatusFullCode == "2"){
+        if(order.orderStatusFullCode == "2" && order.sellerReceiveStatus == "2"){
             _html += ' <td class="middle">' +
             ' <h3 class="link" onclick="SellerOrder.batchDeliver(\''+order.id+'\')">发&nbsp;&nbsp;货</h3>' +
             '</td>' ;
@@ -118,6 +118,11 @@ SellerOrder.batchDeliver = function(id){
         $("#orderList input[type='checkbox']:checked").each(function(){
             if($(this).val().split("-")[1] != 2 ){ //如果不是生产中的订单不允许发货
                 layer.alert("请选择生产中的订单进行发货");
+                flag = false ;
+                return false ;
+            }
+            if($(this).val().split("-")[2] != 2 ){ //如果卖家未收到定金的订单不允许发货
+                layer.alert("该订单定金未到账，不允许发货");
                 flag = false ;
                 return false ;
             }
