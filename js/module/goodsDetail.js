@@ -1,6 +1,6 @@
 //设置全局变量
 var leftData = {
-    pageSize: 2,
+    pageSize: 4,
     pageNo: 1,
     html: ""
 };
@@ -36,7 +36,6 @@ $(function () {
                     }
                     $("#bigImg").html(bigImgHtml);
                     $("#goodsMasterImg").html(goodsMasterImgHtml);
-                    //$("ul").removeAttr("id");
 
                     $("#goodsName").text(mallGoods.goodsName);
                     $("#goodsBrief").text(mallGoods.goodsBrief);
@@ -56,7 +55,7 @@ $(function () {
 
                     $("#isFreeShipping").text("1" == mallGoods.isFreeShipping ? "包邮" : "自费");
 
-                    $("#deposit").text(mallGoods.shopPrice +"元/件");//单价
+                    $("#deposit").text(mallGoods.shopPrice + "元/件");//单价
                     var endSubscribeDays = checkTime(parseInt((new Date(mallGoods.endSubscribeTime) - new Date) / 1000 / 60 / 60 / 24, 10));//认购结束剩余的天数
                     var deliveryDays = parseInt(endSubscribeDays) + parseInt(mallGoods.plantingCycle);//预计发货时间=认购结束时间+生长周期
                     $("#deliveryDays").text("生产完成后" + deliveryDays + "天内发货");
@@ -108,12 +107,11 @@ $(function () {
 /**
  * 添加图片悬浮事件
  */
-
-function bindImageMouseover(){
-   $("#goodsMasterImg li").mouseover(function(){
+function bindImageMouseover() {
+    $("#goodsMasterImg li").mouseover(function () {
         $(this).siblings().find("img").removeClass("img_small_cur");
         $(this).find("img").removeClass("img_small_cur").addClass("img_small_cur");
-        $("#bigImg").html("<li style='display: block;'><img src='"  + $(this).find("img").attr("src") + "'/></li>");
+        $("#bigImg").html("<li style='display: block;'><img src='" + $(this).find("img").attr("src") + "'/></li>");
     });
 }
 
@@ -121,22 +119,19 @@ function bindImageMouseover(){
  * 加载左侧商品列表
  */
 function getLeftGoods() {
+    var goodsId = $.query.get("id");
     $.ajax({
         type: "post",
-        data: "pageNo=" + leftData.pageNo + "&pageSize=" + leftData.pageSize,
-        url: SERVER_URL + "/index",
+        data: "pageNo=" + leftData.pageNo + "&pageSize=" + leftData.pageSize + "&goodsId=" + goodsId,
+        url: SERVER_URL + "/getAllGoods",
         success: function (data) {
-            var goodsList = data.list;
+            var goodsList = data.data.records;
             console.log(goodsList);
-            if (goodsList != null && goodsList.length != 0) {
-                var goods = null;
-                for (var i = 0; i < goodsList.length; i++) {
-                    goods = goodsList[i];
-                    leftData.html += goodsHtml(goods);
-                    countdown(goods.endSubscribeTime, goods.id);//认购倒计时
-                }
-                $("#leftGoods").html(leftData.html);
-            }
+            $(goodsList).each(function (index, goods) {
+                leftData.html += goodsHtml(goods);
+                countdown(goods.endSubscribeTime, goods.id);//认购倒计时
+            });
+            $("#leftGoods").html(leftData.html);
         }
     });
 }
@@ -182,8 +177,13 @@ function subscription() {
 }
 
 function timer(timeStr) {
-    setInterval(function () {
+    var t1 = window.setInterval(function () {
         let nowTime = new Date(timeStr) - new Date;
+        if (nowTime < 1000) {
+            window.clearInterval(t1);
+            layer.alert("该商品认购时间已截止，请认购其他商品");
+            window.location.href = "/index.html";
+        }
         let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
         let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
 
