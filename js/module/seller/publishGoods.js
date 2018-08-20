@@ -414,15 +414,18 @@ function uploadImg(type) {
     if ("masterImg" == type) {
         if (masterImgs.length > 5) {
             layer.alert("宝贝主图最多允许上传5张");
+            $("#uploadMasterImg").val("");
             return;
         }
         if (masterImgsSize > 5) {
             layer.alert("宝贝主图最多允许上传5张");
+            $("#uploadMasterImg").val("");
             return;
         }
         for (let file of masterImgs) {
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
+                $("#uploadMasterImg").val("");
                 return;
             }
             let img = new Image;
@@ -443,15 +446,18 @@ function uploadImg(type) {
     } else if ("landImg" == type) {
         if (landImgs.length > 1) {
             layer.alert("土地图最多允许上传1张");
+            $("#uploadLandImg").val("");
             return;
         }
         if (landImgsSize > 1) {
             layer.alert("土地图最多允许上传1张");
+            $("#uploadLandImg").val("");
             return;
         }
         for (let file of landImgs) {
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
+                $("#uploadLandImg").val("");
                 return;
             }
             let img = new Image;
@@ -472,15 +478,18 @@ function uploadImg(type) {
     } else if ("descImg" == type) {
         if (descImgs.length > 3) {
             layer.alert("商品详情图最多允许上传3张");
+            $("#uploadDescImg").val("");
             return;
         }
         if (descImgsSize > 3) {
             layer.alert("商品详情图最多允许上传3张");
+            $("#uploadDescImg").val("");
             return;
         }
         for (let file of descImgs) {
             if (file.size > maxImgSize) {
                 layer.alert("图片不能超过3MB");
+                $("#uploadDescImg").val("");
                 return;
             }
             let img = new Image;
