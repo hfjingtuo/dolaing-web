@@ -12,20 +12,16 @@ $(function () {
 function getIndex() {
     $.ajax({
         type: "post",
-        data: "pageNo=" + indexData.pageNo + "&pageSize=" + indexData.pageSize,
-        url: SERVER_URL + "/index",
+        data: "pageNo=" + indexData.pageNo + "&pageSize=" + indexData.pageSize + "&goodsId=",
+        url: SERVER_URL + "/getAllGoods",
         success: function (data) {
-            var goodsList = data.list;
-            console.log(goodsList);
-            if (goodsList == null || goodsList.length == 0) {
-                indexData.html += '暂无找到相关商品';
-            } else {
-                var goods = null;
-                for (var i = 0; i < goodsList.length; i++) {
-                    goods = goodsList[i];
+            if (data.data != null) {
+                var goodsList = data.data.records;
+                console.log(goodsList);
+                $(goodsList).each(function (index, goods) {
                     indexData.html += goodsHtml(goods);
                     countdown(goods.endSubscribeTime, goods.id);//认购倒计时
-                }
+                });
                 $("#root").html(indexData.html);
                 if (goodsList.length < indexData.pageSize) {
                     $("#OK").hide();
@@ -65,4 +61,38 @@ function goodsHtml(goods) {
 function getIndexMore() {
     indexData.pageNo += 1;
     getIndex();
+}
+
+/**
+ * 计算剩余时间（计时每秒）
+ * @param time
+ * @param id
+ */
+function countdown(time, id) {
+    setInterval(function () {
+        let nowTime = new Date(time) - new Date;
+        if (nowTime < 1000){
+            clearInterval();
+            window.location.reload();
+        }
+        console.log(nowTime);
+        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
+
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+        days = checkTime(days);
+        hours = checkTime(hours);
+
+        $("#timer" + id).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+    }, 1000);
+}
+
+function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
 }
