@@ -64,7 +64,7 @@ $(function () {
             type: "POST",
             dataType: "json",
             url: SERVER_URL + "/code/msgCode",
-            data: "phone=" + userName,
+            data: "phone=" + userName + "&type=" + 1,
             success: function (data) {
                 console.log(data);
                 var message = data.message;
@@ -87,7 +87,7 @@ $(function () {
                         tips: [2, '#f76592']
                     });
                     $("#msgCode").focus();
-                } else if (501 == code) {
+                } else if (502 == code) {
                     layer.tips(message, '#msgCode', {
                         tips: [2, '#f76592']
                     });
