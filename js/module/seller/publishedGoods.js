@@ -22,7 +22,7 @@ $(function () {
 function getPublishedGoodsList() {
     var getData = "?pageNo=" + PublishedGoods.page.pageNo + "&pageSize=" + PublishedGoods.page.pageSize;
     var ajaxObj = {
-        url: SERVER_URL + "/publishGoods/list" + getData,
+        url: SERVER_URL + "/publishedGoods/list" + getData,
         success: function (data) {
             if (data != null && data.code == '1000') {
                 if (data.data != null) {
