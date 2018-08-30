@@ -46,10 +46,10 @@ function getOrderDetail(orderId, orderNum) {
                 total = orderInfoVo.goodsAmount;
                 var goodsInfo = orderInfoVo.orderGoodsVos[0];
                 var orderDetailHtml = buildOrderDetailHtml(orderInfoVo, goodsInfo, orderNum);
-                if (orderNum == 1 || orderNum == 2) {
-                    countdown(goodsInfo.endSubscribeTime, goodsInfo.goodsId); // 认购倒计时
-                } else if (orderNum == 3) {
-                    countdown(goodsInfo.expectDeliverTime, goodsInfo.goodsId); // 发货倒计时
+                if (orderNum == 1) {
+                    countdown(orderInfoVo.createTime, goodsInfo.goodsId, 0); // 付款倒计时
+                } else if (orderNum == 2 || orderNum == 3) {
+                    countdown(goodsInfo.expectDeliverTime, goodsInfo.goodsId, 1); // 发货倒计时
                 }
                 $("#orderDetails").html(orderDetailHtml);
             }
@@ -68,7 +68,7 @@ function buildOrderDetailHtml(order, goods, orderNum) {
             "<div class=\"fl details_part_list\">" +
             "<h3>订单当前状态：<span>待付款</span></h3>" +
             "<h3>订单编号：" + order.orderSn + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：" + order.createTime + "</h3>" +
-            "<h3>距离结束认购还有：" +
+            "<h3>距离付款结束时间还有：" +
             "<span id='timer" + goods.goodsId + "'></span>" +
             "</h3>" +
             "<h3>应付金额：￥<span>" + order.buyerOrderAmount + "</span></h3>" +
@@ -94,7 +94,7 @@ function buildOrderDetailHtml(order, goods, orderNum) {
             "<div class=\"fl details_part_list\">" +
             "<h3>订单当前状态：<span>生产中</span></h3>" +
             "<h3>订单编号：" + order.orderSn + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：" + order.createTime + "</h3>" +
-            "<h3>距离结束认购还有：" +
+            "<h3>距离发货日期：" +
             "<span id='timer" + goods.goodsId + "'></span>" +
             "</h3>" +
             "<h3>应付金额：￥<span>" + order.buyerOrderAmount + "</span></h3>" +
@@ -334,7 +334,7 @@ function buildPayDetailHtml2(payDetail, sellerReceiveStatus) {
         "<h3>含运费（0元）</h3>" +
         "</div>" +
         "<h1 class=\"fr details_part_money\" style=\"margin-top: 20px;\">￥" +
-        "<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" +  total + "</span>" +
+        "<span style=\"color: #F76096;font-weight: bold;font-size: 18px;\">" + total + "</span>" +
         "</br><span style=\"color: #F76096;margin-right: 4px;\">总计</span>" +
         "</h1>" +
         "</div>";

@@ -52,13 +52,11 @@ function timer(timeStr) {
             second = Math.floor(leftTime / 1000 % 60);
         } else {
             clearInterval();
-            layer.alert('订单已过期，请重新下单');
             window.location = "/web/buyer/buyerCenter.html";
             return;
         }
         if ((minutes == 0 && second <= 1)) {
             clearInterval();
-            layer.alert('订单已过期，请重新下单');
             window.location = "/web/buyer/buyerCenter.html";
             return;
         } else if (minutes == 0) {

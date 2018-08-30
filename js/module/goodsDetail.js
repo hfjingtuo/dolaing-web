@@ -129,7 +129,7 @@ function getLeftGoods() {
             console.log(goodsList);
             $(goodsList).each(function (index, goods) {
                 leftData.html += goodsHtml(goods);
-                countdown(goods.endSubscribeTime, goods.id);//认购倒计时
+                countdown(goods.endSubscribeTime, goods.id, 1);//认购倒计时
             });
             $("#leftGoods").html(leftData.html);
         }

@@ -30,10 +30,10 @@ OrderDetail.getOrderDetail1 = function (orderId) {
 OrderDetail.buildOrderDetailHtml = function (orderInfoVo, userAccountRecord) {
     var goodsInfo = orderInfoVo.orderGoodsVos[0];
     if (orderInfoVo.orderStatusFullCode == "1") {
-        countdown(goodsInfo.endSubscribeTime, goodsInfo.goodsId); // 认购倒计时
+        countdown(goodsInfo.endSubscribeTime, goodsInfo.goodsId, 1); // 认购倒计时
         $("#detailContent").html(OrderDetail.buildStatus1(orderInfoVo, userAccountRecord));
     } else if (orderInfoVo.orderStatusFullCode == "2") {
-        countdown(goodsInfo.expectDeliverTime, goodsInfo.goodsId); // 发货倒计时
+        countdown(goodsInfo.expectDeliverTime, goodsInfo.goodsId, 1); // 发货倒计时
         $("#detailContent").html(OrderDetail.buildStatus2(orderInfoVo, userAccountRecord));
     } else if (orderInfoVo.orderStatusFullCode == "3") {
         $("#detailContent").html(OrderDetail.buildStatus3(orderInfoVo, userAccountRecord));

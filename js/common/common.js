@@ -140,12 +140,13 @@ function goLogout() {
     var ajaxObj = {};
     ajaxObj.url = SERVER_URL + "/logout";
     ajaxObj.success = function () {
-        $.cookie('user', '', {expires: -1,path: '/'});
-        $.cookie('token', '', {expires: -1,path: '/'});
+        $.cookie('user', '', {expires: -1, path: '/'});
+        $.cookie('token', '', {expires: -1, path: '/'});
         location.href = "/login.html";
     }
     ajaxData(ajaxObj);
 }
+
 /**
  * 非空判断
  */
@@ -178,7 +179,7 @@ Dolaing.dictionary = function (dictName) {
                 $.each(data.data, function (i, val) {
                     if (optionVal == "") {
                         $("#catId").append('<option value=' + val.dictValue + '>' + val.dictLabel + '</option>');
-                    }else {
+                    } else {
                         if (optionVal == val.dictValue) {
                             $("#catId").append('<option selected value=' + val.dictValue + '>' + val.dictLabel + '</option>');
                         } else {
@@ -452,19 +453,53 @@ Dolaing.selector = function (ele, rangeId) {
  * @param time
  * @param id
  */
-function countdown(time, id) {
+function countdown(time, id, type) {
     setInterval(function () {
-        let nowTime = new Date(time) - new Date;
-        let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
-        let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
+        if (type == 0) { // 付款
+            //获取当前时间
+            var now = new Date().getTime();
+            //设置截止时间
+            var startTime = new Date(time).getTime();
+            //时间差
+            var leftTime = 1800000 - (now - startTime);//30分钟倒计时
+            var minutes = 0, second = 0;
+            if (leftTime >= 0) {
+                minutes = Math.floor(leftTime / 1000 / 60 % 60);
+                second = Math.floor(leftTime / 1000 % 60);
+            } else {
+                clearInterval();
+                $("#timer" + id).text("0分0秒");
+                window.location = "/web/seller/sellerOrders.html";
+                return;
+            }
+            if ((minutes == 0 && second <= 1)) {
+                clearInterval();
+                $("#timer" + id).text("0分0秒");
+                window.location = "/web/seller/sellerOrders.html";
+                return;
+            } else if (minutes == 0) {
+                $("#timer" + id).text(second + "秒");
+            } else {
+                $("#timer" + id).text(minutes + "分" + second + "秒");
+            }
+        } else if (type == 1) { // 发货或认购
+            let nowTime = new Date(time) - new Date;
+            if (nowTime < 1000) {
+                clearInterval();
+                $("#timer" + id).text("0天0小时0分0秒");
+            } else {
+                let minutes = parseInt(nowTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+                let seconds = parseInt(nowTime / 1000 % 60, 10);//计算剩余的秒数
 
-        minutes = checkTime(minutes);
-        seconds = checkTime(seconds);
-        let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
-        let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
-        days = checkTime(days);
-        hours = checkTime(hours);
-        $("#timer" + id).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+                minutes = checkTime(minutes);
+                seconds = checkTime(seconds);
+                let days = parseInt(nowTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+                let hours = parseInt(nowTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+                days = checkTime(days);
+                hours = checkTime(hours);
+                $("#timer" + id).text(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒");
+            }
+        }
     }, 1000);
 }
 
@@ -532,7 +567,7 @@ Dolaing.validate.isPhone = function (str) {
  * @param idCard
  * @returns {boolean}
  */
-Dolaing.validate.isPersonNo = function(idCard){
+Dolaing.validate.isPersonNo = function (idCard) {
     //15位和18位身份证号码的正则表达式
     var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
     //如果通过该验证，说明身份证格式正确，但准确性还需计算
@@ -574,6 +609,6 @@ Dolaing.validate.isPersonNo = function(idCard){
 }
 
 
-Dolaing.openGoodsDetail = function(id){
-    window.open("/goodsDetails.html?id="+id);
+Dolaing.openGoodsDetail = function (id) {
+    window.open("/goodsDetails.html?id=" + id);
 }
