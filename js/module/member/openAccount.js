@@ -30,7 +30,7 @@ Account.register = function(){
         layer.alert("密码不一致");
         return false ;
     }
-    if(Account.data.identifyingCode == null || Account.data.identifyingCode.trim() ==  ""){
+    if(Account.data.custType == 0 && (Account.data.identifyingCode == null || Account.data.identifyingCode.trim() ==  "")){
         layer.alert("请输入验证码");
         return false ;
     }
@@ -39,6 +39,7 @@ Account.register = function(){
         layer.alert("请先阅读dolaing用户协议");
         return false ;
     }
+
     var ajaxObj = {
         url: SERVER_URL+"/payAccount/marginRegister",
         data: JSON.stringify(Account.data),
@@ -160,13 +161,17 @@ Account.buildData = function(){
         Account.data.userNameText = $("#companyForm input[name='userNameText']").val() ;
         Account.data.certType = $("#companyForm select[name='certType']").val() ;
         Account.data.certId = $("#companyForm input[name='certId']").val() ;
-        Account.data.orgId = $("#companyForm input[name='orgId']").val() ;
+        if(Account.data.certType == "C15"){
+            Account.data.orgId =  Account.data.certId ;
+        }else{
+            Account.data.orgId = $("#companyForm input[name='orgId']").val() ;
+        }
         Account.data.bankCode = $("#companyForm select[name='bankCode']").val() ;
         Account.data.cardNo = $("#companyForm input[name='cardNo']").val() ;
         Account.data.mobile = $("#companyForm input[name='mobile']").val() ;
         Account.data.payPassWord = $("#companyForm input[name='payPassWord']").val() ;
         Account.data.confirmPayPassWord = $("#companyForm input[name='confirmPayPassWord']").val() ;
-        Account.data.identifyingCode = $("#companyForm input[name='identifyingCode']").val() ;
+        // Account.data.identifyingCode = $("#companyForm input[name='identifyingCode']").val() ;
     }
 }
 
@@ -232,6 +237,15 @@ Account.checkPayPassword = function(){
         layer.alert("密码不一致，请输入一致的密码");
     }
 }
+
+Account.tabOrg = function(){
+    if($("#companyForm select[name='certType']").val() == "C15"){
+        $("#orgIdLi").hide();
+    }else{
+        $("#orgIdLi").show();
+    }
+}
+
 
 
 $(function () {
