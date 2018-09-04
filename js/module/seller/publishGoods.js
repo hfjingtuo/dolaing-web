@@ -565,8 +565,23 @@ function getPublishedGoods(goodsId) {
                     $("#landPartArea").val(mallGoods.landPartArea);
                     $("#goodsNumber").val(mallGoods.goodsNumber);
                     $("#goodsDesc").val(mallGoods.goodsDesc);
-                    $("#subscribeTime").val(mallGoods.startSubscribeTime.substr(0, 10) + " 至 " + mallGoods.endSubscribeTime.substr(0, 10));
+                    $("#subscribeTime").val(mallGoods.startSubscribeTime + " 至 " + mallGoods.endSubscribeTime);
 
+                    $("#goodsName").attr("disabled","disabled");
+                    $("#shopPrice").attr("disabled","disabled");
+                    $("#depositRatio").attr("disabled","disabled");
+                    $("#breeds").attr("disabled","disabled");
+                    $("#plantingCycle").attr("disabled","disabled");
+                    $("#expectPartOutput").attr("disabled","disabled");
+                    $("#landSn").attr("disabled","disabled");
+                    $("#landAddress").attr("disabled","disabled");
+                    $("#landPartArea").attr("disabled","disabled");
+                    $("#isFreeShipping").attr("disabled","disabled");
+                    $("#catId").attr("disabled","disabled");
+                    $("#startPlantime").attr("disabled","disabled");
+                    $("#endPlantime").attr("disabled","disabled");
+                    $("#farmerId").attr("disabled","disabled");
+                    $("#subscribeTime").attr("disabled","disabled");
                     //加载商品产量、土地面积信息
                     showGoodsArea();
                     /**获取下级的所有农户**/
