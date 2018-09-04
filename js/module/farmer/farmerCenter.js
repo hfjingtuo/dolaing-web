@@ -240,13 +240,13 @@ FarmerCenter.buildDataView = function(order){
             '                            <h3>（定金比例'+goods.depositRatioLabel+'）</h3>' +
             '                            <h3>总额：'+goods.goodsAmount+'</h3>' +
             '                        </td>' ;
-        if(order.orderStatusFullCode == "2"){
-            _html += ' <td class="middle">' +
-                ' <h3 class="link">发&nbsp;&nbsp;货</h3>' +
-                '</td>' ;
-        }else{
+        // if(order.orderStatusFullCode == "2"){
+        //     _html += ' <td class="middle">' +
+        //         ' <h3 class="link">发&nbsp;&nbsp;货</h3>' +
+        //         '</td>' ;
+        // }else{
             _html += ' <td class="middle"></td>' ;
-        }
+        // }
         _html += '</tr>' +
             '                </table>' +
             '                <h5 class="deliver">预计发货时间：'+Dolaing.date.formatCh(goods.expectDeliverTime)
