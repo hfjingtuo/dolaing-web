@@ -198,6 +198,7 @@ FarmerCenter.buildDataView = function(order){
     var goods = null ;
     var dStatus = "" ;//定金收款状态
     var wStatus = "" ;//尾款收款状态
+
     for(var i =0 ; i< order.orderGoodsVos.length ; i++){
         goods = order.orderGoodsVos[i] ;
         if(order.farmerReceiveStatus == 0){
@@ -216,7 +217,8 @@ FarmerCenter.buildDataView = function(order){
             dStatus = "已到账" ;
             wStatus =  "已到账" ;
         }
-
+        var depositPayment = goods.depositPayment * 0.8 ;
+        var balancePayment = goods.balancePayment * 0.8 ;
         _html += '  <table border="0" cellspacing="0" cellpadding="0" class="grid_seller seller_list_content">' +
             '                    <tr>' +
             '                        <td>' +
@@ -228,8 +230,8 @@ FarmerCenter.buildDataView = function(order){
             '                            </div>' +
             '                        </td>' +
             '<td class="middle">' +
-            '<h3>定金：'+goods.depositPayment+'<br>'+dStatus+'</h3>' +
-            '<h3 style="margin-top: 10px;">尾款：'+goods.balancePayment+'<br>'+wStatus+'</h3>' +
+            '<h3>定金：'+depositPayment+'<br>'+dStatus+'</h3>' +
+            '<h3 style="margin-top: 10px;">尾款：'+balancePayment+'<br>'+wStatus+'</h3>' +
             '</td>' +
             '                        <td class="middle">' +
             '                            <h3>'+order.orderStatusFullName+'</h3>' +

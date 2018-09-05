@@ -83,7 +83,7 @@ SellerCenter.findTradeRecords = function(){
                         if(record.processType == "1"){
                             processType ="转入" ;
                         }else if(record.processType == "2"){
-                            processType ="支付" ;
+                            processType ="转入" ;
                         }
                         var createDay = record.createTime.substr(0,4)+"年"+record.createTime.substr(5,2)+"月"+record.createTime.substr(8,2)+"日"
                         var createHour = record.createTime.substr(11);

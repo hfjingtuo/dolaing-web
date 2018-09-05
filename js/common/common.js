@@ -511,6 +511,9 @@ function checkTime(i) { //将0-9的数字前面加上0，例1变为01
 }
 
 function splitTime(time) {
+    if(time == null || time == ""){
+        return "" ;
+    }
     var times = time.split(" ");
     return times[0] + "</br>" + times[1];
 }
